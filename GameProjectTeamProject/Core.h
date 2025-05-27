@@ -6,5 +6,7 @@ public:
 private:
 	void Update();
 	void Render();
+private:
+	int m_hp;
 };
 
