@@ -6,7 +6,7 @@ void Core::Run()
 	{
 		Update();
 		Render();
-		//FrameSync()
+		// FrameSync()
 	}
 }
 
