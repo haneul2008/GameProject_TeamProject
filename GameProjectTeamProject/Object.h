@@ -1,21 +1,22 @@
 #pragma once
 
-struct _Position
+typedef struct _Position
 {
 public:
     int x;
     int y;
 } Position, * p_Position, Pos, * p_Pos;
 
-struct _ObjectImage
+// dead등 상태에 따른 이미지 추가 가능성 있음
+typedef struct _ObjectImage
 {
 public:
     char image;
 } Image, *p_Image;
 
-struct _Object
+typedef struct _Object
 {
 public:
-    Position pos;
+    _Position pos;
 
 };
