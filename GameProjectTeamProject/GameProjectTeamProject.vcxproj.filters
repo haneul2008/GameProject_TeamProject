@@ -16,6 +16,9 @@
     <Filter Include="01.Core">
       <UniqueIdentifier>{e62ef3f8-3033-4019-8ad0-bb06d484a0ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Stage">
+      <UniqueIdentifier>{68ffd712-2fb0-47f6-bd84-803f073175c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,9 +27,18 @@
     <ClCompile Include="Core.cpp">
       <Filter>01.Core</Filter>
     </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>02.Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
+      <Filter>01.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>02.Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="IUpdate.h">
       <Filter>01.Core</Filter>
     </ClInclude>
   </ItemGroup>
