@@ -14,15 +14,15 @@ void Core::Run()
 
 void Core::AddUpdate(IUpdate& update)
 {
-	_updateList.push_back(update);
+	_updateList.push_back(&update);
 	std::sort(_updateList.begin(), _updateList.end(), UpdatePredicate);
 }
 
 void Core::Update()
 {
-	for (IUpdate& update : _updateList)
+	for (IUpdate* update : _updateList)
 	{
-		update.Update();
+		update->Update();
 	}
 }
 
@@ -30,7 +30,7 @@ void Core::Render()
 {
 }
 
-bool Core::UpdatePredicate(IUpdate& a, IUpdate& b)
+bool Core::UpdatePredicate(IUpdate* a, IUpdate* b)
 {
-	return a.GetPriotity() > b.GetPriotity();
+	return a->GetPriotity() > b->GetPriotity();
 }
