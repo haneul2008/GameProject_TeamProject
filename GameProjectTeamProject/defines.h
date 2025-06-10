@@ -1,2 +1,2 @@
 #pragma once
-#define SAFE_DELETE(p) if (_instance != nullptr){delete _instance;_instance = nullptr;}
+#define SAFE_DELETE(p) if (p != nullptr){delete p;p = nullptr;}

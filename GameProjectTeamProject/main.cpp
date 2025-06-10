@@ -1,7 +1,8 @@
 #include "Core.h"
+#include "UpdateContainer.h"
 
 int main()
 {
-	Core core;
-	core.Run();
+	UpdateContainer container;
+	Core::GetInstance()->Run();
 }

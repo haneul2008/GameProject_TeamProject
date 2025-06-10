@@ -1,14 +1,15 @@
 #pragma once
 #include<vector>
 #include"IUpdate.h"
+#include"Singletone.h"
 
 using std::vector;
 
-class Core
+class Core : public Singleton<Core>
 {
 public:
 	void Run();
-	void AddUpdate(IUpdate& update);
+	void AddUpdate(IUpdate* update);
 private:
 	vector<IUpdate*> _updateList;
 	void Update();

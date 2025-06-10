@@ -39,8 +39,11 @@
     <ClCompile Include="Object.cpp">
       <Filter>11.Object</Filter>
     </ClCompile>
-    <ClCompile Include="MonoSingletone.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Singletone.cpp">
+      <Filter>01.Core</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateContainer.cpp">
+      <Filter>01.Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,10 +65,13 @@
     <ClInclude Include="Object.h">
       <Filter>11.Object</Filter>
     </ClInclude>
-    <ClInclude Include="MonoSingletone.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="defines.h">
+      <Filter>01.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Singletone.h">
+      <Filter>01.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateContainer.h">
       <Filter>01.Core</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,7 +3,7 @@
 #include"defines.h"
 
 template<typename T>
-class MonoSingleton
+class Singleton
 {
 public:
 	static T* GetInstance()
@@ -22,4 +22,7 @@ public:
 private:
 	static T* _instance;
 };
+
+template<typename T>
+T* Singleton<T>::_instance = nullptr;
 

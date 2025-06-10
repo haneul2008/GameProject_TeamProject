@@ -12,9 +12,9 @@ void Core::Run()
 	}
 }
 
-void Core::AddUpdate(IUpdate& update)
+void Core::AddUpdate(IUpdate* update)
 {
-	_updateList.push_back(&update);
+	_updateList.push_back(update);
 	std::sort(_updateList.begin(), _updateList.end(), UpdatePredicate);
 }
 
