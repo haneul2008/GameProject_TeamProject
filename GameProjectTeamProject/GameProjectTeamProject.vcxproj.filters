@@ -74,5 +74,8 @@
     <ClInclude Include="UpdateContainer.h">
       <Filter>01.Core</Filter>
     </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>01.Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -141,6 +141,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Singletone.h" />
