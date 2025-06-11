@@ -1,15 +1,23 @@
 #pragma once
 
 #include "Object.h"
+#include "Singletone.h"
 
-class ICollider
+class Collider
 {
 public:
-    virtual bool collision() = 0;
-    virtual const bool getIsTrigger();
+    virtual bool calculateCollision(const Collider& other) const = 0;
+    virtual bool isAnyTrigger(const Collider& other) const;
+    virtual bool isOverlapLayer(int layer) const;
+
+    virtual bool getIsTrigger() const;
+
+    virtual int getLayer() const;
+    virtual void setLayer(int layer);
 
 protected:
     bool _isTrigger;
+    int _layer;
 };
 
 // singleton으로 필요가 있을지도?
@@ -24,15 +32,15 @@ public:
     PhysicsManager& operator=(const PhysicsManager&) = delete;
 
 public:
-    const ICollider* getCollider(int x, int y);
-    const ICollider* getCollider(const Pos& pos);
+    const Collider* getCollider(int x, int y);
+    const Collider* getCollider(const Pos& pos);
 
-    void setCollider(ICollider* collider, int x, int y);
-    void setCollider(ICollider* collider, const Pos& pos);
+    void setCollider(Collider* collider, int x, int y);
+    void setCollider(Collider* collider, const Pos& pos);
 
 private:
-    // ICollider*의 2차원 배열
-    ICollider*** _physicsMap;
+    // Collider*의 2차원 배열
+    Collider*** _physicsMap;
     int _maxHeight;
     int _maxWidth;
 };

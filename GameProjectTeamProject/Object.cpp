@@ -1,6 +1,6 @@
 #include "Object.h"
 
-ObjectRenderInfo::ObjectRenderInfo(char defaultImage)
+ObjectRenderInfo::ObjectRenderInfo(wchar_t defaultImage)
     :defaultImage(defaultImage)
 {
     _currentFrame = 0;
@@ -12,7 +12,7 @@ ObjectRenderInfo::~ObjectRenderInfo()
 
 }
 
-void ObjectRenderInfo::addAnimation(char name, std::vector<char>&& animation)
+void ObjectRenderInfo::addAnimation(char name, std::vector<wchar_t>&& animation)
 {
     _animation[name] = std::move(animation);
 }
@@ -34,13 +34,13 @@ void ObjectRenderInfo::setCurrentAnimation(char name)
     _currentAnimationName = name;
 }
 
-char ObjectRenderInfo::getCurrentAndAdvanceFrame()
+wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame()
 {
-    std::map<char, std::vector<char>>::iterator it = _animation.find(_currentAnimationName);
+    std::map<char, std::vector<wchar_t >>::iterator it = _animation.find(_currentAnimationName);
     if (it != _animation.end())
     {
         // 현재 프래임 애니메이션 저장시키고 프레임 넘어감
-        char curAnim = it->second[_currentFrame];
+        wchar_t  curAnim = it->second[_currentFrame];
         _currentFrame = (_currentFrame + 1) % it->second.size();
         return curAnim;
     }
@@ -48,7 +48,7 @@ char ObjectRenderInfo::getCurrentAndAdvanceFrame()
         return defaultImage;
 }
 
-Object::Object(char defaultImage)
+Object::Object(wchar_t defaultImage)
     :render(ObjectRenderInfo(defaultImage)),
     pos(Pos())
 {
@@ -57,4 +57,14 @@ Object::Object(char defaultImage)
 Object::~Object()
 {
 
+}
+
+bool Position::operator==(const Position& other) const
+{
+    return (x == other.x) && (y == other.y);
+}
+
+bool Position::operator!=(const Position& other) const
+{
+    return (x != other.x) && (y != other.y);
 }
