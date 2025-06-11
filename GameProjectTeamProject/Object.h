@@ -1,25 +1,44 @@
 #pragma once
 
-#include<Vector>
+#include<vector>
+#include <utility>
 #include<map>
 
-typedef struct _Position
+typedef struct Position
 {
 public:
     int x;
     int y;
 } Position, * pPosition, Pos, * pPos;
 
-// dead등 상태에 따른 이미지 추가 가능성 있음
-typedef struct _ObjectRenderInfo
+typedef class ObjectRenderInfo
 {
 public:
-    char image;
-    std::map<char, std::vector<char>> animation;
+    ObjectRenderInfo(char defaultImage);
+    ~ObjectRenderInfo();
+
+public:
+    char defaultImage;
+
+private:
+    int _currentFrame;
+    char _currentAnimationName;
+    std::map<char, std::vector<char>> _animation;
+
+public:
+    void addAnimation(char name, std::vector<char>&& animation);
+    // std::vector<char>& GetAnimation(char name);
+    void setCurrentAnimation(char name);
+    char getCurrentAndAdvanceFrame();
+
 } RenderInfo, *pRenderInfo, RendI, *pRendI;
 
-typedef struct _Object
+typedef class Object
 {
+public:
+    Object(char defaultImage);
+    virtual ~Object();
+
 public:
     Pos pos;
     RendI render;
