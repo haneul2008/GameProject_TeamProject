@@ -22,6 +22,12 @@
     <Filter Include="11.Object">
       <UniqueIdentifier>{d4e03d44-1a9b-473e-8f72-1d5c01daa2d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="11.Object\header">
+      <UniqueIdentifier>{85cfb928-4695-4370-805f-8d5d1021fe40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11.Object\cpp">
+      <UniqueIdentifier>{540e9891-ab50-40f1-baf5-6fda43e468e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,8 +42,11 @@
     <ClCompile Include="Console.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>11.Object\cpp</Filter>
+    </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>11.Object</Filter>
+      <Filter>11.Object\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +66,10 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
-      <Filter>11.Object</Filter>
+      <Filter>11.Object\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>11.Object\header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

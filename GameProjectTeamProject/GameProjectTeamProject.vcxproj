@@ -131,6 +131,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="WindowInfo.h" />
   </ItemGroup>
