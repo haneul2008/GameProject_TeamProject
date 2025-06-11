@@ -133,6 +133,7 @@
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Singletone.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="UpdateContainer.h" />
