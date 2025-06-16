@@ -31,7 +31,7 @@ void Stage::RenderStage()
 			else if (_curMap[i][j] == (char)Tile::START)
 				cout << "¡Ù"; // ½ÃÀÛ Æ÷Å»
 			else if (_curMap[i][j] == (char)Tile::GOAL)
-				cout << "¢Í"; // ¸ñÇ¥ Æ÷Å»
+				cout << "¢Ç"; // ¸ñÇ¥ Æ÷Å»
 			else
 				continue;
 		}
@@ -57,16 +57,17 @@ Stage::Stage()
 	strcpy_s(_curMap[9], "00000100000000100000");
 	strcpy_s(_curMap[10],"00000100000000111100");
 	strcpy_s(_curMap[11],"00000100000000000000");
-	strcpy_s(_curMap[12],"00000111111111111100");
-	strcpy_s(_curMap[13],"00000100000000001103");
-	strcpy_s(_curMap[14],"00000100000000001001");
-	strcpy_s(_curMap[15],"00000100000000001111");
+	strcpy_s(_curMap[12],"00000111111111111110");
+	strcpy_s(_curMap[13],"00000100000000111110");
+	strcpy_s(_curMap[14],"00000100000000113110");
+	strcpy_s(_curMap[15],"00000100000000111110");
 	strcpy_s(_curMap[16],"00000100000000000000");
 	strcpy_s(_curMap[17],"00000100000000000100");
 	strcpy_s(_curMap[18],"00000111111111111100");
 	strcpy_s(_curMap[19],"00000000000000000000");
 
 	//Test
+	SetConsoleFont(L"", {13, 13}, 0);
 	SetConsoleSetting(0, 0, true, L"Game");
 	ShowCursor(false);
 }
