@@ -94,10 +94,10 @@ bool Collider::tryCollision(const Pos& pos) {
 
     const Collider* collider = (*physicsManager).getCollider(pos);
     if (collider != nullptr) {
-        int collisionLayer = getCollidedObjectLayer(*collider);
+        bool collision = calculateCollision(*collider);
         bool triggerCollsition = isAnyTrigger(*collider);
 
-        if (collisionLayer != 0) {
+        if (collision) {
             if (triggerCollsition)
                 onTriggerEvent(*collider, pos);
             else
