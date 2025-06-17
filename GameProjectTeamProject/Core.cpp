@@ -18,6 +18,12 @@ void Core::AddUpdate(IUpdate* update)
 	std::sort(_updateList.begin(), _updateList.end(), UpdatePredicate);
 }
 
+void Core::AddRender(IRender* render)
+{
+	_renderList.push_back(render);
+	std::sort(_renderList.begin(), _renderList.end(), RenderPredicate);
+}
+
 void Core::Update()
 {
 	for (IUpdate* update : _updateList)
@@ -28,9 +34,18 @@ void Core::Update()
 
 void Core::Render()
 {
+	for (IRender* render : _renderList)
+	{
+		render->Render();
+	}
 }
 
 bool Core::UpdatePredicate(IUpdate* a, IUpdate* b)
 {
-	return a->GetPriotity() > b->GetPriotity();
+	return a->GetUpdatePriotity() > b->GetUpdatePriotity();
+}
+
+bool Core::RenderPredicate(IRender* a, IRender* b)
+{
+	return a->GetRenderPriotity() > b->GetRenderPriotity();
 }

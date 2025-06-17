@@ -2,6 +2,7 @@
 #include<vector>
 #include<Windows.h>
 #include"IUpdate.h"
+#include"IRender.h"
 #include"Singletone.h"
 
 using std::vector;
@@ -37,21 +38,24 @@ typedef struct _room
 
 		return noOverlapX && noOverlapY;
 	}
-}ROOM, *PROOM;
+}ROOM, * PROOM;
 
 typedef struct _stage
 {
 	char(*curMap)[MAP_WIDTH];
 	COORD startPos;
-}STAGE, *PSTAGE;
+	COORD endPos;
+}STAGE, * PSTAGE;
 
 class RoomRender;
 
-class StageManager : public IUpdate, public Singleton<StageManager>
+class StageManager : public Singleton<StageManager>, public IUpdate, public IRender
 {
 public:
 	inline void Update() override;
-	int GetPriotity() override;
+	inline void Render() override;
+	int GetUpdatePriotity() override;
+	int GetRenderPriotity() override;
 	void RenderStage();
 public:
 	StageManager();
