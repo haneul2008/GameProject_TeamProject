@@ -39,18 +39,20 @@ void PhysicsManager::setCollider(Collider* collider, const Pos& pos) {
     return this->setCollider(collider, pos.x, pos.y);
 }
 
-Collider::Collider() {
-
+Collider::Collider(pPos pos, bool trigger, int layer)
+    : _position(pos),
+    _isTrigger(trigger),
+    _layer(layer) {
 }
+
 
 Collider::~Collider() {
 
 }
 
 int Collider::getCollidedObjectLayer(const Collider& other) {
-
-
-    return 0;
+    bool collision = calculateCollision(other);
+    return collision ? isOverlapLayer(other.getLayer()) : 0;
 }
 
 bool Collider::isAnyTrigger(const Collider& other) const {
