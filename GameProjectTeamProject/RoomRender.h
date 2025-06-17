@@ -1,5 +1,5 @@
 #pragma once
-#include"Stage.h"
+#include"StageManager.h"
 
 class RoomRender
 {

@@ -2,7 +2,7 @@
 #include<string>
 #include<vector>
 #include<Windows.h>
-#include "Stage.h"
+#include "StageManager.h"
 #include "Enums.h"
 #include "Console.h"
 #include "RoomRender.h"
@@ -11,18 +11,18 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-inline void Stage::Update()
+inline void StageManager::Update()
 {
 	MoveCursor(0, 0);
 	RenderStage();
 }
 
-int Stage::GetPriotity()
+int StageManager::GetPriotity()
 {
 	return 10;
 }
 
-void Stage::RenderStage()
+void StageManager::RenderStage()
 {
 	for (int i = 0; i < MAP_HEIGHT; ++i)
 	{
@@ -44,7 +44,7 @@ void Stage::RenderStage()
 	}
 }
 
-Stage::Stage() : _rooms()
+StageManager::StageManager() : _rooms()
 {
 	SetConsoleFont(L"", {12,12}, 1);
 	SetConsoleSetting(800, 600, true, L"Game");
@@ -57,7 +57,7 @@ Stage::Stage() : _rooms()
 	CreateMap();
 }
 
-Stage::~Stage()
+StageManager::~StageManager()
 {
 	delete[] _stage->curMap;
 	delete[] _stage;
@@ -69,12 +69,12 @@ Stage::~Stage()
 	}
 }
 
-PSTAGE Stage::GetStage()
+PSTAGE StageManager::GetStage()
 {
 	return _stage;
 }
 
-void Stage::CreateMap()
+void StageManager::CreateMap()
 {
 	for (const auto& room : _rooms)
 	{
