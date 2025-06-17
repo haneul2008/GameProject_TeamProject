@@ -136,6 +136,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="RoomRender.cpp" />
     <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="RoomRender.h" />
     <ClInclude Include="Singletone.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="UpdateContainer.h" />
