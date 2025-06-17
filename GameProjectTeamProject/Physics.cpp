@@ -17,14 +17,19 @@ PhysicsManager::~PhysicsManager() {
     delete[] _physicsMap;
 }
 
-const Collider* PhysicsManager::getCollider(int x, int y) {
+void PhysicsManager::initialize(int maxHieght, int maxWidth) {
+    _maxHeight = maxHieght;
+    _maxWidth = maxWidth;
+}
+
+const Collider* PhysicsManager::getCollider(int x, int y) const {
     if (y < 0 || y >= _maxHeight || x < 0 || x >= _maxWidth)
         return nullptr;
 
     return _physicsMap[y][x];
 }
 
-const Collider* PhysicsManager::getCollider(const Pos& pos) {
+const Collider* PhysicsManager::getCollider(const Pos& pos) const {
     return this->getCollider(pos.x, pos.y);
 }
 
@@ -39,15 +44,16 @@ void PhysicsManager::setCollider(Collider* collider, const Pos& pos) {
     return this->setCollider(collider, pos.x, pos.y);
 }
 
-Collider::Collider(pPos pos, bool trigger, int layer)
-    : _position(pos),
-    _isTrigger(trigger),
-    _layer(layer) {
+Collider::Collider() {
 }
 
-
 Collider::~Collider() {
+}
 
+void Collider::init(pPos pPos, bool trigger, int layer) {
+    _position = pPos;
+    _isTrigger = trigger;
+    _layer = layer;
 }
 
 int Collider::getCollidedObjectLayer(const Collider& other) {
@@ -81,5 +87,26 @@ pPos Collider::getPosition() const {
 
 void Collider::setPosition(pPos position) {
     _position = position;
+}
+
+bool Collider::tryCollision(const Pos& pos) {
+    const PhysicsManager* physicsManager = PhysicsManager::GetInstance();
+
+    const Collider* collider = (*physicsManager).getCollider(pos);
+    if (collider != nullptr) {
+        int collisionLayer = getCollidedObjectLayer(*collider);
+        bool triggerCollsition = isAnyTrigger(*collider);
+
+        if (collisionLayer != 0) {
+            if (triggerCollsition)
+                onTriggerEvent(*collider, pos);
+            else
+                onCollisionEvent(*collider, pos);
+
+            return true;
+        }
+    }
+
+    return false;
 }
 

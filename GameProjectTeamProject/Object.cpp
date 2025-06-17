@@ -1,13 +1,17 @@
-#include "Object.h"
+ï»¿#include "Object.h"
 
-ObjectRenderInfo::ObjectRenderInfo(wchar_t defaultImage)
-    :defaultImage(defaultImage) {
-    _currentFrame = 0;
-    _currentAnimationName = 0;
+ObjectRenderInfo::ObjectRenderInfo() {
+    init(L'ï¿½'); // ê²½ê³  í‘œì‹œ
 }
 
 ObjectRenderInfo::~ObjectRenderInfo() {
 
+}
+
+void ObjectRenderInfo::init(wchar_t defaultImage) {
+    defaultImage = defaultImage;
+    _currentFrame = 0;
+    _currentAnimationName = 0;
 }
 
 void ObjectRenderInfo::addAnimation(char name, std::vector<wchar_t>&& animation) {
@@ -18,7 +22,7 @@ void ObjectRenderInfo::addAnimation(char name, std::vector<wchar_t>&& animation)
 std::vector<char>& _ObjectRenderInfo::GetAnimation(char name)
 {
     // c++ rvo(return value optimizie) c++17
-    // °ª ¸®ÅÏ¿¡ ´ëÇÑ ÃÖÀûÈ­
+    // ê°’ ë¦¬í„´ì— ëŒ€í•œ ìµœì í™”
     std::map<char, std::vector<char>>::iterator it = _animation.find(name);
     if (it != _animation.end())
         return it->second;
@@ -33,7 +37,7 @@ void ObjectRenderInfo::setCurrentAnimation(char name) {
 wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame() {
     std::map<char, std::vector<wchar_t >>::iterator it = _animation.find(_currentAnimationName);
     if (it != _animation.end()) {
-        // ÇöÀç ÇÁ·¡ÀÓ ¾Ö´Ï¸ŞÀÌ¼Ç ÀúÀå½ÃÅ°°í ÇÁ·¹ÀÓ ³Ñ¾î°¨
+        // í˜„ì¬ í”„ë˜ì„ ì• ë‹ˆë©”ì´ì…˜ ì €ì¥ì‹œí‚¤ê³  í”„ë ˆì„ ë„˜ì–´ê°
         wchar_t  curAnim = it->second[_currentFrame];
         _currentFrame = (_currentFrame + 1) % it->second.size();
         return curAnim;
@@ -42,13 +46,16 @@ wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame() {
         return defaultImage;
 }
 
-Object::Object(wchar_t defaultImage)
-    :render(ObjectRenderInfo(defaultImage)),
-    pos(Pos()) {
+Object::Object() {
 }
 
 Object::~Object() {
 
+}
+
+void Object::init(wchar_t defaultImage) {
+    render = RendI();
+    render.init(defaultImage);
 }
 
 bool Position::operator==(const Position& other) const {

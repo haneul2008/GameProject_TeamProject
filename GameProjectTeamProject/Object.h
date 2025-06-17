@@ -18,30 +18,35 @@ public:
 typedef class ObjectRenderInfo
 {
 public:
-    ObjectRenderInfo(wchar_t  defaultImage);
+    ObjectRenderInfo() = default;
     ~ObjectRenderInfo();
 
 public:
-    wchar_t  defaultImage;
+    void init(wchar_t  defaultImage);
+
+    void addAnimation(char name, std::vector<wchar_t >&& animation);
+    // std::vector<char>& GetAnimation(char name);
+    void setCurrentAnimation(char name);
+    wchar_t getCurrentAndAdvanceFrame();
+
+public:
+    wchar_t defaultImage;
 
 private:
     int _currentFrame;
     char _currentAnimationName;
     std::map<char, std::vector<wchar_t >> _animation;
 
-public:
-    void addAnimation(char name, std::vector<wchar_t >&& animation);
-    // std::vector<char>& GetAnimation(char name);
-    void setCurrentAnimation(char name);
-    wchar_t getCurrentAndAdvanceFrame();
-
 } RenderInfo, * pRenderInfo, RendI, * pRendI;
 
 typedef class Object
 {
 public:
-    Object(wchar_t defaultImage);
+    Object();
     virtual ~Object();
+
+public:
+    void init(wchar_t defaultImage);
 
 public:
     Pos pos;
