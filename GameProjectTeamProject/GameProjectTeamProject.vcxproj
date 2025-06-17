@@ -138,7 +138,7 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="RoomRender.cpp" />
     <ClCompile Include="Singletone.cpp" />
-    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,7 +152,7 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="RoomRender.h" />
     <ClInclude Include="Singletone.h" />
-    <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="UpdateContainer.h" />
     <ClInclude Include="WindowInfo.h" />
   </ItemGroup>

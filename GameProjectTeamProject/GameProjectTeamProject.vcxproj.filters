@@ -36,7 +36,7 @@
     <ClCompile Include="Core.cpp">
       <Filter>01.Core</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp">
+    <ClCompile Include="StageManager.cpp">
       <Filter>02.Stage</Filter>
     </ClCompile>
     <ClCompile Include="Console.cpp">
@@ -54,12 +54,21 @@
     <ClCompile Include="UpdateContainer.cpp">
       <Filter>01.Core</Filter>
     </ClCompile>
+    <ClCompile Include="Colliders.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomRender.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
       <Filter>01.Core</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
+    <ClInclude Include="StageManager.h">
       <Filter>02.Stage</Filter>
     </ClInclude>
     <ClInclude Include="IUpdate.h">
@@ -86,8 +95,14 @@
     <ClInclude Include="UpdateContainer.h">
       <Filter>01.Core</Filter>
     </ClInclude>
-    <ClInclude Include="Enums.h">
-      <Filter>01.Core</Filter>
+    <ClInclude Include="Colliders.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomRender.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

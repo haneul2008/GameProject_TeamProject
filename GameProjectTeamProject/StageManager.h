@@ -47,15 +47,15 @@ typedef struct _stage
 
 class RoomRender;
 
-class Stage : public IUpdate, public Singleton<Stage>
+class StageManager : public IUpdate, public Singleton<StageManager>
 {
 public:
 	inline void Update() override;
 	int GetPriotity() override;
 	void RenderStage();
 public:
-	Stage();
-	~Stage();
+	StageManager();
+	~StageManager();
 	PSTAGE GetStage();
 private:
 	void CreateMap();
