@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+#include<Windows.h>
 #include"IUpdate.h"
 
 using std::vector;
@@ -19,6 +20,13 @@ typedef struct _room
 	int y;
 	int width, height;
 
+	COORD GetCenter() const {
+		return {
+			static_cast<SHORT>(x + width / 2),
+			static_cast<SHORT>(y + height / 2)
+		};
+	}
+
 	bool IsOverlap(const _room& other) const {
 		bool noOverlapX = (x < other.x + other.width + ROOM_MINDISTANCE) &&
 			(other.x < x + width + ROOM_MINDISTANCE);
@@ -33,6 +41,7 @@ typedef struct _room
 typedef struct _stage
 {
 	char(*curMap)[MAP_WIDTH];
+	COORD startPos;
 }STAGE, *PSTAGE;
 
 class RoomRender;
@@ -46,6 +55,7 @@ public:
 public:
 	Stage();
 	~Stage();
+	PSTAGE GetStage();
 private:
 	void CreateMap();
 private:

@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<Windows.h>
 #include "Stage.h"
 #include "Enums.h"
 #include "Console.h"
@@ -68,6 +69,11 @@ Stage::~Stage()
 	}
 }
 
+PSTAGE Stage::GetStage()
+{
+	return _stage;
+}
+
 void Stage::CreateMap()
 {
 	for (const auto& room : _rooms)
@@ -106,4 +112,11 @@ void Stage::CreateMap()
 	{
 		_roomRender->DrawRoom(_stage, room);
 	}
+
+	int randNum = rand() % _rooms.size();
+
+	_stage->startPos = _rooms[randNum]->GetCenter();
+
+	COORD startPos = _stage->startPos;
+	_stage->curMap[startPos.Y][startPos.X] = (char)Tile::START;
 }
