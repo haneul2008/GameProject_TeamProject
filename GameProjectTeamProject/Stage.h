@@ -2,6 +2,7 @@
 #include<vector>
 #include<Windows.h>
 #include"IUpdate.h"
+#include"Singletone.h"
 
 using std::vector;
 
@@ -46,7 +47,7 @@ typedef struct _stage
 
 class RoomRender;
 
-class Stage : public IUpdate
+class Stage : public IUpdate, public Singleton<Stage>
 {
 public:
 	inline void Update() override;

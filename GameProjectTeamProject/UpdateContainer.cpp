@@ -3,7 +3,7 @@
 
 UpdateContainer::UpdateContainer()
 {
-	_updates.push_back(new Stage);
+	_updates.push_back(Stage::GetInstance());
 
 	for (IUpdate* update : _updates)
 	{
