@@ -35,7 +35,7 @@ public:
     void setCurrentAnimation(char name);
     wchar_t getCurrentAndAdvanceFrame();
 
-} RenderInfo, *pRenderInfo, RendI, *pRendI;
+} RenderInfo, * pRenderInfo, RendI, * pRendI;
 
 typedef class Object
 {
@@ -46,5 +46,5 @@ public:
 public:
     Pos pos;
     RendI render;
-} Object, *pObject, Obj, *pObj;
+} Object, * pObject, Obj, * pObj;
 

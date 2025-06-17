@@ -6,7 +6,12 @@
 class Collider
 {
 public:
-    virtual bool calculateCollision(const Collider& other) const = 0;
+    Collider();
+    ~Collider();
+
+public:
+    virtual int getCollidedObjectLayer(const Collider& other);
+
     virtual bool isAnyTrigger(const Collider& other) const;
     virtual bool isOverlapLayer(int layer) const;
 
@@ -15,7 +20,14 @@ public:
     virtual int getLayer() const;
     virtual void setLayer(int layer);
 
+    virtual pPos getPosition() const;
+    virtual void setPosition(pPos position);
+
 protected:
+    virtual bool calculateCollision(const Collider& other) const = 0;
+
+protected:
+    pPos _position;
     bool _isTrigger;
     int _layer;
 };
