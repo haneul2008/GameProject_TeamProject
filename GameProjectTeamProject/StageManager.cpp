@@ -13,11 +13,20 @@ using std::vector;
 
 inline void StageManager::Update()
 {
+}
+
+inline void StageManager::Render()
+{
 	MoveCursor(0, 0);
 	RenderStage();
 }
 
-int StageManager::GetPriotity()
+int StageManager::GetUpdatePriotity()
+{
+	return 10;
+}
+
+int StageManager::GetRenderPriotity()
 {
 	return 10;
 }
@@ -116,7 +125,11 @@ void StageManager::CreateMap()
 	int randNum = rand() % _rooms.size();
 
 	_stage->startPos = _rooms[randNum]->GetCenter();
+	_stage->endPos = _rooms[((randNum + 1) % _rooms.size())]->GetCenter();
 
 	COORD startPos = _stage->startPos;
+	COORD endPos = _stage->endPos;
+
 	_stage->curMap[startPos.Y][startPos.X] = (char)Tile::START;
+	_stage->curMap[endPos.Y][endPos.X] = (char)Tile::GOAL;
 }

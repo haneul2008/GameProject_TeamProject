@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include "Core.h"
+#include "IUpdate.h"
 
 using std::vector;
 
