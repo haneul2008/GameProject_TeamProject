@@ -1,13 +1,20 @@
 #pragma once
 
 #include "Entity.h"
+#include "IInputable.h"
 
-class Player : virtual public Entity
+class Player : virtual public Entity, virtual public IInputable
 {
 public:
-    void SetWhatIsItemLayer(int layer);
-    void SetWhatIsWallLayer(int layer);
-    void SetWhatIsEnemyLayer(int layer);
+    Player();
+
+public:
+    void setWhatIsItemLayer(int layer);
+    void setWhatIsWallLayer(int layer);
+    void setWhatIsEnemyLayer(int layer);
+
+    // IInputable을(를) 통해 상속됨
+    void onInputKey(Key key) override;
 
 private:
     int _whatIsItem;

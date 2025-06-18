@@ -1,14 +1,20 @@
 ﻿#include "Object.h"
 
+#include <iostream>
+#include<io.h>  
+#include<fcntl.h>
+
+#include "Console.h"
+#include "Core.h"
+
 ObjectRenderInfo::ObjectRenderInfo() {
-    init(L'�'); // 경고 표시
+    setDefaultImage(L'�'); // 경고 표시
 }
 
 ObjectRenderInfo::~ObjectRenderInfo() {
-
 }
 
-void ObjectRenderInfo::init(wchar_t defaultImage) {
+void ObjectRenderInfo::setDefaultImage(wchar_t defaultImage) {
     defaultImage = defaultImage;
     _currentFrame = 0;
     _currentAnimationName = 0;
@@ -46,16 +52,44 @@ wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame() {
         return defaultImage;
 }
 
-Object::Object() {
+Object::Object():
+    _renderPriotity(0),
+pos(Pos()){
+    Core::GetInstance()->AddRender(this);
 }
 
 Object::~Object() {
-
 }
 
-void Object::init(wchar_t defaultImage) {
+void Object::setDefaultImage(wchar_t defaultImage) {
     render = RendI();
-    render.init(defaultImage);
+    render.setDefaultImage(defaultImage);
+    _renderPriotity = 0;
+}
+
+void Object::Render() {
+    MoveCursor(pos.x, pos.y);
+    wchar_t sprite = render.getCurrentAndAdvanceFrame();
+    int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);
+    std::wcout << sprite;
+    int wcoutMode = _setmode(_fileno(stdout), coutMode);
+}
+
+int Object::GetRenderPriotity() {
+    return _renderPriotity;
+}
+
+void Object::SetRenderPriotity(int priotity) {
+    _renderPriotity = priotity;
+}
+
+Position& Position::operator=(const Position& other) {
+    if (this != &other) {
+        this->x = other.x;
+        this->y = other.y;
+    }
+
+    return *this;
 }
 
 bool Position::operator==(const Position& other) const {

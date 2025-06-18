@@ -28,6 +28,27 @@
     <Filter Include="11.Object\cpp">
       <UniqueIdentifier>{540e9891-ab50-40f1-baf5-6fda43e468e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="12.Entity">
+      <UniqueIdentifier>{49d8b421-6fc7-47a6-b0f9-8934c2533314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12.Entity\cpp">
+      <UniqueIdentifier>{ab625275-6987-4635-8ec9-b5cd5a0e4c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12.Entity\header">
+      <UniqueIdentifier>{d6e89889-52fb-45dd-857d-11c086c71be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.System">
+      <UniqueIdentifier>{71c060b6-dcac-45f2-b117-79acb3c8176b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.System\Physics">
+      <UniqueIdentifier>{1533ede8-61ad-451f-887b-3a40c6ccf3d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.System\Input">
+      <UniqueIdentifier>{3bc57263-7609-4bec-8c32-ee6d9473d4fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.System\Manager">
+      <UniqueIdentifier>{61ee514c-0f78-4c5e-aeb8-d821a564169e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,9 +63,6 @@
     <ClCompile Include="Console.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Physics.cpp">
-      <Filter>11.Object\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>11.Object\cpp</Filter>
     </ClCompile>
@@ -54,14 +72,29 @@
     <ClCompile Include="UpdateContainer.cpp">
       <Filter>01.Core</Filter>
     </ClCompile>
-    <ClCompile Include="Colliders.cpp">
+    <ClCompile Include="RoomRender.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderContainer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>12.Entity\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="RoomRender.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>12.Entity\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>10.System\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Colliders.cpp">
+      <Filter>10.System\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>10.System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InitManager.cpp">
+      <Filter>10.System\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +116,6 @@
     <ClInclude Include="Object.h">
       <Filter>11.Object\header</Filter>
     </ClInclude>
-    <ClInclude Include="Physics.h">
-      <Filter>11.Object\header</Filter>
-    </ClInclude>
     <ClInclude Include="defines.h">
       <Filter>01.Core</Filter>
     </ClInclude>
@@ -95,14 +125,38 @@
     <ClInclude Include="UpdateContainer.h">
       <Filter>01.Core</Filter>
     </ClInclude>
-    <ClInclude Include="Colliders.h">
+    <ClInclude Include="RoomRender.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IRender.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderContainer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>12.Entity\header</Filter>
     </ClInclude>
-    <ClInclude Include="RoomRender.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>12.Entity\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>10.System\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Colliders.h">
+      <Filter>10.System\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>10.System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="TempEnums.h">
+      <Filter>10.System</Filter>
+    </ClInclude>
+    <ClInclude Include="IInputable.h">
+      <Filter>10.System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InitManager.h">
+      <Filter>10.System\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,13 +1,6 @@
 #include "Physics.h"
 
-PhysicsManager::PhysicsManager(int maxHieght, int maxWidth)
-    :_maxHeight(maxHieght),
-    _maxWidth(maxWidth) {
-    for (int y = 0; y < _maxHeight; ++y) {
-        _physicsMap[y] = new Collider * [_maxWidth];
-        for (int x = 0; x < _maxWidth; ++x)
-            _physicsMap[y][x] = nullptr;
-    }
+PhysicsManager::PhysicsManager() {
 }
 
 PhysicsManager::~PhysicsManager() {
@@ -20,6 +13,14 @@ PhysicsManager::~PhysicsManager() {
 void PhysicsManager::initialize(int maxHieght, int maxWidth) {
     _maxHeight = maxHieght;
     _maxWidth = maxWidth;
+
+    _physicsMap = new Collider * *[_maxWidth];
+    for (int x = 0; x < _maxWidth; ++x) {
+        _physicsMap[x] = new Collider * [_maxHeight];
+        for (int y = 0; y < _maxHeight; ++y) {
+            _physicsMap[x][y] = nullptr;
+        }
+    }
 }
 
 const Collider* PhysicsManager::getCollider(int x, int y) const {
@@ -44,7 +45,17 @@ void PhysicsManager::setCollider(Collider* collider, const Pos& pos) {
     return this->setCollider(collider, pos.x, pos.y);
 }
 
-Collider::Collider() {
+int PhysicsManager::getMaxHeight() {
+    return _maxHeight;
+}
+
+int PhysicsManager::getMaxWidth() {
+    return _maxWidth;
+}
+
+Collider::Collider():
+_isTrigger(false),
+_layer(0) {
 }
 
 Collider::~Collider() {

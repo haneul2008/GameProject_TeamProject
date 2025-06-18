@@ -38,18 +38,16 @@ protected:
     int _layer;
 };
 
-// singleton으로 필요가 있을지도?
+// collider가 physics manager를 알고 그게 collider를 아는 기괴한 구조인데 어쩔 수 없다.
 class PhysicsManager : public Singleton<PhysicsManager>
 {
 public:
-    ~PhysicsManager();
+    PhysicsManager();
+    ~PhysicsManager() override;
 
 public:
     PhysicsManager(const PhysicsManager&) = delete;
     PhysicsManager& operator=(const PhysicsManager&) = delete;
-
-protected:
-    PhysicsManager() = default;
 
 public:
     void initialize(int maxHieght, int maxWidth);
@@ -59,6 +57,9 @@ public:
 
     void setCollider(Collider* collider, int x, int y);
     void setCollider(Collider* collider, const Pos& pos);
+
+    int getMaxHeight();
+    int getMaxWidth();
 
 private:
     // Collider*의 2차원 배열

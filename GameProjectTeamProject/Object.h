@@ -4,9 +4,13 @@
 #include <utility>
 #include<map>
 
+#include "IRender.h"
+
 typedef struct Position
 {
 public:
+    Position& operator=(const Position& other);
+
     bool operator==(const Position& other) const;
     bool operator!=(const Position& other) const;
 
@@ -18,11 +22,11 @@ public:
 typedef class ObjectRenderInfo
 {
 public:
-    ObjectRenderInfo() = default;
+    ObjectRenderInfo();
     ~ObjectRenderInfo();
 
 public:
-    void init(wchar_t  defaultImage);
+    void setDefaultImage(wchar_t  defaultImage);
 
     void addAnimation(char name, std::vector<wchar_t >&& animation);
     // std::vector<char>& GetAnimation(char name);
@@ -39,17 +43,29 @@ private:
 
 } RenderInfo, * pRenderInfo, RendI, * pRendI;
 
-typedef class Object
+typedef class Object : virtual public IRender
 {
 public:
     Object();
     virtual ~Object();
 
 public:
-    void init(wchar_t defaultImage);
+    void setDefaultImage(wchar_t defaultImage);
+
+    // IRender을(를) 통해 상속됨
+    void Render() override;
+    int GetRenderPriotity() override;
+
+public:
+    // 일관성을 위해 대문자로 작성
+    void SetRenderPriotity(int priotity);
 
 public:
     Pos pos;
     RendI render;
+
+    // 자식 객체가 우선순위를 알 필요없음
+private:
+    int _renderPriotity;
 } Object, * pObject, Obj, * pObj;
 

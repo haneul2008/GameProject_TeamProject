@@ -28,3 +28,8 @@ private:
 
 template<typename T>
 T* Singleton<T>::_instance = nullptr;
+
+template<typename T>
+Singleton<T>::~Singleton() {
+	DestroyInst();
+}
