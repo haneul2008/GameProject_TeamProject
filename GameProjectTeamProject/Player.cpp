@@ -21,6 +21,15 @@ void Player::setWhatIsEnemyLayer(int layer) {
     _whatIsEnemy = layer;
 }
 
+void Player::applyMove() {
+    if (_tempMoveX != 0 || _tempMoveY != 0)
+        // move 애니메이션으로 변경
+        render.setCurrentAnimation('m');
+    else
+        render.setCurrentAnimation('i');
+    Entity::applyMove();
+}
+
 void Player::onInputKey(Key key) {
     switch (key) {
         case Key::UP:

@@ -1,12 +1,19 @@
-#include "InitManager.h"
+ï»¿#include "InitManager.h"
 
 InitManager::InitManager():
     _player(Player()) {
     PhysicsManager* physicsManager = PhysicsManager::GetInstance();
     physicsManager->initialize(100, 100);
 
-    // ·¹ÀÌ¾î ¼³Á¤ ÇÊ¿ä
-    _player.init(L'P', false, 0);
+    // ë ˆì´ì–´ ì„¤ì • í•„ìš”
+    int playerLayer = 0;
+    char idleAnimation = 'i';
+    char moveAnimation = 'm';
+    _player.init(L'P', false, playerLayer);
+    // {L'â›¦', L'â›§' }
+    _player.render.addAnimation(idleAnimation, {L'â›­', L'â›¯' });
+    _player.render.addAnimation(moveAnimation, {L'â›­', L'â›®' });
+    _player.render.setCurrentAnimation(idleAnimation);
 
     // test
     _player.SetRenderPriotity(-100);

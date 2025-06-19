@@ -13,6 +13,8 @@ public:
     void setWhatIsWallLayer(int layer);
     void setWhatIsEnemyLayer(int layer);
 
+    void applyMove() override;
+
     // IInputable을(를) 통해 상속됨
     void onInputKey(Key key) override;
 

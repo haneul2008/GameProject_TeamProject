@@ -36,7 +36,10 @@ void Entity::moveY(int value) {
     _tempMoveY = value;
 }
 
-void Entity::Update() {
+void Entity::applyMove() {
+    // ㅁ벽등은 2칸을 차지하기에 이를 보간, 하드코딩이라 나중에 짬나면 바꿀 예정
+    _tempMoveX *= 2;
+
     Pos tempPos = pos;
     tempPos.x += _tempMoveX;
     tempPos.y += _tempMoveY;
@@ -56,6 +59,10 @@ void Entity::Update() {
 
     if (!tryCollision(tempPos))
         pos = tempPos;
+}
+
+void Entity::Update() {
+    applyMove();
 }
 
 int Entity::GetUpdatePriotity() {

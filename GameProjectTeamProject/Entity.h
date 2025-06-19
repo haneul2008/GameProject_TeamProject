@@ -20,8 +20,10 @@ public:
     void moveX(int value);
     void moveY(int value);
 
+    virtual void applyMove();
+
     // IUpdate을(를) 통해 상속됨
-    void Update() override;
+    virtual void Update() override;
     int GetUpdatePriotity() override;
     // 일관성을 위해 대문자로 시작.
     void SetUpdatePriotity(int priority);
@@ -32,7 +34,7 @@ protected:
     void onTriggerEvent(const Collider& other, const Pos& newPosition) override;
     void onCollisionEvent(const Collider& other, const Pos& newPosition) override;
 
-private:
+protected:
     int _tempMoveX;
     int _tempMoveY;
     int _updatePriority;

@@ -8,14 +8,13 @@
 #include "Core.h"
 
 ObjectRenderInfo::ObjectRenderInfo() {
-    setDefaultImage(L'�'); // 경고 표시
 }
 
 ObjectRenderInfo::~ObjectRenderInfo() {
 }
 
 void ObjectRenderInfo::setDefaultImage(wchar_t defaultImage) {
-    defaultImage = defaultImage;
+    this->defaultImage = defaultImage;
     _currentFrame = 0;
     _currentAnimationName = 0;
 }
