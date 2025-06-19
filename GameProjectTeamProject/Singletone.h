@@ -6,6 +6,9 @@ template<typename T>
 class Singleton
 {
 public:
+	virtual ~Singleton();
+
+public:
 	static T* GetInstance()
 	{
 		if (_instance == nullptr)
@@ -26,3 +29,7 @@ private:
 template<typename T>
 T* Singleton<T>::_instance = nullptr;
 
+template<typename T>
+Singleton<T>::~Singleton() {
+	DestroyInst();
+}

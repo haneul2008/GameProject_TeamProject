@@ -1,19 +1,26 @@
-#include "Object.h"
+Ôªø#include "Object.h"
 
-ObjectRenderInfo::ObjectRenderInfo(wchar_t defaultImage)
-    :defaultImage(defaultImage)
-{
+#include <iostream>
+#include<io.h>  
+#include<fcntl.h>
+
+#include "Console.h"
+#include "Core.h"
+
+ObjectRenderInfo::ObjectRenderInfo() {
+    setDefaultImage(L'ÔøΩ'); // Í≤ΩÍ≥† ÌëúÏãú
+}
+
+ObjectRenderInfo::~ObjectRenderInfo() {
+}
+
+void ObjectRenderInfo::setDefaultImage(wchar_t defaultImage) {
+    defaultImage = defaultImage;
     _currentFrame = 0;
     _currentAnimationName = 0;
 }
 
-ObjectRenderInfo::~ObjectRenderInfo()
-{
-
-}
-
-void ObjectRenderInfo::addAnimation(char name, std::vector<wchar_t>&& animation)
-{
+void ObjectRenderInfo::addAnimation(char name, std::vector<wchar_t>&& animation) {
     _animation[name] = std::move(animation);
 }
 
@@ -21,7 +28,7 @@ void ObjectRenderInfo::addAnimation(char name, std::vector<wchar_t>&& animation)
 std::vector<char>& _ObjectRenderInfo::GetAnimation(char name)
 {
     // c++ rvo(return value optimizie) c++17
-    // ∞™ ∏Æ≈œø° ¥Î«— √÷¿˚»≠
+    // Í∞í Î¶¨ÌÑ¥Ïóê ÎåÄÌïú ÏµúÏ†ÅÌôî
     std::map<char, std::vector<char>>::iterator it = _animation.find(name);
     if (it != _animation.end())
         return it->second;
@@ -29,17 +36,14 @@ std::vector<char>& _ObjectRenderInfo::GetAnimation(char name)
 }
 */
 
-void ObjectRenderInfo::setCurrentAnimation(char name)
-{
+void ObjectRenderInfo::setCurrentAnimation(char name) {
     _currentAnimationName = name;
 }
 
-wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame()
-{
+wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame() {
     std::map<char, std::vector<wchar_t >>::iterator it = _animation.find(_currentAnimationName);
-    if (it != _animation.end())
-    {
-        // «ˆ¿Á «¡∑°¿” æ÷¥œ∏ﬁ¿Ãº« ¿˙¿ÂΩ√≈∞∞Ì «¡∑π¿” ≥—æÓ∞®
+    if (it != _animation.end()) {
+        // ÌòÑÏû¨ ÌîÑÎûòÏûÑ Ïï†ÎãàÎ©îÏù¥ÏÖò Ï†ÄÏû•ÏãúÌÇ§Í≥† ÌîÑÎ†àÏûÑ ÎÑòÏñ¥Í∞ê
         wchar_t  curAnim = it->second[_currentFrame];
         _currentFrame = (_currentFrame + 1) % it->second.size();
         return curAnim;
@@ -48,23 +52,50 @@ wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame()
         return defaultImage;
 }
 
-Object::Object(wchar_t defaultImage)
-    :render(ObjectRenderInfo(defaultImage)),
-    pos(Pos())
-{
+Object::Object():
+    _renderPriotity(0),
+pos(Pos()){
+    Core::GetInstance()->AddRender(this);
 }
 
-Object::~Object()
-{
-
+Object::~Object() {
 }
 
-bool Position::operator==(const Position& other) const
-{
+void Object::setDefaultImage(wchar_t defaultImage) {
+    render = RendI();
+    render.setDefaultImage(defaultImage);
+    _renderPriotity = 0;
+}
+
+void Object::Render() {
+    MoveCursor(pos.x, pos.y);
+    wchar_t sprite = render.getCurrentAndAdvanceFrame();
+    int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);
+    std::wcout << sprite;
+    int wcoutMode = _setmode(_fileno(stdout), coutMode);
+}
+
+int Object::GetRenderPriotity() {
+    return _renderPriotity;
+}
+
+void Object::SetRenderPriotity(int priotity) {
+    _renderPriotity = priotity;
+}
+
+Position& Position::operator=(const Position& other) {
+    if (this != &other) {
+        this->x = other.x;
+        this->y = other.y;
+    }
+
+    return *this;
+}
+
+bool Position::operator==(const Position& other) const {
     return (x == other.x) && (y == other.y);
 }
 
-bool Position::operator!=(const Position& other) const
-{
+bool Position::operator!=(const Position& other) const {
     return (x != other.x) && (y != other.y);
 }
