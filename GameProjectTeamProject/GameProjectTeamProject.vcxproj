@@ -135,6 +135,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PathGenerator.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="RenderContainer.cpp" />
     <ClCompile Include="RoomRender.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="IRender.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PathGenerator.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="RenderContainer.h" />
     <ClInclude Include="RoomRender.h" />

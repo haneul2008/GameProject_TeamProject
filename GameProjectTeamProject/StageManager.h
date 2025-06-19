@@ -4,6 +4,7 @@
 #include"IUpdate.h"
 #include"IRender.h"
 #include"Singletone.h"
+#include"Object.h"
 
 using std::vector;
 

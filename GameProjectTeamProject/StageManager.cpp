@@ -57,7 +57,6 @@ StageManager::StageManager() : _rooms()
 {
 	SetConsoleFont(L"", {12,12}, 1);
 	SetConsoleSetting(800, 600, true, L"Game");
-	ShowCursor(false);
 
 	_stage = new STAGE;
 	_stage->curMap = new char[MAP_HEIGHT][MAP_WIDTH];

@@ -13,9 +13,6 @@ void RoomRender::DrawRoom(const PSTAGE stage, const PROOM room) const
 	{
 		for (int x = xLeft; x <= xRight; ++x)
 		{
-			if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
-				continue;
-
 			if (x == xLeft || x == xRight || y == yTop || y == yBottom)
 				stage->curMap[y][x] = (char)Tile::WALL;
 			else
