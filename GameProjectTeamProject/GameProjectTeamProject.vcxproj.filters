@@ -72,9 +72,6 @@
     <ClCompile Include="UpdateContainer.cpp">
       <Filter>01.Core</Filter>
     </ClCompile>
-    <ClCompile Include="RoomRender.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="RenderContainer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -95,6 +92,12 @@
     </ClCompile>
     <ClCompile Include="InitManager.cpp">
       <Filter>10.System\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomGenerator.cpp">
+      <Filter>02.Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomRender.cpp">
+      <Filter>02.Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,9 +128,6 @@
     <ClInclude Include="UpdateContainer.h">
       <Filter>01.Core</Filter>
     </ClInclude>
-    <ClInclude Include="RoomRender.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="IRender.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -157,6 +157,18 @@
     </ClInclude>
     <ClInclude Include="InitManager.h">
       <Filter>10.System\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomRender.h">
+      <Filter>02.Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomGenerator.h">
+      <Filter>02.Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

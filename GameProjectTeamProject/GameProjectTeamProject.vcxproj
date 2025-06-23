@@ -137,10 +137,10 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="PathGenerator.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderContainer.cpp" />
+    <ClCompile Include="RoomGenerator.cpp" />
     <ClCompile Include="RoomRender.cpp" />
     <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="StageManager.cpp" />
@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Colliders.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="Entity.h" />
@@ -158,14 +159,15 @@
     <ClInclude Include="IRender.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="PathGenerator.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderContainer.h" />
+    <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="RoomRender.h" />
     <ClInclude Include="Singletone.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="TempEnums.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="UpdateContainer.h" />
     <ClInclude Include="WindowInfo.h" />
   </ItemGroup>
