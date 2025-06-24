@@ -60,7 +60,7 @@ StageManager::StageManager()
 	_stage = new STAGE;
 	_stage->curMap = new char[MAP_HEIGHT][MAP_WIDTH];
 	_roomRender = new RoomRender;
-	_roomGenerator = new RoomGenerator(5);
+	_roomGenerator = new RoomGenerator(3);
 
 	CreateMap();
 }
@@ -80,5 +80,8 @@ PSTAGE StageManager::GetStage()
 
 void StageManager::CreateMap()
 {
-	_roomGenerator->GenerateRooms(_stage);
+	_rooms = _roomGenerator->GenerateRooms(_stage);
+
+	for (const PROOM room : _rooms)
+		_roomRender->DrawRoom(_stage, room);
 }

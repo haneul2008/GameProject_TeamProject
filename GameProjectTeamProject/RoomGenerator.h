@@ -3,18 +3,23 @@
 #include "Types.h"
 #include "Constants.h"
 
+using std::vector;
+
 class RoomGenerator
 {
 public:
 	RoomGenerator(int maxDepth) : _maxDepth(maxDepth) {}
 public:
-	void GenerateRooms(PSTAGE stage);
+	vector<PROOM> GenerateRooms(PSTAGE stage);
 private:
-	void FillRoom(PSTAGE stage);
-	std::vector<Rect> SplitRegion(const Rect& region, int depth);
-	Rect CreateRoom(const Rect& region);
-	void ConnectRooms(const PSTAGE stage, const std::vector<Rect>& rooms);
+	vector<Rect> SplitRegion(const Rect& region, int depth);
+	PROOM CreateRoom(const Rect& region);
+	void ConnectRooms(const PSTAGE stage, const std::vector<PROOM>& rooms);
+	void CalculatePath(const PSTAGE stage, const PROOM room, const PROOM targetRoom);
+	void GetPath(vector<Pos>& pathList, const Pos& start, const Pos& end);
+	int GetRandomPoint(int start, int end);
+	Pos GetRandomWallPos(const PROOM room, int side);
 private:
 	int _maxDepth;
-	std::vector<Rect> _roomList;
+	vector<PROOM> _roomList;
 };

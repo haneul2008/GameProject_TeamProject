@@ -28,6 +28,7 @@ private:
 	void CreateMap();
 private:
 	PSTAGE _stage;
+	std::vector<PROOM> _rooms;
 	RoomRender* _roomRender;
 	RoomGenerator* _roomGenerator;
 };
