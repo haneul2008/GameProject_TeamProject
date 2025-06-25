@@ -1,8 +1,8 @@
 #pragma once
-#define NOMINMAX
 #include<Windows.h>
 #include"Constants.h"
 #include"Object.h"
+#include"Enums.h"
 
 struct Rect
 {
@@ -54,14 +54,38 @@ typedef struct _stage
 	COORD endPos;
 }STAGE, * PSTAGE;
 
-struct ConnectedRoomPair
+struct Vector
 {
-	Pos room1;
-	Pos room2;
+	int x, y;
+	Vector(int initX, int initY) :x(initX), y(initY) {};
 
-	const bool operator ==(const ConnectedRoomPair& other) const
+	Dir GetDir()
 	{
-		return (room1 == other.room1 || room2 == other.room2) &&
-			(room2 == other.room1 || room2 == other.room2);
+		Dir result = Dir::ZERO;
+
+		if (x == 0 && y == 0) return result;
+
+		if (std::abs(x) > std::abs(y))
+		{
+			if (x > 0)
+				result = Dir::RIGHT;
+			else
+				result = Dir::LEFT;
+		}
+		else
+		{
+			if (y > 0)
+				result = Dir::UP;
+			else
+				result = Dir::DOWN;
+		}
+
+		return result;
 	}
+};
+
+struct RoomInfo
+{
+	std::vector<PROOM> rooms;
+	std::vector<std::vector<Pos>> pathList;
 };

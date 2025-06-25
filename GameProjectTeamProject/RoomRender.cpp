@@ -20,3 +20,16 @@ void RoomRender::DrawRoom(const PSTAGE stage, const PROOM room) const
 		}
 	}
 }
+
+void RoomRender::DrawPath(const PSTAGE stage, const std::vector<Pos>& pathList)
+{
+	for (int i = 0; i < pathList.size(); ++i)
+	{
+		Pos pos = std::move(pathList[i]);
+
+		if (i == 0 || i == pathList.size() - 1)
+			stage->curMap[pos.y][pos.x] = (char)Tile::DOOR;
+		else
+			stage->curMap[pos.y][pos.x] = (char)Tile::ROAD;
+	}
+}

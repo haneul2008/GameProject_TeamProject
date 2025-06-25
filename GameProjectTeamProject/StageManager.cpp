@@ -44,6 +44,8 @@ void StageManager::RenderStage()
 				cout << "¡Ù"; // ½ÃÀÛ Æ÷Å»
 			else if (_stage->curMap[i][j] == (char)Tile::GOAL)
 				cout << "¢Ç"; // ¸ñÇ¥ Æ÷Å»
+			else if (_stage->curMap[i][j] == (char)Tile::DOOR)
+				cout << "¥Ð"; // ¹®
 			else
 				cout << "  ";
 		}
@@ -80,8 +82,8 @@ PSTAGE StageManager::GetStage()
 
 void StageManager::CreateMap()
 {
-	_rooms = _roomGenerator->GenerateRooms(_stage);
-
+	RoomInfo info = _roomGenerator->GenerateRooms(_stage);
+	_rooms = info.rooms;
 	for (const PROOM room : _rooms)
 		_roomRender->DrawRoom(_stage, room);
 }
