@@ -49,6 +49,21 @@
     <Filter Include="10.System\Manager">
       <UniqueIdentifier>{61ee514c-0f78-4c5e-aeb8-d821a564169e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="10.System\Turn">
+      <UniqueIdentifier>{de0443bd-1968-4fe3-875f-4c7b99b4bafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="13.Enemy">
+      <UniqueIdentifier>{0fd933a6-ec94-48f6-813c-fd32ad6740ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="13.Enemy\cpp">
+      <UniqueIdentifier>{e96aa81e-b42b-4c16-91bc-39a4fb2bda7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="13.Enemy\header">
+      <UniqueIdentifier>{526e3182-e7d9-4627-b515-3d317c23d046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.System\UI">
+      <UniqueIdentifier>{f2b5d7ee-3820-4693-86a9-f6572431265a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,10 +102,22 @@
     <ClCompile Include="Colliders.cpp">
       <Filter>10.System\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
+    <ClCompile Include="InputSystem.cpp">
       <Filter>10.System\Input</Filter>
     </ClCompile>
     <ClCompile Include="InitManager.cpp">
+      <Filter>10.System\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnManager.cpp">
+      <Filter>10.System\Turn</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>13.Enemy\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="UISupporter.cpp">
+      <Filter>10.System\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
       <Filter>10.System\Manager</Filter>
     </ClCompile>
     <ClCompile Include="RoomGenerator.cpp">
@@ -146,7 +173,7 @@
     <ClInclude Include="Colliders.h">
       <Filter>10.System\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
+    <ClInclude Include="InputSystem.h">
       <Filter>10.System\Input</Filter>
     </ClInclude>
     <ClInclude Include="TempEnums.h">
@@ -156,6 +183,21 @@
       <Filter>10.System\Input</Filter>
     </ClInclude>
     <ClInclude Include="InitManager.h">
+      <Filter>10.System\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnManager.h">
+      <Filter>10.System\Turn</Filter>
+    </ClInclude>
+    <ClInclude Include="IDamageable.h">
+      <Filter>12.Entity\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>13.Enemy\header</Filter>
+    </ClInclude>
+    <ClInclude Include="UISupporter.h">
+      <Filter>10.System\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
       <Filter>10.System\Manager</Filter>
     </ClInclude>
     <ClInclude Include="RoomRender.h">
@@ -169,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="IDeadHandler.h">
+      <Filter>12.Entity\header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,15 +7,17 @@
 #include "Console.h"
 #include "Core.h"
 
-ObjectRenderInfo::ObjectRenderInfo() {
-    setDefaultImage(L'�'); // 경고 표시
+ObjectRenderInfo::ObjectRenderInfo():
+_currentFrame(0),
+_currentAnimationName('n'),
+defaultImage(L'N') {
 }
 
 ObjectRenderInfo::~ObjectRenderInfo() {
 }
 
 void ObjectRenderInfo::setDefaultImage(wchar_t defaultImage) {
-    defaultImage = defaultImage;
+    this->defaultImage = defaultImage;
     _currentFrame = 0;
     _currentAnimationName = 0;
 }
@@ -52,13 +54,21 @@ wchar_t ObjectRenderInfo::getCurrentAndAdvanceFrame() {
         return defaultImage;
 }
 
-Object::Object():
+Object::Object() :
     _renderPriotity(0),
-pos(Pos()){
-    Core::GetInstance()->AddRender(this);
+    pos(Pos()),
+    previousPos(pos) {
 }
 
 Object::~Object() {
+}
+
+void Object::init() {
+    // 본래 있었음
+}
+
+void Object::active() {
+    Core::GetInstance()->AddRender(this);
 }
 
 void Object::setDefaultImage(wchar_t defaultImage) {
@@ -68,7 +78,13 @@ void Object::setDefaultImage(wchar_t defaultImage) {
 }
 
 void Object::Render() {
-    MoveCursor(pos.x, pos.y);
+    if (previousPos != pos) {
+        MoveCursor(previousPos.x, previousPos.y);
+        std::cout << "  ";
+    }
+
+    // ㅁ벽등은 2칸을 차지하기에 이를 보간, 하드코딩이라 나중에 짬나면 바꿀 예정
+    MoveCursor(pos.x * 2, pos.y);
     wchar_t sprite = render.getCurrentAndAdvanceFrame();
     int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);
     std::wcout << sprite;
@@ -98,4 +114,19 @@ bool Position::operator==(const Position& other) const {
 
 bool Position::operator!=(const Position& other) const {
     return (x != other.x) && (y != other.y);
+}
+
+Position Position::operator+(const Position& other) const {
+    Position pos = Position();
+    pos = { x + other.x, y + other.y };
+
+    return pos;
+}
+
+Position Position::operator-(const Position& other) const {
+    return *this + -other;
+}
+
+Position Position::operator-() const {
+    return Position(-x, -y);
 }

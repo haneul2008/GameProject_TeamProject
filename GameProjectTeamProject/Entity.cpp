@@ -1,18 +1,54 @@
-#include "Entity.h"
+﻿#include "Entity.h"
+
+#include <algorithm>
+#include <cstdlib>
+#include <format>
 
 #include "Core.h"
+#include "InputSystem.h"
+#include "UISupporter.h"
 
-Entity::Entity() {
-    Core::GetInstance()->AddUpdate(this);
+Entity::Entity() :
+    _entityStat(EntityStat()),
+    _tempMoveX(0),
+    _tempMoveY(0),
+    _updatePriority(0) {
 }
 
 Entity::~Entity() {
 }
 
-void Entity::init(wchar_t defaultImage, bool trigger, int layer) {
-    pos = Pos();
-    Collider::init(&pos, trigger, layer);
+Entity::Entity(Entity&& other) :
+    _entityStat(EntityStat()),
+    _tempMoveX(0),
+    _tempMoveY(0),
+    _updatePriority(0) {
+}
+
+Entity::Entity(const Entity& other)
+    : Object(other), Collider(other),
+_entityStat(other._entityStat),
+_name(other._name),
+_tempMoveX(0),
+_tempMoveY(0),
+_updatePriority(other._updatePriority){
+    Collider::init(&pos, other.getIsTrigger(), other.getLayer());
+}
+
+void Entity::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer) {
+    Object::init();
     Object::setDefaultImage(defaultImage);
+
+    pos = Pos();
+    _entityStat = stat;
+
+    Collider::init(&pos, trigger, layer);
+}
+
+void Entity::active() {
+    Collider::active();
+    Object::active();
+    Core::GetInstance()->AddUpdate(this);
 }
 
 void Entity::setPosition(const Pos& pos) {
@@ -25,7 +61,7 @@ void Entity::move(int x, int y) {
 }
 
 void Entity::move(const Pos& pos) {
-    move(pos.x, pos. y);
+    move(pos.x, pos.y);
 }
 
 void Entity::moveX(int value) {
@@ -36,10 +72,10 @@ void Entity::moveY(int value) {
     _tempMoveY = value;
 }
 
-void Entity::Update() {
-    Pos tempPos = pos;
-    tempPos.x += _tempMoveX;
-    tempPos.y += _tempMoveY;
+void Entity::applyMove() {
+    previousPos = pos;
+    pos.x += _tempMoveX;
+    pos.y += _tempMoveY;
 
     _tempMoveX = 0;
     _tempMoveY = 0;
@@ -49,13 +85,22 @@ void Entity::Update() {
     int maxWidth = physicsManager->getMaxWidth();
     int maxHeight = physicsManager->getMaxHeight();
 
-    if (tempPos.x < 0 || tempPos.y < 0 ||
-        tempPos.x >= maxWidth ||
-        tempPos.y >= maxHeight)
+    if (pos == previousPos ||
+        pos.x < 0 ||
+        pos.y < 0 ||
+        pos.x >= maxWidth ||
+        pos.y >= maxHeight)
         return;
 
-    if (!tryCollision(tempPos))
-        pos = tempPos;
+    tryCollision(previousPos, pos);
+}
+
+const EntityStat Entity::getStat() const {
+    return _entityStat;
+}
+
+void Entity::Update() {
+    applyMove();
 }
 
 int Entity::GetUpdatePriotity() {
@@ -66,8 +111,56 @@ void Entity::SetUpdatePriotity(int priority) {
     _updatePriority = priority;
 }
 
-void Entity::onTriggerEvent(const Collider& other, const Pos& newPosition) {
+void Entity::onTriggerEvent(Collider& other, const Pos& previousPos) {
 }
 
-void Entity::onCollisionEvent(const Collider& other, const Pos& newPosition) {
+void Entity::onCollisionEvent(Collider& other, const Pos& previousPos) {
+    // 만약 충돌 했으면 전 위치로 이동 기본 값으로 해두고, 후에 구현할 때 덮어쓰는 방식으로 사용.
+    pos = previousPos;
+}
+
+void Entity::takeDamage(Entity* dealer, int damage) {
+    if (damage <= 0) { // 회복 시
+        _entityStat.hp = std::min(_entityStat.hp - damage, _entityStat.maxHp);
+
+        std::string healMassage = std::format("{}이(가) {}에 의해 {}의 체력을 회복했습니다.", _name, dealer->getName(), -damage);
+        std::wstring printMessage = to_wstring(healMassage);
+        pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+        return;
+    }
+
+    int attackSuccess = rand() % 101;
+
+    if (_entityStat.avoidance <= attackSuccess)
+        _entityStat.hp = std::max(_entityStat.hp - damage, 0);
+
+    if (_entityStat.hp > 0)
+        onHitEvent(dealer, damage);
+    else
+        onDeadEvent(dealer, damage);
+}
+
+void Entity::onHitEvent(Entity* dealer, int damage) {
+}
+
+void Entity::onDeadEvent(Entity* dealer, int damage) {
+}
+
+void Entity::setName(std::string name) {
+    _name = name;
+}
+
+std::string Entity::getName() {
+    return _name;
+}
+
+EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDamagePer) {
+    EntityStat stat;
+    stat.damage = damage;
+    stat.maxHp = maxHp;
+    stat.hp = maxHp;
+    stat.avoidance = avoidance;
+    stat.addDamagePer = addDamagePer;
+    return stat;
 }

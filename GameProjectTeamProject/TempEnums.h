@@ -16,3 +16,18 @@ enum class Key
     FAIL,
     END
 };
+
+enum class Layer
+{
+    DEFAULT,
+    ITEM,
+    ENEMY,
+    PLAYER,
+    WALL,
+    STAIR,
+    END
+};
+
+constexpr int L(Layer l) {
+    return 1 << (int)l;
+}
