@@ -132,9 +132,11 @@
     <ClCompile Include="Colliders.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="InitManager.cpp" />
-    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -143,6 +145,8 @@
     <ClCompile Include="RoomRender.cpp" />
     <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="TurnManager.cpp" />
+    <ClCompile Include="UISupporter.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,10 +154,14 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="IDamageable.h" />
+    <ClInclude Include="IDeadHandler.h" />
     <ClInclude Include="IInputable.h" />
     <ClInclude Include="InitManager.h" />
-    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IRender.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
@@ -164,6 +172,8 @@
     <ClInclude Include="Singletone.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="TempEnums.h" />
+    <ClInclude Include="TurnManager.h" />
+    <ClInclude Include="UISupporter.h" />
     <ClInclude Include="UpdateContainer.h" />
     <ClInclude Include="WindowInfo.h" />
   </ItemGroup>

@@ -14,6 +14,10 @@ public:
     bool operator==(const Position& other) const;
     bool operator!=(const Position& other) const;
 
+    Position operator+(const Position& other) const;
+    Position operator-(const Position& other) const;
+    Position operator-() const;
+
 public:
     int x;
     int y;
@@ -50,6 +54,9 @@ public:
     virtual ~Object();
 
 public:
+    void init();
+    virtual void active();
+
     void setDefaultImage(wchar_t defaultImage);
 
     // IRender을(를) 통해 상속됨
@@ -62,10 +69,11 @@ public:
 
 public:
     Pos pos;
+    Pos previousPos;
     RendI render;
 
     // 자식 객체가 우선순위를 알 필요없음
 private:
-    int _renderPriotity;
+    int _renderPriotity = 10;
 } Object, * pObject, Obj, * pObj;
 

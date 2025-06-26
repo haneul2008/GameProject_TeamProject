@@ -1,5 +1,7 @@
 #pragma once
 
+#include<vector>
+
 #include "Object.h"
 #include "Singletone.h"
 
@@ -11,6 +13,7 @@ public:
 
 public:
     virtual void init(pPos pPos, bool trigger, int layer);
+    virtual void active();
 
     virtual int getCollidedObjectLayer(const Collider& other);
 
@@ -26,14 +29,14 @@ public:
     virtual void setPosition(pPos position);
 
 protected:
-    virtual bool calculateCollision(const Collider& other) const = 0;
-    virtual bool tryCollision(const Pos& pos);
+    virtual bool calculateCollision(const Collider& other) const abstract;
+    virtual bool tryCollision(const Pos& previousPos, const Pos& pos);
 
-    virtual void onTriggerEvent(const Collider& other, const Pos& beforePosition) = 0;
-    virtual void onCollisionEvent(const Collider& other, const Pos& beforePosition) = 0;
+    virtual void onTriggerEvent(Collider& other, const Pos& previousPos) abstract;
+    virtual void onCollisionEvent(Collider& other, const Pos& previousPos) abstract;
 
 protected:
-    pPos _position;
+    pPos _pPosition;
     bool _isTrigger;
     int _layer;
 };
@@ -50,21 +53,18 @@ public:
     PhysicsManager& operator=(const PhysicsManager&) = delete;
 
 public:
-    void initialize(int maxHieght, int maxWidth);
+    void setMaxMoveBound(int x, int y);
 
-    const Collider* getCollider(int x, int y) const;
-    const Collider* getCollider(const Pos& pos) const;
+    Collider* getCollider(const Collider& owner, int x, int y) const;
+    Collider* getCollider(const Collider& owner, const Pos& pos) const;
 
-    void setCollider(Collider* collider, int x, int y);
-    void setCollider(Collider* collider, const Pos& pos);
+    void addCollider(Collider* collider);
 
     int getMaxHeight();
     int getMaxWidth();
 
 private:
-    // Collider*의 2차원 배열
-    // 스테이지와 매칭되는 콜라이더 맵
-    Collider*** _physicsMap;
+    std::vector<Collider*> _collisers;
     int _maxHeight;
     int _maxWidth;
 };
