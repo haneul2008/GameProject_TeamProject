@@ -36,14 +36,14 @@ typedef struct _room
 		};
 	}
 
-	bool IsOverlap(const _room& other) const {
-		bool noOverlapX = (x < other.x + other.width + ROOM_MINDISTANCE) &&
-			(other.x < x + width + ROOM_MINDISTANCE);
+	bool IsOverlap(const Pos& other) const {
+		bool isOverlapX = (x <= other.x) &&
+			(other.x <= x + width);
 
-		bool noOverlapY = (y < other.y + other.height + ROOM_MINDISTANCE) &&
-			(other.y < y + height + ROOM_MINDISTANCE);
+		bool isOverlapY = (y <= other.y) &&
+			(other.y <= y + height);
 
-		return noOverlapX && noOverlapY;
+		return isOverlapX && isOverlapY;
 	}
 }ROOM, * PROOM;
 
@@ -54,38 +54,11 @@ typedef struct _stage
 	COORD endPos;
 }STAGE, * PSTAGE;
 
-struct Vector
-{
-	int x, y;
-	Vector(int initX, int initY) :x(initX), y(initY) {};
-
-	Dir GetDir()
-	{
-		Dir result = Dir::ZERO;
-
-		if (x == 0 && y == 0) return result;
-
-		if (std::abs(x) > std::abs(y))
-		{
-			if (x > 0)
-				result = Dir::RIGHT;
-			else
-				result = Dir::LEFT;
-		}
-		else
-		{
-			if (y > 0)
-				result = Dir::UP;
-			else
-				result = Dir::DOWN;
-		}
-
-		return result;
-	}
-};
+typedef std::vector<Pos> Path;
+typedef std::vector<Path> PathList;
 
 struct RoomInfo
 {
 	std::vector<PROOM> rooms;
-	std::vector<std::vector<Pos>> pathList;
+	PathList pathList;
 };

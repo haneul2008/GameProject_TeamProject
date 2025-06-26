@@ -84,6 +84,10 @@ void StageManager::CreateMap()
 {
 	RoomInfo info = _roomGenerator->GenerateRooms(_stage);
 	_rooms = info.rooms;
+	vector<vector<Pos>>* pathList = &info.pathList;
 	for (const PROOM room : _rooms)
 		_roomRender->DrawRoom(_stage, room);
+
+	for (const vector<Pos> path : *pathList)
+		_roomRender->DrawPath(_stage, path);
 }

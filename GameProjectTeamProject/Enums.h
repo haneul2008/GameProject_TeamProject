@@ -9,8 +9,3 @@ enum class WallSide
 {
 	TOP, BOTTOM, LEFT, RIGHT, END
 };
-
-enum class Dir
-{
-	UP, DOWN, LEFT, RIGHT, ZERO
-};

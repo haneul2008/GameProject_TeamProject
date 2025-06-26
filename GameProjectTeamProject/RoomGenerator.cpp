@@ -9,7 +9,7 @@ RoomInfo RoomGenerator::GenerateRooms(PSTAGE stage)
 	_roomList.clear();
 	Rect rootRegion = { 1, 1, MAP_WIDTH - 1, MAP_HEIGHT - 1 };
 	SplitRegion(rootRegion, _maxDepth);
-	vector<vector<Pos>> pathList = ConnectRooms(stage, _roomList);
+	PathList pathList = ConnectRooms(stage, _roomList);
 	return { _roomList, pathList };
 }
 
@@ -102,9 +102,9 @@ PROOM RoomGenerator::CreateRoom(const Rect& region)
 	return room;
 }
 
-vector<vector<Pos>> RoomGenerator::ConnectRooms(const PSTAGE stage, const std::vector<PROOM>& rooms)
+PathList RoomGenerator::ConnectRooms(const PSTAGE stage, const std::vector<PROOM>& rooms)
 {
-	vector<vector<Pos>> allPath;
+	PathList pathList;
 
 	float distance;
 	PROOM targetRoom = rooms[0];
@@ -137,55 +137,71 @@ vector<vector<Pos>> RoomGenerator::ConnectRooms(const PSTAGE stage, const std::v
 
 		connectedRoomPairs[room].push_back(targetRoom);
 		connectedRoomPairs[targetRoom].push_back(room);
-		allPath.push_back(CalculatePath(stage, room, targetRoom));
+		pathList.push_back(CalculatePath(stage, room, targetRoom));
 	}
 
-	ConnectAllRoom(stage, rooms, connectedRoomPairs);
-	return allPath;
-}
-
-vector<Pos> RoomGenerator::CalculatePath(const PSTAGE stage, const PROOM room, const PROOM targetRoom)
-{
-	vector<Pos> pathList;
-	std::pair<WallSide, WallSide> sidePair = GetWallSide(room, targetRoom);
-
-	Pos current = GetRandomWallPos(room, sidePair.first);
-	Pos target = GetRandomWallPos(targetRoom, sidePair.second);
-
-	if (current.x == target.x || current.y == target.y)
-		GetPath(pathList, current, target);
-	else
-	{
-		Pos middlePoints[2] = {};
-		int deltaY = (target.y + current.y) / 2;
-		int deltaX = (target.x + current.x) / 2;
-
-		Vector dir = { target.x - current.x, target.y - current.y };
-		switch (dir.GetDir())
-		{
-		case Dir::UP:
-		case Dir::DOWN:
-			middlePoints[0] = { current.x, deltaY };
-			middlePoints[1] = { target.x, deltaY };
-			break;
-		case Dir::LEFT:
-		case Dir::RIGHT:
-			middlePoints[0] = { deltaX, current.y };
-			middlePoints[1] = { deltaX, target.y };
-			break;
-		default:
-			break;
-		}
-
-		GetPath(pathList, current, middlePoints[0]);
-		GetPath(pathList, middlePoints[0], middlePoints[1]);
-		GetPath(pathList, middlePoints[1], target);
-	}
-
+	PathList connectedPathList = ConnectAllRoom(stage, rooms, connectedRoomPairs);
+	pathList.insert(pathList.end(), connectedPathList.begin(), connectedPathList.end());
 	return pathList;
 }
 
-void RoomGenerator::GetPath(vector<Pos>& pathList, const Pos& start, const Pos& end)
+Path RoomGenerator::CalculatePath(const PSTAGE stage, const PROOM room, const PROOM targetRoom)
+{
+	std::pair<WallSide, WallSide> sidePair = GetWallSide(room, targetRoom);
+	WallSide currentSide = sidePair.first;
+	WallSide targetSide = sidePair.second;
+
+	Pos current = GetRandomWallPos(room, currentSide);
+	Pos target = GetRandomWallPos(targetRoom, targetSide);
+
+	return GetOptimalPath(currentSide, targetSide, current, target);
+}
+
+Path RoomGenerator::GetOptimalPath(const WallSide& currentSide, const WallSide& targetSide, const Pos& current, const Pos& target)
+{
+	Path path;
+	Pos middlePoints[2] = {};
+
+	if (current.x == target.x || current.y == target.y)
+	{
+		SetStraightPath(path, current, target);
+	}
+	else if (((int)currentSide <= (int)WallSide::BOTTOM && (int)targetSide >= (int)WallSide::LEFT) || ((int)currentSide >= (int)WallSide::LEFT && (int)targetSide <= (int)WallSide::BOTTOM))
+	{
+		if (currentSide == WallSide::TOP || currentSide == WallSide::BOTTOM)
+			middlePoints[0] = { current.x, target.y };
+		else
+			middlePoints[0] = { target.x, current.y };
+
+		SetStraightPath(path, current, middlePoints[0]);
+		SetStraightPath(path, middlePoints[0], target);
+	}
+	else
+	{
+		int deltaY = (target.y + current.y) / 2;
+		int deltaX = (target.x + current.x) / 2;
+
+		if ((currentSide == WallSide::TOP && targetSide == WallSide::BOTTOM) ||
+			(currentSide == WallSide::BOTTOM && targetSide == WallSide::TOP))
+		{
+			middlePoints[0] = { current.x, deltaY };
+			middlePoints[1] = { target.x, deltaY };
+		}
+		else
+		{
+			middlePoints[0] = { deltaX, current.y };
+			middlePoints[1] = { deltaX, target.y };
+		}
+
+		SetStraightPath(path, current, middlePoints[0]);
+		SetStraightPath(path, middlePoints[0], middlePoints[1]);
+		SetStraightPath(path, middlePoints[1], target);
+	}
+
+	return path;
+}
+
+void RoomGenerator::SetStraightPath(vector<Pos>& pathList, const Pos& start, const Pos& end)
 {
 	bool isHorizontal = end.y == start.y;
 	bool isVertical = end.x == start.x;
@@ -193,7 +209,7 @@ void RoomGenerator::GetPath(vector<Pos>& pathList, const Pos& start, const Pos& 
 	if (isHorizontal)
 	{
 		int distance = std::abs(end.x - start.x);
-		int dir = (end.x - start.x) / distance;
+		int dir = (end.x - start.x > 0) ? 1 : -1;
 
 		for (int i = 0; i <= distance; ++i)
 			pathList.push_back({ start.x + dir * i, start.y });
@@ -201,7 +217,7 @@ void RoomGenerator::GetPath(vector<Pos>& pathList, const Pos& start, const Pos& 
 	else if (isVertical)
 	{
 		int distance = std::abs(end.y - start.y);
-		int dir = (end.y - start.y) / distance;
+		int dir = (end.y - start.y > 0) ? 1 : -1;
 
 		for (int i = 0; i <= distance; ++i)
 			pathList.push_back({ start.x, start.y + dir * i });
@@ -221,6 +237,7 @@ std::pair<WallSide, WallSide> RoomGenerator::GetWallSide(const PROOM start, cons
 
 	int maxDistance = 1000;
 
+	Path tempPath;
 	Pos startWallPos;
 	Pos endWallPos;
 
@@ -233,12 +250,27 @@ std::pair<WallSide, WallSide> RoomGenerator::GetWallSide(const PROOM start, cons
 			if (i == j) continue;
 
 			endWallPos = GetWallCenterPos(end, (WallSide)j);
-			int distance = std::abs(end->x - start->x) + std::abs(end->y - start->y);
 
-			if (distance < maxDistance)
+			tempPath = GetOptimalPath((WallSide)i, (WallSide)j, startWallPos, endWallPos);
+			bool isContinue = false;
+
+			for (const Pos& pos : tempPath)
+			{
+				if (pos == startWallPos || pos == endWallPos) continue;
+
+				if (start->IsOverlap(pos) || end->IsOverlap(pos))
+				{
+					isContinue = true;
+					break;
+				}
+			}
+
+			if (isContinue) continue;
+
+			if (tempPath.size() < maxDistance)
 			{
 				result = { (WallSide)i, (WallSide)j };
-				maxDistance = distance;
+				maxDistance = tempPath.size();
 			}
 		}
 	}
@@ -281,13 +313,13 @@ Pos RoomGenerator::GetWallCenterPos(const PROOM room, WallSide side)
 		result = { room->x + room->width / 2, room->y };
 		break;
 	case WallSide::BOTTOM:
-		result = { room->x + room->width / 2, room->y + room->height - 1 };
+		result = { room->x + room->width / 2, room->y + room->height };
 		break;
 	case WallSide::LEFT:
 		result = { room->x, room->y + room->height / 2 };
 		break;
 	case WallSide::RIGHT:
-		result = { room->x + room->width - 1, room->y + room->height / 2 };
+		result = { room->x + room->width, room->y + room->height / 2 };
 		break;
 	default:
 		result = {};
@@ -297,8 +329,10 @@ Pos RoomGenerator::GetWallCenterPos(const PROOM room, WallSide side)
 	return result;
 }
 
-void RoomGenerator::ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& rooms, std::unordered_map<PROOM, vector<PROOM>>& connectedRoomPairs)
+PathList RoomGenerator::ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& rooms, std::unordered_map<PROOM, vector<PROOM>>& connectedRoomPairs)
 {
+	PathList pathList;
+
 	std::unordered_map<PROOM, bool> visitPairs;
 	std::vector<std::vector<PROOM>> connectedRooms;
 
@@ -328,7 +362,7 @@ void RoomGenerator::ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& room
 		connectedRooms.push_back(component);
 	}
 
-	if (connectedRooms.size() <= 1) return;
+	if (connectedRooms.size() <= 1) return pathList;
 
 	for (int i = 0; i < connectedRooms.size() - 1; ++i)
 	{
@@ -354,7 +388,9 @@ void RoomGenerator::ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& room
 		{
 			connectedRoomPairs[start].push_back(end);
 			connectedRoomPairs[end].push_back(start);
-			CalculatePath(stage, start, end);
+			pathList.push_back(CalculatePath(stage, start, end));
 		}
 	}
+
+	return pathList;
 }
