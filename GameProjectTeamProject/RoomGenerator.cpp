@@ -154,7 +154,22 @@ Path RoomGenerator::CalculatePath(const PSTAGE stage, const PROOM room, const PR
 	Pos current = GetRandomWallPos(room, currentSide);
 	Pos target = GetRandomWallPos(targetRoom, targetSide);
 
-	return GetOptimalPath(currentSide, targetSide, current, target);
+	Path path = GetOptimalPath(currentSide, targetSide, current, target);
+
+	for (int i = 0; i < path.size(); ++i)
+	{
+		if (i == 0 || i == path.size() - 1) continue;
+
+		if (room->IsOverlap(path[i]) || targetRoom->IsOverlap(path[i]))
+		{
+			Pos currentCenter = GetWallCenterPos(room, currentSide);
+			Pos targetCenter = GetWallCenterPos(targetRoom, targetSide);
+			path = GetOptimalPath(currentSide, targetSide, currentCenter, targetCenter);
+			break;
+		}
+	}
+
+	return path;
 }
 
 Path RoomGenerator::GetOptimalPath(const WallSide& currentSide, const WallSide& targetSide, const Pos& current, const Pos& target)
@@ -313,13 +328,13 @@ Pos RoomGenerator::GetWallCenterPos(const PROOM room, WallSide side)
 		result = { room->x + room->width / 2, room->y };
 		break;
 	case WallSide::BOTTOM:
-		result = { room->x + room->width / 2, room->y + room->height };
+		result = { room->x + room->width / 2, room->y + room->height - 1 };
 		break;
 	case WallSide::LEFT:
 		result = { room->x, room->y + room->height / 2 };
 		break;
 	case WallSide::RIGHT:
-		result = { room->x + room->width, room->y + room->height / 2 };
+		result = { room->x + room->width - 1, room->y + room->height / 2 };
 		break;
 	default:
 		result = {};

@@ -38,10 +38,10 @@ typedef struct _room
 
 	bool IsOverlap(const Pos& other) const {
 		bool isOverlapX = (x <= other.x) &&
-			(other.x <= x + width);
+			(other.x <= x + width - 1);
 
 		bool isOverlapY = (y <= other.y) &&
-			(other.y <= y + height);
+			(other.y <= y + height - 1);
 
 		return isOverlapX && isOverlapY;
 	}
@@ -61,4 +61,10 @@ struct RoomInfo
 {
 	std::vector<PROOM> rooms;
 	PathList pathList;
+};
+
+struct RenderTile
+{
+	Tile tile;
+	bool isHide;
 };
