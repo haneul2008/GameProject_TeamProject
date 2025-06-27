@@ -24,6 +24,18 @@ void Core::AddRender(IRender* render)
 	std::sort(_renderList.begin(), _renderList.end(), RenderPredicate);
 }
 
+void Core::RemoveUpdate(IUpdate* update)
+{
+	auto it = std::remove(_updateList.begin(), _updateList.end(), update);
+	_updateList.erase(it, _updateList.end());
+}
+
+void Core::RemoveRender(IRender* render)
+{
+	auto it = std::remove(_renderList.begin(), _renderList.end(), render);
+	_renderList.erase(it, _renderList.end());
+}
+
 void Core::Update()
 {
 	for (IUpdate* update : _updateList)

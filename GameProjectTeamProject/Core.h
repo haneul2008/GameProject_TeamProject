@@ -12,6 +12,8 @@ public:
 	void Run();
 	void AddUpdate(IUpdate* update);
 	void AddRender(IRender* render);
+	void RemoveUpdate(IUpdate* update);
+	void RemoveRender(IRender* render);
 private:
 	vector<IUpdate*> _updateList;
 	vector<IRender*> _renderList;
