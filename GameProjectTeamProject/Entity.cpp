@@ -9,7 +9,7 @@
 #include "UISupporter.h"
 
 Entity::Entity() :
-    _entityStat(EntityStat()),
+    stat(EntityStat()),
     _tempMoveX(0),
     _tempMoveY(0),
     _updatePriority(0) {
@@ -19,7 +19,7 @@ Entity::~Entity() {
 }
 
 Entity::Entity(Entity&& other) :
-    _entityStat(EntityStat()),
+    stat(EntityStat()),
     _tempMoveX(0),
     _tempMoveY(0),
     _updatePriority(0) {
@@ -27,12 +27,17 @@ Entity::Entity(Entity&& other) :
 
 Entity::Entity(const Entity& other)
     : Object(other), Collider(other),
-    _entityStat(other._entityStat),
+    stat(other.stat),
     _name(other._name),
     _tempMoveX(0),
     _tempMoveY(0),
-    _updatePriority(other._updatePriority) {
+    _updatePriority(other._updatePriority),
+    _attckComments(other._attckComments){
     Collider::init(&pos, other.getIsTrigger(), other.getLayer());
+}
+
+Entity* Entity::newClone() {
+    return new Entity(*this);
 }
 
 void Entity::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer) {
@@ -40,22 +45,22 @@ void Entity::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer
     Object::setDefaultImage(defaultImage);
 
     pos = Pos();
-    _entityStat = stat;
-
+    stat = stat;
     Collider::init(&pos, trigger, layer);
 }
 
 void Entity::active() {
     Collider::active();
+    Collider::setPosition(&pos);
     Object::active();
     Core::GetInstance()->AddUpdate(this);
 }
 
 void Entity::deActive() {
-    Collider::active();
-    Object::active();
-    // 여기도 제거 필요
-    //Core::GetInstance()->AddUpdate(this);
+    Collider::deActive();
+    Object::deActive();
+    Core::GetInstance()->RemoveUpdate(this);
+    _deadListeners.clear();
 }
 
 void Entity::setPosition(const Pos& pos) {
@@ -103,7 +108,7 @@ void Entity::applyMove() {
 }
 
 const EntityStat Entity::getStat() const {
-    return _entityStat;
+    return stat;
 }
 
 void Entity::Update() {
@@ -126,9 +131,13 @@ void Entity::onCollisionEvent(Collider& other, const Pos& previousPos) {
     pos = previousPos;
 }
 
+std::string Entity::getAttackComment() const {
+    return _attckComments[rand() % _attckComments.size()];
+}
+
 void Entity::takeDamage(Entity* dealer, int damage) {
     if (damage <= 0) { // 회복 시
-        _entityStat.hp = std::min(_entityStat.hp - damage, _entityStat.maxHp);
+        stat.hp = std::min(stat.hp - damage, stat.maxHp);
 
         std::string healMassage = std::format("{}이(가) {}에 의해 {}의 체력을 회복했습니다.", _name, dealer->getName(), -damage);
         std::wstring printMessage = to_wstring(healMassage);
@@ -139,10 +148,10 @@ void Entity::takeDamage(Entity* dealer, int damage) {
 
     int attackSuccess = rand() % 101;
 
-    if (_entityStat.avoidance <= attackSuccess)
-        _entityStat.hp = std::max(_entityStat.hp - damage, 0);
+    if (stat.avoidance <= attackSuccess)
+        stat.hp = std::max(stat.hp - damage, 0);
 
-    if (_entityStat.hp > 0)
+    if (stat.hp > 0)
         onHitEvent(dealer, damage);
     else
         onDeadEvent(dealer, damage);
@@ -153,6 +162,7 @@ void Entity::onHitEvent(Entity* dealer, int damage) {
 
 void Entity::onDeadEvent(Entity* dealer, int damage) {
     for (IDeadHandler* listener : _deadListeners)
+        if (listener != nullptr)
         listener->handleDeadEvent(this);
 }
 
@@ -171,6 +181,18 @@ void Entity::setName(std::string name) {
 
 std::string Entity::getName() {
     return _name;
+}
+
+void Entity::addAttackComment(const std::string& comment) {
+    _attckComments.push_back(comment);
+}
+
+void Entity::attack(Entity* target, int damage) {
+    std::string printComment = std::format("{}이(가) {}에게 {}. 피해 : {}", _name, target->getName(), getAttackComment(), damage);
+    std::wstring printMessage = to_wstring(printComment);
+    pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+    target->takeDamage(this, damage);
 }
 
 EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDamagePer) {

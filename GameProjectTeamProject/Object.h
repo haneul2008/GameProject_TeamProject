@@ -18,6 +18,10 @@ public:
     Position operator-(const Position& other) const;
     Position operator-() const;
 
+    int getMagnitude() const;
+    // 두 값의 요소의 절대값 1이 넘지않게합니다. 즉, 길이가 1을 초과 할 수 있습니다.
+    void normalize();
+
 public:
     int x;
     int y;

@@ -5,5 +5,5 @@
 class IDeadHandler
 {
 public:
-    void handleDeadEvent(Entity* deadEntity);
+    virtual void handleDeadEvent(Entity* deadEntity) abstract;
 };

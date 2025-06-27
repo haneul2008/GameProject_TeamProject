@@ -9,7 +9,7 @@ class Collider
 {
 public:
     Collider();
-    ~Collider();
+    virtual ~Collider();
 
 public:
     virtual void init(pPos pPos, bool trigger, int layer);

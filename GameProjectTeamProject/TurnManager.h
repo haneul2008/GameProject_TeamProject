@@ -14,10 +14,11 @@ public:
 class TurnManager : public Singleton<TurnManager>
 {
 public:
-    void onPlayerTurn();
-    void onEnemyTurn();
+    void usePlayerTurn();
+    void useEnemyTurn();
 
     void addTurnListener(ITurnListener* listener);
+    void removeTurnListener(ITurnListener* listener);
 
 private:
     std::set<ITurnListener*> _turnListeners;

@@ -27,6 +27,7 @@ public:
     virtual ~Entity() override;
     Entity(Entity&& other);
     Entity(const Entity& other);
+    virtual Entity* newClone();
 
 public:
     virtual void init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer);
@@ -60,14 +61,20 @@ public:
     void setName(std::string name = "NULL");
     std::string getName();
     
+    void addAttackComment(const std::string& comment);
+    virtual void attack(Entity* target, int damage);
+
 protected:
     // PositionCollider을(를) 통해 상속됨
-    // 상자 밀기 등은 필히 PhysicsManager에서 물리 맵 건들여야함.
     virtual void onTriggerEvent(Collider& other, const Pos& newPosition) override;
     virtual void onCollisionEvent(Collider& other, const Pos& newPosition) override;
 
+    std::string getAttackComment() const;
+
+public:
+    EntityStat stat;
+
 protected:
-    EntityStat _entityStat;
     std::unordered_set<IDeadHandler*> _deadListeners;
 
 protected:
@@ -75,5 +82,6 @@ protected:
     int _tempMoveX;
     int _tempMoveY;
     int _updatePriority;
+    std::vector<std::string> _attckComments;
 };
 
