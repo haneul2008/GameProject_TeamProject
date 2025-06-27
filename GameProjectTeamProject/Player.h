@@ -1,7 +1,10 @@
 #pragma once
 
+#include<memory>
+
 #include "Entity.h"
 #include "IInputable.h"
+#include "FOV.h"
 
 class Player : virtual public Entity, virtual public IInputable
 {
@@ -34,4 +37,7 @@ private:
     int _whatIsItem;
     int _whatIsWall;
     int _whatIsEnemy;
+
+private:
+    std::unique_ptr<FOV> fov;
 };

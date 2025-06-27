@@ -16,6 +16,8 @@ public:
     virtual void active() override;
     virtual void deActive() override;
 
+    void Render() override;
+
     // ITurnListener을(를) 통해 상속됨
     void handlePlayerTurn() override;
     void handleEnemyTurn() override;

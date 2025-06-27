@@ -4,6 +4,7 @@
 
 #include "UISupporter.h"
 #include "Physics.h"
+#include "StageManager.h"
 
 Enemy::~Enemy() {
 }
@@ -24,6 +25,13 @@ void Enemy::active() {
 void Enemy::deActive() {
     Entity::deActive();
     TurnManager::GetInstance()->removeTurnListener(this);
+}
+
+void Enemy::Render() {
+    if (StageManager::GetInstance()->GetStage()->curMap[pos.y][pos.x].isHide)
+        return;
+
+    Entity::Render();
 }
 
 void Enemy::handlePlayerTurn() {

@@ -6,12 +6,16 @@
 #include "InputSystem.h"
 #include "TurnManager.h"
 #include "IDamageable.h"
+#include "StageManager.h"
 
 Player::Player() :
     _whatIsItem(0),
     _whatIsWall(0),
     _whatIsEnemy(0),
     _inputLock(false) {
+    StageManager* stageManager = StageManager::GetInstance();
+
+    fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
 }
 
 Player::~Player() {
@@ -49,6 +53,7 @@ void Player::applyMove() {
         // move 애니메이션으로 변경
         render.setCurrentAnimation('m');
         TurnManager::GetInstance()->usePlayerTurn();
+        fov.get()->UpdateFov(pos);
     }
     else
         render.setCurrentAnimation('i');
