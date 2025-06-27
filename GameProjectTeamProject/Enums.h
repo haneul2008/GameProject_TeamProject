@@ -2,7 +2,7 @@
 
 enum class Tile
 {
-	WALL = '0', ROAD, START, GOAL, DOOR
+	WALL = '0', ROAD, START, GOAL, DOOR, EMPTY
 };
 
 enum class WallSide

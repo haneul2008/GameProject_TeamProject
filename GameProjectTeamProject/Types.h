@@ -23,6 +23,32 @@ struct Rect
 	}
 };
 
+struct RenderTile
+{
+	void SetTile(Tile initTile)
+	{
+		tile = initTile;
+
+		if (initTile == Tile::WALL)
+			symbol = "■"; // 벽
+		else if (initTile == Tile::ROAD)
+			symbol = "·"; // 길
+		else if (initTile == Tile::START)
+			symbol = "☆"; // 시작 포탈
+		else if (initTile == Tile::GOAL)
+			symbol = "▤"; // 목표 포탈
+		else if (initTile == Tile::DOOR)
+			symbol = "Π"; // 문
+		else if (initTile == Tile::EMPTY)
+			symbol = "  ";
+	}
+
+	Tile tile;
+	std::string symbol;
+	bool isHide;
+};
+
+
 typedef struct _room
 {
 	int x;
@@ -49,7 +75,7 @@ typedef struct _room
 
 typedef struct _stage
 {
-	char(*curMap)[MAP_WIDTH];
+	RenderTile(*curMap)[MAP_WIDTH];
 	COORD startPos;
 	COORD endPos;
 }STAGE, * PSTAGE;
@@ -61,10 +87,4 @@ struct RoomInfo
 {
 	std::vector<PROOM> rooms;
 	PathList pathList;
-};
-
-struct RenderTile
-{
-	Tile tile;
-	bool isHide;
 };

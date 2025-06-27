@@ -36,18 +36,7 @@ void StageManager::RenderStage()
 	{
 		for (int j = 0; j < MAP_WIDTH; ++j)
 		{
-			if (_stage->curMap[i][j] == (char)Tile::WALL)
-				cout << "■"; // 벽
-			else if (_stage->curMap[i][j] == (char)Tile::ROAD)
-				cout << "·"; // 길
-			else if (_stage->curMap[i][j] == (char)Tile::START)
-				cout << "☆"; // 시작 포탈
-			else if (_stage->curMap[i][j] == (char)Tile::GOAL)
-				cout << "▤"; // 목표 포탈
-			else if (_stage->curMap[i][j] == (char)Tile::DOOR)
-				cout << "Π"; // 문
-			else
-				cout << "  ";
+			cout << _stage->curMap[i][j].symbol;
 		}
 
 		cout << endl;
@@ -60,8 +49,8 @@ StageManager::StageManager()
 	SetConsoleSetting(800, 600, true, L"Game");
 
 	_stage = new STAGE;
-	_stage->curMap = new char[MAP_HEIGHT][MAP_WIDTH];
-	_roomRender = new RoomRender;
+	_stage->curMap = new RenderTile[MAP_HEIGHT][MAP_WIDTH];
+	_roomRender = new RoomRender(_stage);
 	_roomGenerator = new RoomGenerator(3);
 
 	CreateMap();
