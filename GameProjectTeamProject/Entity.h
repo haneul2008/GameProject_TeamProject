@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 
 #include "Object.h"
 #include "Colliders.h"
 #include "IUpdate.h"
 #include "IDamageable.h"
+#include "IDeadHandler.h"
 
 struct EntityStat
 {
@@ -25,10 +27,12 @@ public:
     virtual ~Entity() override;
     Entity(Entity&& other);
     Entity(const Entity& other);
+    virtual Entity* newClone();
 
 public:
     virtual void init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer);
     virtual void active() override;
+    virtual void deActive() override;
 
     void setPosition(const Pos& pos);
 
@@ -51,22 +55,36 @@ public:
     virtual void onHitEvent(Entity* dealer, int damage);
     virtual void onDeadEvent(Entity* dealer, int damage);
 
+    void addDeadListener(IDeadHandler* deadListener);
+    void removeDeadListener(IDeadHandler* deadListener);
+
     void setName(std::string name = "NULL");
     std::string getName();
     
+    void addAttackComment(const std::string& comment);
+    virtual void attack(Entity* target, int damage);
+
+    bool getIsdead() const;
+
 protected:
     // PositionCollider을(를) 통해 상속됨
-    // 상자 밀기 등은 필히 PhysicsManager에서 물리 맵 건들여야함.
     virtual void onTriggerEvent(Collider& other, const Pos& newPosition) override;
     virtual void onCollisionEvent(Collider& other, const Pos& newPosition) override;
 
+    std::string getAttackComment() const;
+
+public:
+    EntityStat stat;
+
 protected:
-    EntityStat _entityStat;
+    std::unordered_set<IDeadHandler*> _deadListeners;
+    std::vector<std::string> _attckComments;
 
 protected:
     std::string _name;
     int _tempMoveX;
     int _tempMoveY;
     int _updatePriority;
+    bool _isDead;
 };
 

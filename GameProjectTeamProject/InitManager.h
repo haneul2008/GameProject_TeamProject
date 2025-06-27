@@ -11,7 +11,6 @@ public:
     InitManager();
 
 private:
-    Player _player;
-    std::vector<Enemy> _enemies;
+    Player _pPlayer;
 };
 

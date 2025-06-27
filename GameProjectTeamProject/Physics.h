@@ -9,11 +9,12 @@ class Collider
 {
 public:
     Collider();
-    ~Collider();
+    virtual ~Collider();
 
 public:
     virtual void init(pPos pPos, bool trigger, int layer);
     virtual void active();
+    virtual void deActive();
 
     virtual int getCollidedObjectLayer(const Collider& other);
 
@@ -59,12 +60,13 @@ public:
     Collider* getCollider(const Collider& owner, const Pos& pos) const;
 
     void addCollider(Collider* collider);
+    void removeCollider(Collider* collider);
 
     int getMaxHeight();
     int getMaxWidth();
 
 private:
-    std::vector<Collider*> _collisers;
+    std::vector<Collider*> _colliders;
     int _maxHeight;
     int _maxWidth;
 };

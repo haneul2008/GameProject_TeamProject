@@ -71,6 +71,10 @@ void Object::active() {
     Core::GetInstance()->AddRender(this);
 }
 
+void Object::deActive() {
+    Core::GetInstance()->RemoveRender(this);
+}
+
 void Object::setDefaultImage(wchar_t defaultImage) {
     render = RendI();
     render.setDefaultImage(defaultImage);
@@ -129,4 +133,13 @@ Position Position::operator-(const Position& other) const {
 
 Position Position::operator-() const {
     return Position(-x, -y);
+}
+
+int Position::getMagnitude() const {
+    return x > y ? x : y;
+}
+
+void Position::normalize() {
+    x = x == 0 ? 0 : x > 0 ? 1 : -1;
+    y = y == 0 ? 0 : y > 0 ? 1 : -1;
 }
