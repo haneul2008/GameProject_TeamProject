@@ -5,7 +5,7 @@
 void GameScene::OnSceneEnter()
 {
 	//Temp
-	SetConsoleFont(L"", { 14,14 }, 1);
+	SetConsoleFont(L"", { 18,18 }, 1);
 	SetConsoleSetting(800, 600, true, L"Game");
 	
 	StageManager::GetInstance()->CreateMap();

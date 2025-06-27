@@ -1,6 +1,7 @@
 #pragma once
 #include<Windows.h>
 #include<string>
+#include "Console.h"
 #include"Constants.h"
 #include"Object.h"
 #include"Enums.h"
@@ -28,27 +29,46 @@ struct RenderTile
 {
 	RenderTile() : tile(),
 		symbol(""),
+		textColor(),
 		isHide(true) {};
 
 	void SetTile(Tile initTile)
 	{
 		tile = initTile;
 
-		if (initTile == Tile::WALL)
+		switch (initTile)
+		{
+		case Tile::WALL:
 			symbol = "¡á"; // º®
-		else if (initTile == Tile::ROAD)
+			textColor = COLOR::GRAY;
+			break;
+		case Tile::ROAD:
 			symbol = "¡¤"; // ±æ
-		else if (initTile == Tile::START)
-			symbol = "¡Ù"; // ½ÃÀÛ Æ÷Å»
-		else if (initTile == Tile::GOAL)
+			textColor = COLOR::GRAY;
+			break;
+		case Tile::START:
+			symbol = "¢Ã"; // ½ÃÀÛ Æ÷Å»
+			textColor = COLOR::LIGHT_YELLOW;
+			break;
+		case Tile::GOAL:
 			symbol = "¢Ç"; // ¸ñÇ¥ Æ÷Å»
-		else if (initTile == Tile::DOOR)
+			textColor = COLOR::GRAY;
+			break;
+		case Tile::DOOR:
 			symbol = "¥Ð"; // ¹®
-		else if (initTile == Tile::EMPTY)
+			textColor = COLOR::LIGHT_RED;
+			break;
+		case Tile::EMPTY:
 			symbol = "  ";
+			textColor = COLOR::BLACK;
+			break;
+		default:
+			break;
+		}
 	}
 
 	Tile tile;
+	COLOR textColor;
 	std::string symbol;
 	bool isHide;
 };

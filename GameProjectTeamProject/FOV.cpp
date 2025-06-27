@@ -27,6 +27,10 @@ void FOV::UpdateFov(const Pos& targetPos)
 		{targetPos.x, targetPos.y - 1}
 	};
 
-	for(const Pos& pos : posArr)
+	for (const Pos& pos : posArr)
+	{
+		if (_stage->curMap[pos.y][pos.x].tile == Tile::DOOR ||
+			_stage->curMap[pos.y][pos.x].tile == Tile::ROAD)
 		_stage->curMap[pos.y][pos.x].isHide = false;
+	}
 }

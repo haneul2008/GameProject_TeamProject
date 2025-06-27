@@ -62,7 +62,10 @@ void StageManager::RenderStage()
 			if (_stage->curMap[i][j].isHide)
 				cout << "  ";
 			else
+			{
+				SetColor(_stage->curMap[i][j].textColor);
 				cout << _stage->curMap[i][j].symbol;
+			}
 		}
 
 		cout << endl;
