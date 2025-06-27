@@ -3,6 +3,7 @@
 #include <format>
 
 #include "UISupporter.h"
+#include "Physics.h"
 
 Enemy::~Enemy() {
 }
@@ -55,8 +56,8 @@ void Enemy::addDeadMessage(std::string message) {
 }
 
 void Enemy::setPlayer(Player* player) {
-    _player = player;
-    _player->addDeadListener(this);
+    _pPlayer = player;
+    _pPlayer->addDeadListener(this);
 }
 
 void Enemy::setSenceRange(int range) {
@@ -64,10 +65,10 @@ void Enemy::setSenceRange(int range) {
 }
 
 void Enemy::onCollisionEvent(Collider& other, const Pos& beforePosition) {
-    if (_player == nullptr)
+    if (_pPlayer == nullptr)
         return;
 
-    if ((other.getLayer() & _player->getLayer()) != 0) {
+    if ((other.getLayer() & _pPlayer->getLayer()) != 0) {
         Entity* entity = dynamic_cast<Entity*>(&other);
         if (entity != nullptr && stat.damage >= 0)
             attack(entity, stat.damage);
@@ -81,25 +82,41 @@ std::string Enemy::getDeadMessage() {
 }
 
 bool Enemy::sencePlayerInSenceRange() {
-    if (_player == nullptr)
+    if (_pPlayer == nullptr)
         return false;
 
-    Pos direction = *_player->getPosition() - pos;
+    Pos direction = *_pPlayer->getPosition() - pos;
     return direction.getMagnitude() <= _senceRange;
 }
 
 Pos&& Enemy::getMoveToPlayerPos() {
     Pos moveDistance = Pos();
 
-    if (_player == nullptr)
+    if (_pPlayer == nullptr)
         return std::move(moveDistance);
 
-    Pos direction = *_player->getPosition() - pos;
+    Pos direction = *_pPlayer->getPosition() - pos;
 
     if (std::abs(direction.x) > std::abs(direction.y))
         moveDistance.x = direction.x;
     else
         moveDistance.y = direction.y;
+
+    Pos check = pos + moveDistance;
+    Collider* collider = PhysicsManager::GetInstance()->getCollider(*this, check);
+    if (collider != nullptr
+        && !collider->getIsTrigger()
+        && (collider->getLayer() & _pPlayer->getLayer()) == 0) {
+
+        if (std::abs(direction.x) > std::abs(direction.y)) {
+            moveDistance.x = 0;
+            moveDistance.y = direction.y;
+        }
+        else {
+            moveDistance.y = 0;
+            moveDistance.x = direction.x;
+        }
+    }
 
     moveDistance.normalize();
 
@@ -107,9 +124,9 @@ Pos&& Enemy::getMoveToPlayerPos() {
 }
 
 void Enemy::handleDeadEvent(Entity* deadEntity) {
-    if (_player == deadEntity) {
-        _player = nullptr;
-        _player->removeDeadListener(this);
+    if (_pPlayer == deadEntity) {
+        _pPlayer = nullptr;
+        _pPlayer->removeDeadListener(this);
     }
 }
 

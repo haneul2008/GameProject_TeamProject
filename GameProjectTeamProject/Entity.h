@@ -64,6 +64,8 @@ public:
     void addAttackComment(const std::string& comment);
     virtual void attack(Entity* target, int damage);
 
+    bool getIsdead() const;
+
 protected:
     // PositionCollider을(를) 통해 상속됨
     virtual void onTriggerEvent(Collider& other, const Pos& newPosition) override;
@@ -76,12 +78,13 @@ public:
 
 protected:
     std::unordered_set<IDeadHandler*> _deadListeners;
+    std::vector<std::string> _attckComments;
 
 protected:
     std::string _name;
     int _tempMoveX;
     int _tempMoveY;
     int _updatePriority;
-    std::vector<std::string> _attckComments;
+    bool _isDead;
 };
 

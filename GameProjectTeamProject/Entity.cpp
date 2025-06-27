@@ -12,7 +12,8 @@ Entity::Entity() :
     stat(EntityStat()),
     _tempMoveX(0),
     _tempMoveY(0),
-    _updatePriority(0) {
+    _updatePriority(0),
+    _isDead(false) {
 }
 
 Entity::~Entity() {
@@ -22,7 +23,8 @@ Entity::Entity(Entity&& other) :
     stat(EntityStat()),
     _tempMoveX(0),
     _tempMoveY(0),
-    _updatePriority(0) {
+    _updatePriority(0),
+    _isDead (false){
 }
 
 Entity::Entity(const Entity& other)
@@ -32,7 +34,8 @@ Entity::Entity(const Entity& other)
     _tempMoveX(0),
     _tempMoveY(0),
     _updatePriority(other._updatePriority),
-    _attckComments(other._attckComments){
+    _attckComments(other._attckComments),
+    _isDead (false){
     Collider::init(&pos, other.getIsTrigger(), other.getLayer());
 }
 
@@ -45,7 +48,7 @@ void Entity::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer
     Object::setDefaultImage(defaultImage);
 
     pos = Pos();
-    stat = stat;
+    this->stat = stat;
     Collider::init(&pos, trigger, layer);
 }
 
@@ -161,6 +164,7 @@ void Entity::onHitEvent(Entity* dealer, int damage) {
 }
 
 void Entity::onDeadEvent(Entity* dealer, int damage) {
+    _isDead = true;
     for (IDeadHandler* listener : _deadListeners)
         if (listener != nullptr)
         listener->handleDeadEvent(this);
@@ -188,11 +192,18 @@ void Entity::addAttackComment(const std::string& comment) {
 }
 
 void Entity::attack(Entity* target, int damage) {
+    if (_isDead)
+        return;
+
     std::string printComment = std::format("{}이(가) {}에게 {}. 피해 : {}", _name, target->getName(), getAttackComment(), damage);
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
 
     target->takeDamage(this, damage);
+}
+
+bool Entity::getIsdead() const {
+    return _isDead;
 }
 
 EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDamagePer) {

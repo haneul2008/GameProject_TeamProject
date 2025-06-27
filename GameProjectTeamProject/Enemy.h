@@ -40,7 +40,7 @@ protected:
 
 private:
     std::vector<std::string> _deadMassages;
-    Player* _player;
+    Player* _pPlayer;
     int _senceRange;
 };
 

@@ -11,6 +11,6 @@ public:
     InitManager();
 
 private:
-    Player _player;
+    Player _pPlayer;
 };
 
