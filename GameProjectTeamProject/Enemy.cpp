@@ -25,6 +25,8 @@ void Enemy::onDeadEvent(Entity* dealer, int damage) {
     std::string printComment = std::format("{}이(가) {}.", _name, getDeadMessage());
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+    Entity::onDeadEvent(dealer, damage);
 }
 
 void Enemy::addDeadMessage(std::string message) {

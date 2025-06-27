@@ -12,6 +12,5 @@ public:
 
 private:
     Player _player;
-    std::vector<Enemy> _enemies;
 };
 

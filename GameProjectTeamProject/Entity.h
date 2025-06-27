@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 
 #include "Object.h"
 #include "Colliders.h"
 #include "IUpdate.h"
 #include "IDamageable.h"
+#include "IDeadHandler.h"
 
 struct EntityStat
 {
@@ -29,6 +31,7 @@ public:
 public:
     virtual void init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer);
     virtual void active() override;
+    virtual void deActive() override;
 
     void setPosition(const Pos& pos);
 
@@ -51,6 +54,9 @@ public:
     virtual void onHitEvent(Entity* dealer, int damage);
     virtual void onDeadEvent(Entity* dealer, int damage);
 
+    void addDeadListener(IDeadHandler* deadListener);
+    void removeDeadListener(IDeadHandler* deadListener);
+
     void setName(std::string name = "NULL");
     std::string getName();
     
@@ -62,6 +68,7 @@ protected:
 
 protected:
     EntityStat _entityStat;
+    std::unordered_set<IDeadHandler*> _deadListeners;
 
 protected:
     std::string _name;

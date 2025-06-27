@@ -9,7 +9,7 @@
 class EntityManager : public Singleton<EntityManager>
 {
 public:
-    void addEntityData(Entity&& entity);
+    void addEntityData(std::string name, Entity&& entity);
     Entity* getEntityData(std::string name);
     Entity&& getEntity(std::string name);
 

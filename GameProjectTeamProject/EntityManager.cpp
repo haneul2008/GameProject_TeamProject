@@ -1,7 +1,7 @@
 #include "EntityManager.h"
 
-void EntityManager::addEntityData(Entity&& entity) {
-    _entityData.insert({ entity.getName(), std::move(entity) });
+void EntityManager::addEntityData(std::string name, Entity&& entity) {
+    _entityData.insert({ name, std::move(entity) });
 }
 
 Entity* EntityManager::getEntityData(std::string name) {

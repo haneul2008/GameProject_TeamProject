@@ -71,6 +71,11 @@ void Object::active() {
     Core::GetInstance()->AddRender(this);
 }
 
+void Object::deActive() {
+    // 아직 안 됨
+    //Core::GetInstance()->AddRender(this);
+}
+
 void Object::setDefaultImage(wchar_t defaultImage) {
     render = RendI();
     render.setDefaultImage(defaultImage);

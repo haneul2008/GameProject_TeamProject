@@ -27,11 +27,11 @@ Entity::Entity(Entity&& other) :
 
 Entity::Entity(const Entity& other)
     : Object(other), Collider(other),
-_entityStat(other._entityStat),
-_name(other._name),
-_tempMoveX(0),
-_tempMoveY(0),
-_updatePriority(other._updatePriority){
+    _entityStat(other._entityStat),
+    _name(other._name),
+    _tempMoveX(0),
+    _tempMoveY(0),
+    _updatePriority(other._updatePriority) {
     Collider::init(&pos, other.getIsTrigger(), other.getLayer());
 }
 
@@ -49,6 +49,13 @@ void Entity::active() {
     Collider::active();
     Object::active();
     Core::GetInstance()->AddUpdate(this);
+}
+
+void Entity::deActive() {
+    Collider::active();
+    Object::active();
+    // 여기도 제거 필요
+    //Core::GetInstance()->AddUpdate(this);
 }
 
 void Entity::setPosition(const Pos& pos) {
@@ -145,6 +152,17 @@ void Entity::onHitEvent(Entity* dealer, int damage) {
 }
 
 void Entity::onDeadEvent(Entity* dealer, int damage) {
+    for (IDeadHandler* listener : _deadListeners)
+        listener->handleDeadEvent(this);
+}
+
+void Entity::addDeadListener(IDeadHandler* deadListener) {
+    if (deadListener != nullptr)
+        _deadListeners.insert(deadListener);
+}
+
+void Entity::removeDeadListener(IDeadHandler* deadListener) {
+    _deadListeners.erase(deadListener);
 }
 
 void Entity::setName(std::string name) {

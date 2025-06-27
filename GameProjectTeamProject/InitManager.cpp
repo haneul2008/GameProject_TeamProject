@@ -1,7 +1,9 @@
 ﻿#include "InitManager.h"
 
 #include<windows.h>
+
 #include "InputSystem.h"
+#include "EntityManager.h"
 #include "TempEnums.h"
 
 InitManager::InitManager() :
@@ -46,9 +48,9 @@ InitManager::InitManager() :
 
     int startDamage = 1, startMaxHP = 10, startAvoidance = 0;
 
-    _player.init(EntityStat::makeStat(startDamage , startMaxHP, startAvoidance, addDamagePer), L'P', false, L(Layer::PLAYER));
+    _player.init(EntityStat::makeStat(startDamage, startMaxHP, startAvoidance, addDamagePer), L'P', false, L(Layer::PLAYER));
     _player.active();
-    // 
+
     _player.render.addAnimation(idleAnimation, { L'⛭', L'⛯' });
     _player.render.addAnimation(moveAnimation, { L'⛮', L'⛭' });
     _player.render.setCurrentAnimation(idleAnimation);
@@ -65,18 +67,21 @@ InitManager::InitManager() :
 
     // Enemy Init
 
-    _enemies.push_back(std::move(Enemy()));
-    Enemy& star = _enemies.back();
-    star.init(EntityStat::makeStat(startDamage, startMaxHP, startAvoidance, addDamagePer), L'E', false, L(Layer::ENEMY));
-    // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
-    star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
-    star.render.setCurrentAnimation(idleAnimation);
+    EntityManager* entityManager = EntityManager::GetInstance();
 
-    star.setName("별");
-    star.addDeadMessage("자신의 별조각을 떨어트리며 사라졌다");
-    star.addDeadMessage("약한 폭발과 합께 사라졌다");
-    star.addDeadMessage("온 몸이 흩어져 날라갔다");
-    star.addDeadMessage("자신의 존재 이유를 잊고 사그라졌다");
+    entityManager->addEntityData("E_star", std::move(Enemy()));
+    Enemy* starPtr = dynamic_cast<Enemy*>(entityManager->getEntityData("E_star"));
+    if (starPtr != nullptr) {
+        Enemy& star = *starPtr;
+        star.init(EntityStat::makeStat(1, 5, 10, 10), L'E', false, L(Layer::ENEMY));
+        // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
+        star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
+        star.render.setCurrentAnimation(idleAnimation);
 
-    // 소유권을 넘겨야 계속 잔류해있음.
+        star.setName("별");
+        star.addDeadMessage("자신의 별조각을 떨어트리며 사라졌다");
+        star.addDeadMessage("약한 폭발과 합께 사라졌다");
+        star.addDeadMessage("온 몸이 흩어져 날라갔다");
+        star.addDeadMessage("자신의 존재 이유를 잊고 사그라졌다");
+    }
 }

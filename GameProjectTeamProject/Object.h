@@ -56,6 +56,7 @@ public:
 public:
     void init();
     virtual void active();
+    virtual void deActive();
 
     void setDefaultImage(wchar_t defaultImage);
 

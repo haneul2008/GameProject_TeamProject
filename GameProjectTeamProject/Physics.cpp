@@ -1,5 +1,7 @@
 #include "Physics.h"
 
+#include <algorithm>
+
 PhysicsManager::PhysicsManager() {
 }
 
@@ -12,11 +14,11 @@ void PhysicsManager::setMaxMoveBound(int x, int y) {
 }
 
 Collider* PhysicsManager::getCollider(const Collider& owner, int x, int y) const {
-    return this->getCollider(owner, {x, y});
+    return this->getCollider(owner, { x, y });
 }
 
 Collider* PhysicsManager::getCollider(const Collider& owner, const Pos& pos) const {
-    for (Collider* collider : _collisers) {
+    for (Collider* collider : _colliders) {
         if (*collider->getPosition() == pos && &owner != collider)
             return collider;
     }
@@ -24,7 +26,13 @@ Collider* PhysicsManager::getCollider(const Collider& owner, const Pos& pos) con
 }
 
 void PhysicsManager::addCollider(Collider* collider) {
-    _collisers.push_back(collider);
+    _colliders.push_back(collider);
+}
+
+void PhysicsManager::removeCollider(Collider* collider) {
+    if (collider != nullptr)
+        // remove : 찾은 요소를 끝 위치로 이동시키고 그 위치 반환
+        _colliders.erase(std::remove(_colliders.begin(), _colliders.end(), collider), _colliders.end());
 }
 
 int PhysicsManager::getMaxHeight() {
@@ -35,10 +43,10 @@ int PhysicsManager::getMaxWidth() {
     return _maxWidth;
 }
 
-Collider::Collider():
-_isTrigger(false),
-_layer(0),
-_pPosition(nullptr){
+Collider::Collider() :
+    _isTrigger(false),
+    _layer(0),
+    _pPosition(nullptr) {
 }
 
 Collider::~Collider() {
@@ -52,6 +60,10 @@ void Collider::init(pPos pPos, bool trigger, int layer) {
 
 void Collider::active() {
     PhysicsManager::GetInstance()->addCollider(this);
+}
+
+void Collider::deActive() {
+    PhysicsManager::GetInstance()->removeCollider(this);
 }
 
 int Collider::getCollidedObjectLayer(const Collider& other) {
