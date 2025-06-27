@@ -2,10 +2,10 @@
 
 void FOV::UpdateFov(const Pos& targetPos)
 {
-	if (_stage->curMap[targetPos.y][targetPos.x].isHide == false) return;
-
 	for (const PROOM room : _rooms)
 	{
+		if (room->isHide == false) return;
+
 		if (room->IsOverlap(targetPos))
 		{
 			for (int y = room->y; y < room->y + room->height; ++y)
@@ -18,5 +18,15 @@ void FOV::UpdateFov(const Pos& targetPos)
 		}
 	}
 
-	_stage->curMap[targetPos.y][targetPos.x].isHide = false;
+	Pos posArr[5] =
+	{
+		{targetPos.x, targetPos.y},
+		{targetPos.x + 1, targetPos.y},
+		{targetPos.x, targetPos.y + 1},
+		{targetPos.x - 1, targetPos.y},
+		{targetPos.x, targetPos.y - 1}
+	};
+
+	for(const Pos& pos : posArr)
+		_stage->curMap[pos.y][pos.x].isHide = false;
 }

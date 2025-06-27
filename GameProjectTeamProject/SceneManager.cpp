@@ -7,7 +7,7 @@ SceneManager::SceneManager() : _scenePairs(), _currentScene(nullptr)
 	_scenePairs["TITLE"] = new TitleScene;
 	_scenePairs["GAME"] = new GameScene;
 
-	ChangeScene("TITLE");
+	ChangeScene("GAME");
 }
 
 SceneManager::~SceneManager()

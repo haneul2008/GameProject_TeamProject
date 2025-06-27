@@ -59,6 +59,14 @@ typedef struct _room
 	int x;
 	int y;
 	int width, height;
+	bool isHide;
+
+	_room() :
+		x(0),
+		y(0),
+		width(0),
+		height(0),
+		isHide(true) {};
 
 	Pos GetCenter() const {
 		return {

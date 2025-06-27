@@ -12,20 +12,17 @@ using std::vector;
 
 class RoomRender;
 
-class StageManager : public Singleton<StageManager>, public IUpdate, public IRender
+class StageManager : public Singleton<StageManager>
 {
-public:
-	inline void Update() override;
-	inline void Render() override;
-	int GetUpdatePriotity() override;
-	int GetRenderPriotity() override;
-	void RenderStage();
 public:
 	StageManager();
 	~StageManager();
+public:
+	void CreateMap();
+	void Render();
 	PSTAGE GetStage();
 private:
-	void CreateMap();
+	void RenderStage();
 private:
 	PSTAGE _stage;
 	RoomRender* _roomRender;

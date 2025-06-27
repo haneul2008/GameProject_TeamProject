@@ -88,8 +88,11 @@ PROOM RoomGenerator::CreateRoom(const Rect& region)
 	int rw = rangew(rng);
 	int rh = rangeh(rng);
 
-	std::uniform_int_distribution<int> rangex(0, region.width - rw - 1);
-	std::uniform_int_distribution<int> rangey(0, region.height - rh - 1);
+	if (rw > region.width) rw = region.width;
+	if (rh > region.height) rh = region.height;
+
+	std::uniform_int_distribution<int> rangex(0, region.width - rw);
+	std::uniform_int_distribution<int> rangey(0, region.height - rh);
 
 	int rx = region.x + rangex(rng);
 	int ry = region.y + rangey(rng);
