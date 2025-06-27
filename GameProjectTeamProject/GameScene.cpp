@@ -1,6 +1,7 @@
 #include "Console.h"
 #include "GameScene.h"
 #include "StageManager.h"
+#include"InitManager.h"
 
 void GameScene::OnSceneEnter()
 {
@@ -9,10 +10,12 @@ void GameScene::OnSceneEnter()
 	SetConsoleSetting(800, 600, true, L"Game");
 	
 	StageManager::GetInstance()->CreateMap();
+	InitManager::GetInstance()->InitPlayer();
 }
 
 void GameScene::OnSceneExit()
 {
+	InitManager::GetInstance()->DeletePlayer();
 	system("cls");
 }
 

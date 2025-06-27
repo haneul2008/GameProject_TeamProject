@@ -7,8 +7,7 @@ int main()
 {
 	UpdateContainer updateContainer;
 	RenderContainer renderContainer;
-
-	InitManager inputManger;
+	InitManager::GetInstance();
 
 	Core::GetInstance()->Run();
 }

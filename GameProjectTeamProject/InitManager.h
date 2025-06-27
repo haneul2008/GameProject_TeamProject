@@ -4,13 +4,15 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Singletone.h"
 
-class InitManager
+class InitManager : public Singleton<InitManager>
 {
 public:
     InitManager();
-
+    void InitPlayer();
+    void DeletePlayer();
 private:
-    Player _pPlayer;
+    Player* _pPlayer;
 };
 

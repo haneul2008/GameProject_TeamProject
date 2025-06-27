@@ -6,4 +6,4 @@ const int MAX_ROOM_WIDTH = 12;
 const int MAX_ROOM_HEIGHT = 7;
 const int MIN_ROOM_WIDTH = 7;
 const int MIN_ROOM_HEIGHT = 5;
-const int ROOM_MINDISTANCE = 8;
+const int ROOM_MINDISTANCE = 10;

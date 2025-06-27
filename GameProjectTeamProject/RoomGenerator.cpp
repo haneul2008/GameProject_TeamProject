@@ -29,6 +29,9 @@ std::vector<Rect> RoomGenerator::SplitRegion(const Rect& region, int depth)
 			region.height >= MIN_ROOM_HEIGHT + 2)
 		{
 			PROOM room = CreateRoom(region);
+
+			if (room == nullptr) return result;
+
 			_roomList.push_back(room);
 
 			if (room->width > 0 && room->height > 0)
@@ -96,6 +99,15 @@ PROOM RoomGenerator::CreateRoom(const Rect& region)
 
 	int rx = region.x + rangex(rng);
 	int ry = region.y + rangey(rng);
+
+	int distance = 0;
+
+	for (const PROOM room : _roomList)
+	{
+		distance = std::abs(room->x - rx) + std::abs(room->y - ry);
+		if (distance < ROOM_MINDISTANCE)
+			return nullptr;
+	}
 
 	PROOM room = new ROOM;
 	room->x = rx;

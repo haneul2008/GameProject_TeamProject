@@ -9,3 +9,8 @@ enum class WallSide
 {
 	TOP, BOTTOM, LEFT, RIGHT, END
 };
+
+enum class Behavior
+{
+	GameStart, Description, Quit
+};

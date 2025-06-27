@@ -15,6 +15,8 @@ UpdateContainer::~UpdateContainer()
 {
 	for (IUpdate* update : _updates)
 	{
-		delete update;
+		Core::GetInstance()->RemoveUpdate(update);
+		if (dynamic_cast<SceneManager*>(update) == nullptr)
+			delete update;
 	}
 }

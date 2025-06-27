@@ -70,6 +70,9 @@
     <Filter Include="04.Scene">
       <UniqueIdentifier>{4632fb44-9a90-4a93-90f0-1926d4897c4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.ETC">
+      <UniqueIdentifier>{713caccb-99e2-4c7e-8992-6cd0268b1244}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleInteraction.cpp">
+      <Filter>04.ETC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Strings.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleInteraction.h">
+      <Filter>04.ETC</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

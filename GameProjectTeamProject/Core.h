@@ -14,6 +14,7 @@ public:
 	void AddRender(IRender* render);
 	void RemoveUpdate(IUpdate* update);
 	void RemoveRender(IRender* render);
+	void QuitGame();
 private:
 	vector<IUpdate*> _updateList;
 	vector<IRender*> _renderList;
@@ -22,6 +23,7 @@ private:
 	static bool UpdatePredicate(IUpdate* prev, IUpdate* current);
 	static bool RenderPredicate(IRender* a, IRender* b);
 private:
+	bool _isRunning;
 	int m_hp;
 };
 

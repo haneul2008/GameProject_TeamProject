@@ -15,6 +15,8 @@ RenderContainer::~RenderContainer()
 {
 	for (IRender* render : _renders)
 	{
-		delete render;
+		Core::GetInstance()->RemoveRender(render);
+		if(dynamic_cast<SceneManager*>(render) == nullptr)
+			delete render;
 	}
 }

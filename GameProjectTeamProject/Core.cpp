@@ -1,14 +1,19 @@
 #include<algorithm>
 #include "Core.h"
+#include "Console.h"
 
 void Core::Run()
 {
+	_isRunning = true;
+
 	while (true)
 	{
 		Update();
 		Render();
 		
-		// FrameSync()
+		FrameSync(5);
+
+		if (_isRunning == false) break;
 	}
 }
 
@@ -34,6 +39,11 @@ void Core::RemoveRender(IRender* render)
 {
 	auto it = std::remove(_renderList.begin(), _renderList.end(), render);
 	_renderList.erase(it, _renderList.end());
+}
+
+void Core::QuitGame()
+{
+	_isRunning = false;
 }
 
 void Core::Update()
