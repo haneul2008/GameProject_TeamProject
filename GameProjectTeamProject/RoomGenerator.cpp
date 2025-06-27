@@ -10,6 +10,7 @@ RoomInfo RoomGenerator::GenerateRooms(PSTAGE stage)
 	Rect rootRegion = { 1, 1, MAP_WIDTH - 1, MAP_HEIGHT - 1 };
 	SplitRegion(rootRegion, _maxDepth);
 	PathList pathList = ConnectRooms(stage, _roomList);
+	SetPositions(stage);
 	return { _roomList, pathList };
 }
 
@@ -408,4 +409,16 @@ PathList RoomGenerator::ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& 
 	}
 
 	return pathList;
+}
+
+void RoomGenerator::SetPositions(const PSTAGE stage)
+{
+	int startRoom = GetRandomPoint(0, _roomList.size() - 1);
+	int endRoom = GetRandomPoint(0, _roomList.size() - 1);
+
+	if (startRoom == endRoom)
+		endRoom = startRoom + 1 % _roomList.size();
+
+	stage->startPos = _roomList[startRoom]->GetCenter();
+	stage->endPos = _roomList[endRoom]->GetCenter();
 }

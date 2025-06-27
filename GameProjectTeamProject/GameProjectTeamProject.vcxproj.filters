@@ -64,6 +64,9 @@
     <Filter Include="10.System\UI">
       <UniqueIdentifier>{f2b5d7ee-3820-4693-86a9-f6572431265a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.FOV">
+      <UniqueIdentifier>{ec5693bb-ae6f-496f-b253-8dfb8b876c1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="RoomRender.cpp">
       <Filter>02.Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="FOV.cpp">
+      <Filter>03.FOV</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="IDeadHandler.h">
       <Filter>12.Entity\header</Filter>
+    </ClInclude>
+    <ClInclude Include="FOV.h">
+      <Filter>03.FOV</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

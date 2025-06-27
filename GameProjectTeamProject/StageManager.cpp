@@ -36,7 +36,10 @@ void StageManager::RenderStage()
 	{
 		for (int j = 0; j < MAP_WIDTH; ++j)
 		{
-			cout << _stage->curMap[i][j].symbol;
+			if (_stage->curMap[i][j].isHide)
+				cout << "  ";
+			else
+				cout << _stage->curMap[i][j].symbol;
 		}
 
 		cout << endl;
@@ -59,6 +62,10 @@ StageManager::StageManager()
 StageManager::~StageManager()
 {
 	delete[] _stage->curMap;
+
+	for (const PROOM room : _stage->rooms)
+		delete room;
+
 	delete[] _stage;
 	delete[] _roomRender;
 	delete[] _roomGenerator;
@@ -72,11 +79,11 @@ PSTAGE StageManager::GetStage()
 void StageManager::CreateMap()
 {
 	RoomInfo info = _roomGenerator->GenerateRooms(_stage);
-	_rooms = info.rooms;
+	_stage->rooms = std::move(info.rooms);
 	vector<vector<Pos>>* pathList = &info.pathList;
-	for (const PROOM room : _rooms)
+	for (const PROOM room : _stage->rooms)
 		_roomRender->DrawRoom(_stage, room);
 
-	for (const vector<Pos> path : *pathList)
+	for (Path& path : *pathList)
 		_roomRender->DrawPath(_stage, path);
 }

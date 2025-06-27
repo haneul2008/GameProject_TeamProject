@@ -30,9 +30,15 @@ void RoomRender::DrawRoom(const PSTAGE stage, const PROOM room) const
 				stage->curMap[y][x].SetTile(Tile::ROAD);
 		}
 	}
+
+	Pos startPos = stage->startPos;
+	Pos endPos = stage->endPos;
+
+	stage->curMap[startPos.y][startPos.x].SetTile(Tile::START);
+	stage->curMap[endPos.y][endPos.x].SetTile(Tile::GOAL);
 }
 
-void RoomRender::DrawPath(const PSTAGE stage, const std::vector<Pos>& pathList)
+void RoomRender::DrawPath(const PSTAGE stage, Path& pathList)
 {
 	for (int i = 0; i < pathList.size(); ++i)
 	{

@@ -27,6 +27,7 @@ private:
 	Pos GetWallCenterPos(const PROOM room, WallSide side);
 	PathList ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& rooms, 
 		std::unordered_map<PROOM, vector<PROOM>>& connectedRoomPairs);
+	void SetPositions(const PSTAGE stage);
 private:
 	int _maxDepth;
 	vector<PROOM> _roomList;

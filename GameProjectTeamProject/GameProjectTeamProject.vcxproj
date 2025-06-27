@@ -135,6 +135,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="FOV.cpp" />
     <ClCompile Include="InitManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="FOV.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="IDeadHandler.h" />
     <ClInclude Include="IInputable.h" />

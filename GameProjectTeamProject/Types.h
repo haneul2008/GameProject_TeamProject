@@ -1,5 +1,6 @@
 #pragma once
 #include<Windows.h>
+#include<string>
 #include"Constants.h"
 #include"Object.h"
 #include"Enums.h"
@@ -25,6 +26,10 @@ struct Rect
 
 struct RenderTile
 {
+	RenderTile() : tile(),
+		symbol(""),
+		isHide(true) {};
+
 	void SetTile(Tile initTile)
 	{
 		tile = initTile;
@@ -76,8 +81,9 @@ typedef struct _room
 typedef struct _stage
 {
 	RenderTile(*curMap)[MAP_WIDTH];
-	COORD startPos;
-	COORD endPos;
+	std::vector<PROOM> rooms;
+	Pos startPos;
+	Pos endPos;
 }STAGE, * PSTAGE;
 
 typedef std::vector<Pos> Path;
