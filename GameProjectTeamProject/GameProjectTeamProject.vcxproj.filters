@@ -67,6 +67,9 @@
     <Filter Include="03.FOV">
       <UniqueIdentifier>{ec5693bb-ae6f-496f-b253-8dfb8b876c1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Scene">
+      <UniqueIdentifier>{4632fb44-9a90-4a93-90f0-1926d4897c4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="UpdateContainer.cpp">
       <Filter>01.Core</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderContainer.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>12.Entity\cpp</Filter>
@@ -132,6 +132,21 @@
     <ClCompile Include="FOV.cpp">
       <Filter>03.FOV</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderContainer.cpp">
+      <Filter>01.Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -162,9 +177,6 @@
       <Filter>01.Core</Filter>
     </ClInclude>
     <ClInclude Include="IRender.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderContainer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -223,6 +235,21 @@
     </ClInclude>
     <ClInclude Include="FOV.h">
       <Filter>03.FOV</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderContainer.h">
+      <Filter>01.Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>04.Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

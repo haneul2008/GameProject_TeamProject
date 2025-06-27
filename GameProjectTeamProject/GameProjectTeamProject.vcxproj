@@ -136,6 +136,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="FOV.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InitManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
@@ -145,8 +146,11 @@
     <ClCompile Include="RenderContainer.cpp" />
     <ClCompile Include="RoomGenerator.cpp" />
     <ClCompile Include="RoomRender.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Singletone.cpp" />
     <ClCompile Include="StageManager.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TurnManager.cpp" />
     <ClCompile Include="UISupporter.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
@@ -161,6 +165,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="FOV.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="IDamageable.h" />
     <ClInclude Include="IDeadHandler.h" />
     <ClInclude Include="IInputable.h" />
@@ -174,9 +179,12 @@
     <ClInclude Include="RenderContainer.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="RoomRender.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singletone.h" />
     <ClInclude Include="StageManager.h" />
     <ClInclude Include="TempEnums.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TurnManager.h" />
     <ClInclude Include="UISupporter.h" />
     <ClInclude Include="Types.h" />

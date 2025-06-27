@@ -48,9 +48,6 @@ void StageManager::RenderStage()
 
 StageManager::StageManager()
 {
-	SetConsoleFont(L"", {12,12}, 1);
-	SetConsoleSetting(800, 600, true, L"Game");
-
 	_stage = new STAGE;
 	_stage->curMap = new RenderTile[MAP_HEIGHT][MAP_WIDTH];
 	_roomRender = new RoomRender(_stage);

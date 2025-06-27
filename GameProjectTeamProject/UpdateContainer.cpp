@@ -1,9 +1,9 @@
 #include "UpdateContainer.h"
-#include "StageManager.h"
+#include "SceneManager.h"
 
 UpdateContainer::UpdateContainer()
 {
-	_updates.push_back(StageManager::GetInstance());
+	_updates.push_back(SceneManager::GetInstance());
 
 	for (IUpdate* update : _updates)
 	{

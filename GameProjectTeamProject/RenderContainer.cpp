@@ -1,9 +1,9 @@
 #include "RenderContainer.h"
-#include "StageManager.h"
+#include "SceneManager.h"
 
 RenderContainer::RenderContainer()
 {
-	_renders.push_back(StageManager::GetInstance());
+	_renders.push_back(SceneManager::GetInstance());
 
 	for (IRender* render : _renders)
 	{
