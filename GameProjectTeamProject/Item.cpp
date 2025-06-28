@@ -38,6 +38,14 @@ std::string Item::getName() const {
     return _name;
 }
 
+bool Item::isPick() {
+    return _picked;
+}
+
+void Item::pick() {
+    _picked = true;
+}
+
 // Item=========================================
 
 void StatItem::setUpStat(const EntityStat& stat) {

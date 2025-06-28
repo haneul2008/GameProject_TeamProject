@@ -39,51 +39,9 @@ InitManager::InitManager() :
     inputManager->addInputKeyPair({ VK_ESCAPE, Key::ESC });
 
     inputManager->SetUpdatePriotity(1000);
-
-
-    // Enemy Init
-
-    //char idleAnimation = 'i', moveAnimation = 'm';
-
-    //std::string enemyDataPoolName = "ENEMY";
-    //std::string e_star_name = "star";
-
-    //EntityManager* entityManager = EntityManager::GetInstance();
-
-    //entityManager->addEntityData(enemyDataPoolName, e_star_name, new Enemy());
-    //Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getEntityData(enemyDataPoolName, e_star_name));
-    //if (enemyPtr != nullptr) {
-    //    Enemy& star = *enemyPtr;
-    //    // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
-    //    star.init(EntityStat::makeStat(1, 5, 10, 10), L'E', false, L(Layer::ENEMY));
-
-    //    star.setPlayer(_pPlayer);
-    //    star.setSenceRange(5);
-
-    //    star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
-    //    star.render.setCurrentAnimation(idleAnimation);
-
-    //    star.setName("별");
-    //    star.addDeadMessage("자신의 별조각을 떨어트리며 사라졌다");
-    //    star.addDeadMessage("약한 폭발과 합께 사라졌다");
-    //    star.addDeadMessage("온 몸이 흩어져 날라갔다");
-    //    star.addDeadMessage("자신의 존재 이유를 잊고 사그라졌다");
-
-    //    star.addAttackComment("자신의 날카로운 조각으로 찌르는 공격을 했다");
-    //    star.addAttackComment("빠르게 베어지나가는 공격을 했다");
-    //    star.addAttackComment("시야를 빼는 강렬한 불빛을 내뿜었다");
-    //}
-
-
-    //// Test
-
-    //Entity* newEnemy = entityManager->activeRandomEntity(enemyDataPoolName);
-    //newEnemy->setPosition({10, 10});
 }
 
-void InitManager::InitPlayer()
-{
-    // Player Init
+void InitManager::InitPlayer() {
     _pPlayer = new Player();
 
     char idleAnimation = 'i', moveAnimation = 'm';
@@ -123,7 +81,42 @@ void InitManager::InitPlayer()
     _pPlayer->SetUpdatePriotity(100);
 }
 
-void InitManager::DeletePlayer()
-{
+void InitManager::InitEnemies() {
+    char idleAnimation = 'i', moveAnimation = 'm';
+
+    std::string enemyDataPoolName = "ENEMY";
+    std::string e_star_name = "star";
+
+    EntityManager* entityManager = EntityManager::GetInstance();
+
+    entityManager->addEntityData(enemyDataPoolName, e_star_name, new Enemy());
+    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getEntityData(enemyDataPoolName, e_star_name));
+    if (enemyPtr != nullptr) {
+        Enemy& star = *enemyPtr;
+        // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
+        star.init(EntityStat::makeStat(1, 5, 10, 10), L'E', false, L(Layer::ENEMY));
+
+        star.setPlayer(_pPlayer);
+        star.setSenceRange(5);
+
+        star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
+        star.render.setCurrentAnimation(idleAnimation);
+
+        star.setName("별");
+        star.addDeadMessage("자신의 별조각을 떨어트리며 사라졌다");
+        star.addDeadMessage("약한 폭발과 합께 사라졌다");
+        star.addDeadMessage("온 몸이 흩어져 날라갔다");
+        star.addDeadMessage("자신의 존재 이유를 잊고 사그라졌다");
+
+        star.addAttackComment("자신의 날카로운 조각으로 찌르는 공격을 했다");
+        star.addAttackComment("빠르게 베어지나가는 공격을 했다");
+        star.addAttackComment("시야를 빼는 강렬한 불빛을 내뿜었다");
+    }
+
+    Entity* newEnemy = entityManager->activeRandomEntity(enemyDataPoolName);
+    newEnemy->setPosition({ 10, 10 });
+}
+
+void InitManager::DeletePlayer() {
     delete _pPlayer;
 }
