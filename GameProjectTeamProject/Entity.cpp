@@ -105,7 +105,7 @@ void Entity::applyMove() {
         return;
     }
 
-    tryCollision(previousPos, pos);
+    tryCollision(previousPos);
 }
 
 const EntityStat Entity::getStat() const {

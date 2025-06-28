@@ -34,15 +34,17 @@ public:
 
     // IDeadHandler을(를) 통해 상속됨
     void handleDeadEvent(Entity* deadEntity) override;
+    void setWallLayer(int layer);
 
 protected:
     std::string getDeadMessage();
     bool sencePlayerInSenceRange();
-    Pos&& getMoveToPlayerPos();
+    Pos getMoveToPlayerPos();
 
 private:
     std::vector<std::string> _deadMassages;
     Player* _pPlayer;
     int _senceRange;
+    int _whatIsWall;
 };
 

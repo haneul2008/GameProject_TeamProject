@@ -27,7 +27,7 @@ Collider* PhysicsManager::getCollider(const Collider& owner, int x, int y) const
 
 Collider* PhysicsManager::getCollider(const Collider& owner, const Pos& pos) const {
     for (Collider* collider : _colliders) {
-        if (collider->calculateCollision(owner) && &owner != collider)
+        if (*collider->getPosition() == pos && &owner != collider)
             return collider;
     }
     return nullptr;
@@ -41,6 +41,14 @@ void PhysicsManager::removeCollider(Collider* collider) {
     if (collider != nullptr)
         // remove : 찾은 요소를 끝 위치로 이동시키고 그 위치 반환
         _colliders.erase(std::remove(_colliders.begin(), _colliders.end(), collider), _colliders.end());
+}
+
+Collider* PhysicsManager::getCollider(const Collider& owner) const {
+    for (Collider* collider : _colliders) {
+        if (&owner != collider && collider->calculateCollision(owner))
+            return collider;
+    }
+    return nullptr;
 }
 
 int PhysicsManager::getMaxHeight() {
@@ -107,10 +115,10 @@ void Collider::setOriginPosition(pPos position) {
     _pPosition = position;
 }
 
-bool Collider::tryCollision(const Pos& previousPos, const Pos& pos) {
+bool Collider::tryCollision(const Pos& previousPos) {
     const PhysicsManager* physicsManager = PhysicsManager::GetInstance();
 
-    Collider* collider = (*physicsManager).getCollider(*this, pos);
+    Collider* collider = physicsManager->getCollider(*this);
     if (collider != nullptr) {
         bool triggerCollsition = isAnyTrigger(*collider);
         if (triggerCollsition)
