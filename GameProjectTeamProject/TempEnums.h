@@ -15,6 +15,17 @@ enum class Key
     INTERACT,
     ESC,
     FAIL,
+    // 무식하기 그지 없지만 후레 개선하도록 함.
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT,
+    NINE,
+
     END
 };
 

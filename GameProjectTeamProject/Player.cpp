@@ -56,8 +56,8 @@ void Player::SetUp() {
     StageManager* stageManager = StageManager::GetInstance();
     fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
 
-	setPosition(stageManager->GetStage()->startPos);
-	fov->UpdateFov(pos);
+    setPosition(stageManager->GetStage()->startPos);
+    fov->UpdateFov(pos);
 }
 
 void Player::takeDamage(Entity* dealer, int damage) {
@@ -104,11 +104,43 @@ void Player::onInputKey(Key key) {
             break;
         case Key::INTERACT:
             break;
+            // 이게 무슨 무식함의 극치란 말인가..?
+        case Key::ONE:
+            InventoryManager::GetInstance()->useItem(this, 1);
+            break;
+        case Key::TWO:
+            InventoryManager::GetInstance()->useItem(this, 2);
+            break;
+        case Key::THREE:
+            InventoryManager::GetInstance()->useItem(this, 3);
+            break;
+        case Key::FOUR:
+            InventoryManager::GetInstance()->useItem(this, 4);
+            break;
+        case Key::FIVE:
+            InventoryManager::GetInstance()->useItem(this, 5);
+            break;
+        case Key::SIX:
+            InventoryManager::GetInstance()->useItem(this, 6);
+            break;
+        case Key::SEVEN:
+            InventoryManager::GetInstance()->useItem(this, 7);
+            break;
+        case Key::EIGHT:
+            InventoryManager::GetInstance()->useItem(this, 8);
+            break;
+        case Key::NINE:
+            InventoryManager::GetInstance()->useItem(this, 9);
+            break;
     }
 }
 
 void Player::setInputLock(bool value) {
     _inputLock = value;
+}
+
+void Player::onUseItem() {
+    setHpUI();
 }
 
 void Player::onTriggerEvent(Collider& other, const Pos& previousPos) {

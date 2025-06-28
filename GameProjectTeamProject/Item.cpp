@@ -56,6 +56,10 @@ void Item::pick() {
     _picked = true;
 }
 
+void Item::useItem(Entity* itemUser) {
+    itemUser->onUseItem();
+}
+
 // Item=========================================
 
 StatItem* StatItem::newClone() {
@@ -68,4 +72,5 @@ void StatItem::setUpStat(const EntityStat& stat) {
 
 void StatItem::useItem(Entity* itemUser) {
     itemUser->stat = itemUser->stat + _upStat;
+    Item::useItem(itemUser);
 }

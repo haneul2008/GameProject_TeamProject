@@ -28,6 +28,8 @@ public:
     void onInputKey(Key key) override;
     void setInputLock(bool value);
 
+    virtual void onUseItem() override;
+
 private:
     void onTriggerEvent(Collider& other, const Pos& newPosition) override;
     void onCollisionEvent(Collider& other, const Pos& newPosition) override;

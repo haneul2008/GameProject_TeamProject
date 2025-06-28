@@ -66,6 +66,7 @@ public:
     virtual void attack(Entity* target, int damage);
 
     bool getIsdead() const;
+    virtual void onUseItem();
 
 protected:
     // PositionCollider을(를) 통해 상속됨
