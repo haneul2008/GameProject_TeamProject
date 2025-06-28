@@ -54,7 +54,7 @@ void Entity::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer
 
 void Entity::active() {
     Collider::active();
-    Collider::setPosition(&pos);
+    Collider::setOriginPosition(&pos);
     Object::active();
     Core::GetInstance()->AddUpdate(this);
 }
@@ -137,7 +137,7 @@ std::string Entity::getAttackComment() const {
 }
 
 void Entity::takeDamage(Entity* dealer, int damage) {
-    if (damage <= 0) { // 회복 시
+    if (damage <= 0) { // 회복 시 damage가 음수일 때
         stat.hp = std::min(stat.hp - damage, stat.maxHp);
 
         std::string healMassage = std::format("{}이(가) {}에 의해 {}의 체력을 회복했습니다.", _name, dealer->getName(), -damage);
@@ -214,11 +214,11 @@ EntityStat EntityStat::operator+(const EntityStat& other) const {
     return newEntityStat;
 }
 
-EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDamagePer) {
+EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDamagePer, int hp) {
     EntityStat stat;
     stat.damage = damage;
     stat.maxHp = maxHp;
-    stat.hp = maxHp;
+    stat.hp = hp < 0 ? maxHp : hp;
     stat.avoidance = avoidance;
     stat.addDamagePer = addDamagePer;
     return stat;

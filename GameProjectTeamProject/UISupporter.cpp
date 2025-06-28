@@ -5,6 +5,15 @@
 #include <Windows.h>
 
 #include "Console.h"
+#include "Core.h"
+
+UISupporter::UISupporter() {
+    Core::GetInstance()->AddRender(this);
+}
+
+UISupporter::~UISupporter() {
+    Core::GetInstance()->RemoveRender(this);
+}
 
 void UISupporter::Render() {
     int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);

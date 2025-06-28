@@ -12,8 +12,6 @@ public:
     virtual void deActive() override;
     virtual Item* newClone() override;
 
-    void setPosition(const Pos& pos);
-
     void setName(std::string name = "NULL");
     std::string getName() const;
 

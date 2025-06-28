@@ -17,6 +17,10 @@ struct UIInfo
 class UISupporter : public Singleton<UISupporter>, public IRender
 {
 public:
+    UISupporter();
+    ~UISupporter() override;
+
+public:
     // IRender을(를) 통해 상속됨
     void Render() override;
     int GetRenderPriotity() override;
