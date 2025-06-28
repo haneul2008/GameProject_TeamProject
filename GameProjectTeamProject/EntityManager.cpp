@@ -99,6 +99,6 @@ void EntityManager::Update() {
 }
 
 int EntityManager::GetUpdatePriotity() {
-    // 항상 마지막에 실행 시켜야함
-    return -2147483648;
+    // 항상 처음에 실행 시켜야함
+    return 2147483647;
 }

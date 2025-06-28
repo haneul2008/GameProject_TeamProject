@@ -16,6 +16,9 @@ public:
     void setName(std::string name = "NULL");
     std::string getName() const;
 
+    bool isPick();
+    void pick();
+
     virtual void useItem(Entity* itemUser) abstract;
 
 public:
@@ -25,6 +28,7 @@ public:
 
 private:
     std::string _name;
+    bool _picked = false;
 };
 
 class StatItem : public virtual Item
