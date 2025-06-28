@@ -14,7 +14,7 @@ using std::vector;
 
 class RoomRender;
 
-class StageManager : public Singleton<StageManager>
+class StageManager : public Singleton<StageManager>, public IDeadHandler
 {
 public:
 	StageManager();

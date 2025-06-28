@@ -13,7 +13,7 @@
 
 using std::cout;
 using std::endl;
-using std::vector;
+using std::vector;\
 
 StageManager::StageManager()
 {
