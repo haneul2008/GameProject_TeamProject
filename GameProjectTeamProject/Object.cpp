@@ -101,6 +101,7 @@ void Object::Render() {
     MoveCursor(pos.x * 2, pos.y);
     wchar_t sprite = render.getCurrentAndAdvanceFrame();
     int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);
+    SetColor();
     std::wcout << sprite;
     int wcoutMode = _setmode(_fileno(stdout), coutMode);
 }

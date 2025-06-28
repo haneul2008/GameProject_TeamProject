@@ -8,6 +8,7 @@
 #include"Constants.h"
 #include"RoomGenerator.h"
 #include"ObjectSpawner.h"
+#include "Physics.h"
 
 using std::vector;
 
@@ -33,5 +34,6 @@ private:
 	RoomRender* _roomRender;
 	RoomGenerator* _roomGenerator;
 	ObjectSpawner* _objectSpawner;
+	std::vector<Collider*> _colliders;
 	int _currentFloor;
 };
