@@ -1,6 +1,7 @@
 #include<algorithm>
 #include "Core.h"
 #include "Console.h"
+#include "Entity.h"
 
 void Core::Run()
 {
@@ -11,7 +12,7 @@ void Core::Run()
 		Update();
 		Render();
 		
-		FrameSync(5);
+		FrameSync(60);
 
 		if (_isRunning == false) break;
 	}
@@ -48,17 +49,17 @@ void Core::QuitGame()
 
 void Core::Update()
 {
-	for (IUpdate* update : _updateList)
+	for(int i = 0; i < _updateList.size(); ++i)
 	{
-		update->Update();
+		_updateList[i]->Update();
 	}
 }
 
 void Core::Render()
 {
-	for (IRender* render : _renderList)
+	for(int i = 0; i < _renderList.size(); ++i)
 	{
-		render->Render();
+		_renderList[i]->Render();
 	}
 }
 

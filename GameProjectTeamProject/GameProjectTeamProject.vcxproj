@@ -132,6 +132,7 @@
     <ClCompile Include="Colliders.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DescScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="TitleInteraction.cpp" />
     <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TurnManager.cpp" />
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UISupporter.cpp" />
@@ -164,6 +166,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="DescScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="TempEnums.h" />
     <ClInclude Include="TitleInteraction.h" />
     <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Transition.h" />
     <ClInclude Include="TurnManager.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="UISupporter.h" />

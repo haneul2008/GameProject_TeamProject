@@ -13,6 +13,7 @@ enum class Key
     READYINPUT,
     ENDINPUT,
     INTERACT,
+    ESC,
     FAIL,
     END
 };

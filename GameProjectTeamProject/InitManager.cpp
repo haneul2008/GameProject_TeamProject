@@ -36,6 +36,8 @@ InitManager::InitManager() :
     inputManager->addInputKeyPair({ 'D', Key::RIGHT });
     inputManager->addInputKeyPair({ VK_RIGHT, Key::RIGHT });
 
+    inputManager->addInputKeyPair({ VK_ESCAPE, Key::ESC });
+
     inputManager->SetUpdatePriotity(1000);
 
 
@@ -119,7 +121,6 @@ void InitManager::InitPlayer()
     // 테스트
     _pPlayer->SetRenderPriotity(100);
     _pPlayer->SetUpdatePriotity(100);
-    _pPlayer->setPosition({ 30, 30 });
 }
 
 void InitManager::DeletePlayer()

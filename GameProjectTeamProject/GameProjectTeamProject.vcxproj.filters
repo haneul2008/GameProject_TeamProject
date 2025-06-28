@@ -153,6 +153,12 @@
     <ClCompile Include="TitleInteraction.cpp">
       <Filter>04.ETC</Filter>
     </ClCompile>
+    <ClCompile Include="DescScene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Transition.cpp">
+      <Filter>04.ETC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -261,6 +267,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="TitleInteraction.h">
+      <Filter>04.ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="DescScene.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Transition.h">
       <Filter>04.ETC</Filter>
     </ClInclude>
   </ItemGroup>

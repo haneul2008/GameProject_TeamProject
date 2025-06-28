@@ -12,6 +12,6 @@ private:
 	void Interact();
 private:
 	std::vector<Pos> _posList;
-	Pos _prevPos;
+	std::pair<Pos, Pos> _prevPosPair;
 	int _selectIdx;
 };
