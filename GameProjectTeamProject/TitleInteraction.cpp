@@ -3,6 +3,8 @@
 #include "InputSystem.h"
 #include "Enums.h"
 #include "Core.h"
+#include "SceneManager.h"
+#include "Transition.h"
 
 TitleInteraction::TitleInteraction(std::vector<Pos> posList) : _posList(), _prevPos(), _selectIdx(0)
 {
@@ -52,9 +54,12 @@ void TitleInteraction::Interact()
 	switch (behavior)
 	{
 	case Behavior::GameStart:
-
+		Transition();
+		SceneManager::GetInstance()->ChangeScene("GAME");
 		break;
 	case Behavior::Description:
+		Transition();
+		SceneManager::GetInstance()->ChangeScene("DESC");
 		break;
 	case Behavior::Quit:
 		Core::GetInstance()->QuitGame();

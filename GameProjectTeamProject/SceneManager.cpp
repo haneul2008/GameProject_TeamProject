@@ -1,11 +1,13 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "DescScene.h"
 
 SceneManager::SceneManager() : _scenePairs(), _currentScene(nullptr)
 {
 	_scenePairs["TITLE"] = new TitleScene;
 	_scenePairs["GAME"] = new GameScene;
+	_scenePairs["DESC"] = new DescScene;
 
 	ChangeScene("TITLE");
 }
