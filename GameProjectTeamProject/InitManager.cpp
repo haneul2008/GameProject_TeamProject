@@ -114,7 +114,6 @@ void InitManager::InitEnemies() {
     }
 
     Entity* newEnemy = entityManager->activeRandomEntity(enemyDataPoolName);
-    newEnemy->setPosition({ 10, 10 });
 }
 
 void InitManager::DeletePlayer() {

@@ -75,6 +75,10 @@ void Object::deActive() {
     Core::GetInstance()->RemoveRender(this);
 }
 
+Object* Object::newClone() {
+    return new Object(*this);
+}
+
 void Object::setDefaultImage(wchar_t defaultImage) {
     render = RendI();
     render.setDefaultImage(defaultImage);

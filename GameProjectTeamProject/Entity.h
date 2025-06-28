@@ -29,7 +29,7 @@ public:
     virtual ~Entity() override;
     Entity(Entity&& other);
     Entity(const Entity& other);
-    virtual Entity* newClone();
+    virtual Entity* newClone() override;
 
 public:
     virtual void init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer);
