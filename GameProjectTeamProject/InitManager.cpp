@@ -269,9 +269,9 @@ void InitManager::InitItems() {
         potion.setUpStat(EntityStat::makeStat(0, 0, 0, 0, 25));
     }
 
-    std::string statItemName = "potionR";
+    statItemName = "potionR";
     entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
-    StatItem* statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
     if (statItemPtr != nullptr) {
         StatItem& potion = *statItemPtr;
         potion.init(L'♟', true, L(Layer::ITEM));

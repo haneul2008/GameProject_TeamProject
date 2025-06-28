@@ -60,7 +60,7 @@ public:
     Collider* getCollider(const Pos& pos) const;
     Collider* getCollider(const Collider& owner, int x, int y) const;
     Collider* getCollider(const Collider& owner, const Pos& pos) const;
-    Collider* getCollider(const Collider& owner) const;
+    Collider* getCollision(const Collider& owner) const;
 
     void addCollider(Collider* collider);
     void removeCollider(Collider* collider);
