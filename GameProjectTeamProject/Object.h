@@ -61,6 +61,7 @@ public:
     void init();
     virtual void active();
     virtual void deActive();
+    virtual Object* newClone();
 
     void setDefaultImage(wchar_t defaultImage);
 

@@ -10,6 +10,7 @@ public:
     virtual void init(wchar_t defaultImage, bool trigger, int layer);
     virtual void active() override;
     virtual void deActive() override;
+    virtual Item* newClone() override;
 
     void setPosition(const Pos& pos);
 
@@ -33,6 +34,9 @@ private:
 
 class StatItem : public virtual Item
 {
+public:
+    virtual StatItem* newClone() override;
+
 public:
     void setUpStat(const EntityStat& stat);
 
