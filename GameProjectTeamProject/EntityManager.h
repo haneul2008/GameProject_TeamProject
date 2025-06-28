@@ -22,6 +22,7 @@ public:
     Entity* activeRandomEntity(std::string dataPool);
 
     void deleteEntity(Entity* deadEntity);
+    void deleteAllActiveEnemy();
 
     // IDeadHandler을(를) 통해 상속됨
     void handleDeadEvent(Entity* deadEntity) override;

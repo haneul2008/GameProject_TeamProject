@@ -91,6 +91,13 @@ void EntityManager::deleteEntity(Entity* deadEntity) {
     delete deadEntity;
 }
 
+void EntityManager::deleteAllActiveEnemy() {
+    std::vector<Entity*> tempData = _activeEntities;
+
+    for (Entity* activeEntity : tempData)
+        deleteEntity(activeEntity);
+}
+
 void EntityManager::Update() {
     while (!_toDeletedEntityQueue.empty()) {
         deleteEntity(_toDeletedEntityQueue.front());
