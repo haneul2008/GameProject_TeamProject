@@ -15,10 +15,12 @@ struct EntityStat
     int damage;
     int maxHp;
     int hp;
-    int avoidance; // 회피율
+    // 회피율 (0.0% ~ 100.0%) {0 ~ 1000}
+    int evadePer; 
     int addDamagePer; // 추뎀 퍼센트
 
     EntityStat operator+(const EntityStat& other) const;
+    EntityStat operator*(const float& value) const;
 
     static EntityStat makeStat(int damage, int maxHp, int avoidance, int addDamagePer, int hp = -1);
 };
@@ -67,6 +69,8 @@ public:
 
     bool getIsdead() const;
     virtual void onUseItem();
+
+    void multifyStat(float value);
 
 protected:
     // PositionCollider을(를) 통해 상속됨

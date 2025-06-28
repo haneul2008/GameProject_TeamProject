@@ -27,7 +27,7 @@ Collider* PhysicsManager::getCollider(const Collider& owner, int x, int y) const
 
 Collider* PhysicsManager::getCollider(const Collider& owner, const Pos& pos) const {
     for (Collider* collider : _colliders) {
-        if (*collider->getPosition() == pos && &owner != collider)
+        if (collider->calculateCollision(owner) && &owner != collider)
             return collider;
     }
     return nullptr;
@@ -112,17 +112,13 @@ bool Collider::tryCollision(const Pos& previousPos, const Pos& pos) {
 
     Collider* collider = (*physicsManager).getCollider(*this, pos);
     if (collider != nullptr) {
-        bool collision = calculateCollision(*collider);
+        bool triggerCollsition = isAnyTrigger(*collider);
+        if (triggerCollsition)
+            onTriggerEvent(*collider, previousPos);
+        else
+            onCollisionEvent(*collider, previousPos);
 
-        if (collision) {
-            bool triggerCollsition = isAnyTrigger(*collider);
-            if (triggerCollsition)
-                onTriggerEvent(*collider, previousPos);
-            else
-                onCollisionEvent(*collider, previousPos);
-
-            return true;
-        }
+        return true;
     }
 
     return false;

@@ -140,6 +140,16 @@ void Entity::takeDamage(Entity* dealer, int damage) {
     if (damage == 0)
         return;
 
+    int evade = rand() % 1001;
+    if (evade <= stat.evadePer) {
+
+        std::string healMassage = std::format("{}이(가) {}의 공격을 회피했다.", _name, dealer->getName());
+        std::wstring printMessage = to_wstring(healMassage);
+        pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+        return;
+    }
+
     if (damage <= 0) { // 회복 시 damage가 음수일 때
         stat.hp = std::min(stat.hp - damage, stat.maxHp);
 
@@ -150,7 +160,7 @@ void Entity::takeDamage(Entity* dealer, int damage) {
     else {
         int attackSuccess = rand() % 101;
 
-        if (stat.avoidance <= attackSuccess)
+        if (stat.evadePer <= attackSuccess)
             stat.hp = std::max(stat.hp - damage, 0);
 
         if (stat.hp > 0)
@@ -224,13 +234,27 @@ bool Entity::getIsdead() const {
 void Entity::onUseItem() {
 }
 
+void Entity::multifyStat(float value) {
+    stat = stat * value;
+}
+
 EntityStat EntityStat::operator+(const EntityStat& other) const {
     EntityStat newEntityStat = EntityStat();
     newEntityStat.damage = damage + other.damage;
     newEntityStat.maxHp = maxHp + other.maxHp;
     newEntityStat.hp = hp + other.hp;
-    newEntityStat.avoidance = avoidance + other.avoidance;
+    newEntityStat.evadePer = evadePer + other.evadePer;
     newEntityStat.addDamagePer = addDamagePer + other.addDamagePer;
+    return newEntityStat;
+}
+
+EntityStat EntityStat::operator*(const float& value) const {
+    EntityStat newEntityStat = EntityStat();
+    newEntityStat.damage = static_cast<int>(std::round(damage * value));
+    newEntityStat.addDamagePer = static_cast<int>(std::round(addDamagePer * value));
+    newEntityStat.evadePer = static_cast<int>(std::round(evadePer * value));
+    newEntityStat.hp = static_cast<int>(std::round(hp * value));
+    newEntityStat.maxHp = static_cast<int>(std::round(maxHp * value));
     return newEntityStat;
 }
 
@@ -239,7 +263,7 @@ EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDam
     stat.damage = damage;
     stat.maxHp = maxHp;
     stat.hp = hp < 0 ? maxHp : hp;
-    stat.avoidance = avoidance;
+    stat.evadePer = avoidance;
     stat.addDamagePer = addDamagePer;
     return stat;
 }

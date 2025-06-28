@@ -61,7 +61,7 @@ void InitManager::InitPlayer() {
     char idleAnimation = 'i', moveAnimation = 'm';
 
     int addDamagePer = 10;
-    int startDamage = 3, startMaxHP = 15, startAvoidance = 0;
+    int startDamage = 30, startMaxHP = 150, startAvoidance = 0;
 
     _pPlayer->init(EntityStat::makeStat(startDamage, startMaxHP, startAvoidance, addDamagePer), L'P', false, L(Layer::PLAYER));
     _pPlayer->active();
@@ -102,9 +102,38 @@ void InitManager::InitEnemies() {
 
     EntityManager* entityManager = EntityManager::GetInstance();
 
-    std::string e_star_name = "star";
-    entityManager->addObjectData(ENEMY_DATA_POOL, e_star_name, new Enemy());
-    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getObjectData(ENEMY_DATA_POOL, e_star_name));
+    // 극히 무식하다..
+    // 아니 생긴게 흉측해서 그런가?
+
+    std::string tempEnemyName = "star";
+    entityManager->addObjectData(ENEMY_DATA_POOL, tempEnemyName, new Enemy());
+    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getObjectData(ENEMY_DATA_POOL, tempEnemyName));
+    if (enemyPtr != nullptr) {
+        Enemy& star = *enemyPtr;
+        // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
+        star.init(EntityStat::makeStat(20, 35, 100, 10), L'E', false, L(Layer::ENEMY));
+
+        star.setPlayer(_pPlayer);
+        star.setSenceRange(5);
+
+        star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
+        star.render.setCurrentAnimation(idleAnimation);
+
+        star.setName("별");
+        star.addDeadMessage("자신의 별조각을 떨어트리며 사라졌다");
+        star.addDeadMessage("약한 폭발과 합께 사라졌다");
+        star.addDeadMessage("온 몸이 흩어져 날라갔다");
+        star.addDeadMessage("자신의 존재 이유를 잊고 사그라졌다");
+
+        star.addAttackComment("자신의 날카로운 조각으로 찌르는 공격을 했다");
+        star.addAttackComment("빠르게 베어지나가는 공격을 했다");
+        star.addAttackComment("시야를 빼는 강렬한 불빛을 내뿜었다");
+    }
+    
+
+    tempEnemyName = "SovietUnion";
+    entityManager->addObjectData(ENEMY_DATA_POOL, tempEnemyName, new Enemy());
+    enemyPtr = dynamic_cast<Enemy*>(entityManager->getObjectData(ENEMY_DATA_POOL, tempEnemyName));
     if (enemyPtr != nullptr) {
         Enemy& star = *enemyPtr;
         // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게

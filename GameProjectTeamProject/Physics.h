@@ -29,8 +29,9 @@ public:
     virtual pPos getPosition() const;
     virtual void setOriginPosition(pPos position);
 
-protected:
     virtual bool calculateCollision(const Collider& other) const abstract;
+
+protected:
     virtual bool tryCollision(const Pos& previousPos, const Pos& pos);
 
     virtual void onTriggerEvent(Collider& other, const Pos& previousPos) abstract;

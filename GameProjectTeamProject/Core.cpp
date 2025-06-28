@@ -15,7 +15,7 @@ void Core::Run()
 		Update();
 		Render();
 		
-		FrameSync(300);
+		FrameSync(60);
 
 		if (_isRunning == false) break;
 	}
