@@ -12,6 +12,7 @@ void TitleScene::OnSceneEnter()
 	int x = resolution.X / 5;
 	int y = resolution.Y / 4;
 
+	SetColor(COLOR::GRAY);
 	int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);
 	for (const std::wstring& str : title)
 	{
