@@ -2,10 +2,13 @@
 #include "Core.h"
 #include "Console.h"
 #include "Entity.h"
+#include "Mci.h"
+#pragma comment(lib, "winmm")
 
 void Core::Run()
 {
 	_isRunning = true;
+	PlaySoundID(SOUNDID::BGM, true);
 
 	while (true)
 	{

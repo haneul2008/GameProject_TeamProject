@@ -1,8 +1,12 @@
 #include "Transition.h"
 #include "Console.h"
+#include "Mci.h"
+#pragma comment(lib, "winmm")
 
 Transition::Transition()
 {
+	PlaySoundID(SOUNDID::Transition);
+
 	COORD resolution = GetConsoleResolution();
 	int thickness = 7;
 	for(int y = 0; y < resolution.Y; y += thickness)
@@ -19,6 +23,7 @@ Transition::Transition()
 			FrameSync(1500);
 		}
 	}
+	FrameSync(10);
 	SetColor();
 	system("cls");
 }
