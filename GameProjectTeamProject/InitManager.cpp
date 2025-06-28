@@ -4,7 +4,9 @@
 
 #include "InputSystem.h"
 #include "EntityManager.h"
+#include "InventoryManager.h"
 #include "TempEnums.h"
+#include "Item.h"
 
 InitManager::InitManager() :
     _pPlayer(nullptr) {
@@ -12,6 +14,12 @@ InitManager::InitManager() :
 
     PhysicsManager* physicsManager = PhysicsManager::GetInstance();
     physicsManager->setMaxMoveBound(100, 100);
+
+
+    // Inventory Init
+
+    InventoryManager* inventoryManager = InventoryManager::GetInstance();
+    inventoryManager->init(3);
 
 
     // Input Init
@@ -79,18 +87,18 @@ void InitManager::InitPlayer() {
     // 테스트
     _pPlayer->SetRenderPriotity(100);
     _pPlayer->SetUpdatePriotity(100);
+
+    InitItems();
 }
 
 void InitManager::InitEnemies() {
     char idleAnimation = 'i', moveAnimation = 'm';
 
-    std::string enemyDataPoolName = "ENEMY";
-    std::string e_star_name = "star";
-
     EntityManager* entityManager = EntityManager::GetInstance();
 
-    entityManager->addObjectData(enemyDataPoolName, e_star_name, new Enemy());
-    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getObjectData(enemyDataPoolName, e_star_name));
+    std::string e_star_name = "star";
+    entityManager->addObjectData(ENEMY_DATA_POOL, e_star_name, new Enemy());
+    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getObjectData(ENEMY_DATA_POOL, e_star_name));
     if (enemyPtr != nullptr) {
         Enemy& star = *enemyPtr;
         // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
@@ -112,6 +120,24 @@ void InitManager::InitEnemies() {
         star.addAttackComment("빠르게 베어지나가는 공격을 했다");
         star.addAttackComment("시야를 빼는 강렬한 불빛을 내뿜었다");
     }
+}
+
+void InitManager::InitItems() {
+    EntityManager* entityManager = EntityManager::GetInstance();
+
+    std::string i_heal_potion = "potion";
+    entityManager->addObjectData(ITEM_DATA_POOL, i_heal_potion, new StatItem());
+    StatItem* statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, i_heal_potion));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'P', true, L(Layer::ITEM));
+
+        potion.setName("엘릭서");
+        potion.setUpStat(EntityStat::makeStat(0, 20, 0, 0, 25));
+    }
+
+    Object* obj = entityManager->activeRandomObject(ITEM_DATA_POOL);
+    obj->setPosition({ 10, 10 });
 }
 
 void InitManager::DeletePlayer() {

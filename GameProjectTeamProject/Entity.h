@@ -19,7 +19,7 @@ struct EntityStat
 
     EntityStat operator+(const EntityStat& other) const;
 
-    static EntityStat makeStat(int damage, int maxHp, int avoidance, int addDamagePer);
+    static EntityStat makeStat(int damage, int maxHp, int avoidance, int addDamagePer, int hp = -1);
 };
 
 class Entity : public virtual IUpdate, public virtual Object, public virtual PositionCollider, public virtual IDamageable

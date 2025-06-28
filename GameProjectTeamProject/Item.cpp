@@ -16,23 +16,19 @@ void Item::init( wchar_t defaultImage, bool trigger, int layer) {
 
 void Item::active() {
     Collider::active();
-    Collider::setPosition(&pos);
+    Collider::setOriginPosition(&pos);
     Object::active();
 }
 
 void Item::deActive() {
     Collider::deActive();
-    Collider::setPosition(nullptr);
+    Collider::setOriginPosition(nullptr);
     Object::deActive();
 }
 
 Item* Item::newClone() {
     // item자체는 nullptr반환 상속 객체가 newClone가능하게 할것
     return nullptr;
-}
-
-void Item::setPosition(const Pos& pos) {
-    this->pos = pos;
 }
 
 void Item::setName(std::string name) {

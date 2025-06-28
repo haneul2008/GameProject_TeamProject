@@ -11,7 +11,7 @@ class InventoryManager : public Singleton<InventoryManager>, public IUpdate
 {
 public:
     InventoryManager();
-    ~InventoryManager();
+    ~InventoryManager() override;
 
 public:
     void init(int maxInven);
@@ -22,8 +22,6 @@ public:
     int GetUpdatePriotity() override;
 
     bool useItem(Entity* user, int i);
-
-private:
     void resetItemUI();
 
 private:
