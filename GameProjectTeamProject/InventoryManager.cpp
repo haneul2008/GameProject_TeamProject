@@ -8,7 +8,7 @@
 
 constexpr std::string INVEN(int i) { return "INVEN" + std::to_string(i); }
 constexpr int INTERVAL = 10;
-constexpr int START_Y_POS = 46;
+constexpr int START_Y_POS = 45;
 
 InventoryManager::InventoryManager() :
     _maxInven(0) {
