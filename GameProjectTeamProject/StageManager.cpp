@@ -13,7 +13,7 @@
 
 using std::cout;
 using std::endl;
-using std::vector;
+using std::vector;\
 
 StageManager::StageManager()
 {
@@ -40,12 +40,6 @@ StageManager::~StageManager()
 
 void StageManager::Init()
 {
-	for(const Collider* collider : _colliders)
-	{
-		if (collider != nullptr)
-			delete collider;
-	}
-	_colliders.clear();
 	_currentFloor = 0;
 }
 
@@ -64,8 +58,11 @@ void StageManager::CreateMap()
 	for (Collider* collider : _colliders)
 	{
 		PhysicsManager::GetInstance()->removeCollider(collider);
+		if (collider != nullptr)
 		delete collider;
 	}
+
+	_colliders.clear();
 
 	for(int i = 0; i < MAP_HEIGHT; ++i)
 	{
@@ -109,6 +106,7 @@ bool StageManager::CheckGoal(const Pos& pos)
 		ClearStage();
 		CreateMap();
 		Transition();
+		SpawnObjects();
 		return true;
 	}
 
@@ -139,7 +137,7 @@ void StageManager::RenderStage()
 		for (int j = 0; j < MAP_WIDTH; ++j)
 		{
 			Collider* collider = PhysicsManager::GetInstance()->getCollider({ j, i });
-			if (dynamic_cast<Entity*>(collider) != nullptr)
+			if (dynamic_cast<Object*>(collider) != nullptr)
 			{
 				MoveCursor(collider->getPosition()->x * 2 + 2, collider->getPosition()->y);
 				continue;

@@ -40,6 +40,8 @@ void Enemy::handlePlayerTurn() {
 }
 
 void Enemy::handleEnemyTurn() {
+
+
     if (!sencePlayerInSenceRange())
         return;
 
@@ -60,6 +62,7 @@ void Enemy::onDeadEvent(Entity* dealer, int damage) {
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
     PlaySoundID(SOUNDID::EnemyDead);
+	_pPlayer->removeDeadListener(this);
 
     Entity::onDeadEvent(dealer, damage);
 }
@@ -95,7 +98,7 @@ std::string Enemy::getDeadMessage() {
 }
 
 bool Enemy::sencePlayerInSenceRange() {
-    if (_pPlayer == nullptr)
+    if (_pPlayer == nullptr || _pPlayer->isDead)
         return false;
 
     Pos direction = *_pPlayer->getPosition() - pos;
@@ -140,7 +143,6 @@ Pos Enemy::getMoveToPlayerPos() {
 
 void Enemy::handleDeadEvent(Entity* deadEntity) {
     if (_pPlayer == deadEntity) {
-        _pPlayer->removeDeadListener(this);
         _pPlayer = nullptr;
     }
 }

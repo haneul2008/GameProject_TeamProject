@@ -133,6 +133,7 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="DataSaver.cpp" />
+    <ClCompile Include="DeadScene.cpp" />
     <ClCompile Include="DescScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="DataSaver.h" />
+    <ClInclude Include="DeadScene.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="DescScene.h" />
     <ClInclude Include="Enemy.h" />
@@ -193,6 +195,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="RenderContainer.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="RoomRender.h" />
     <ClInclude Include="Scene.h" />
@@ -210,6 +213,9 @@
     <ClInclude Include="Types.h" />
     <ClInclude Include="UpdateContainer.h" />
     <ClInclude Include="WindowInfo.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameProjectTeamProject.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

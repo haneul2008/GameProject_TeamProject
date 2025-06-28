@@ -11,8 +11,10 @@
 #include "StageManager.h"
 #include "Item.h"
 #include "InventoryManager.h"
+#include "SceneManager.h"
 #include "Constants.h"
 #include "Mci.h"
+#include "Core.h"
 #pragma comment(lib, "winmm")
 
 const std::string HP_UI = "HP_UI";
@@ -55,7 +57,10 @@ void Player::setWhatIsEnemyLayer(int layer) {
 
 void Player::SetUp() {
     StageManager* stageManager = StageManager::GetInstance();
-    fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
+    if (fov) {
+        delete fov;
+    }
+    fov = new FOV(stageManager->GetStage(), stageManager->GetStage()->rooms);
 
     setPosition(stageManager->GetStage()->startPos);
     fov->UpdateFov(pos);
@@ -68,6 +73,15 @@ void Player::takeDamage(Entity* dealer, int damage) {
     setHpUI();
 }
 
+void Player::onDeadEvent(Entity* dealer, int damage)
+{
+	SceneManager::GetInstance()->ChangeScene("DEAD");
+	Core::GetInstance()->RemoveRender(this);
+	Core::GetInstance()->RemoveUpdate(this);
+
+	delete fov;
+}
+
 void Player::applyMove() {
     bool move = _tempMoveX != 0 || _tempMoveY != 0;
 
@@ -77,7 +91,7 @@ void Player::applyMove() {
         // move 애니메이션으로 변경
         render.setCurrentAnimation('m');
         TurnManager::GetInstance()->usePlayerTurn();
-        fov.get()->UpdateFov(pos);
+        fov->UpdateFov(pos);
 
         if (StageManager::GetInstance()->CheckGoal(pos))
             SetUp();
@@ -181,6 +195,8 @@ void Player::onCollisionEvent(Collider& other, const Pos& previousPos) {
 }
 
 void Player::setHpUI() {
+    if (isDead) return;
+
     std::string str = std::format("HP : {} / {}", stat.hp, stat.maxHp);
     std::wstring wstr = to_wstring(str);
     UISupporter::GetInstance()->setUI(HP_UI, wstr);

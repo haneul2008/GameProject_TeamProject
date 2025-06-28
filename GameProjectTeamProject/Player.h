@@ -22,6 +22,7 @@ public:
     void SetUp();
 
     void takeDamage(Entity* dealer, int damage) override;
+    void onDeadEvent(Entity* dealer, int damage) override;
     void applyMove() override;
 
     // IInputable을(를) 통해 상속됨
@@ -45,5 +46,5 @@ private:
     int _whatIsEnemy;
 
 private:
-    std::unique_ptr<FOV> fov;
+    FOV* fov;
 };
