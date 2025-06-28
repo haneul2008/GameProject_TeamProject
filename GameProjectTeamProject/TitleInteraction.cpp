@@ -6,7 +6,7 @@
 #include "SceneManager.h"
 #include "Transition.h"
 
-TitleInteraction::TitleInteraction(std::vector<Pos> posList) : _posList(), _prevPos(), _selectIdx(0)
+TitleInteraction::TitleInteraction(std::vector<Pos> posList) : _posList(), _prevPosPair(), _selectIdx(0)
 {
 	_posList = std::move(posList);
 
@@ -36,14 +36,24 @@ void TitleInteraction::Update()
 
 void TitleInteraction::RenderSword()
 {
-	MoveCursor(_prevPos.x, _prevPos.y);
-	std::cout << "         ";
+	MoveCursor(_prevPosPair.first.x, _prevPosPair.first.y);
+	std::cout << "       ";
+	MoveCursor(_prevPosPair.second.x, _prevPosPair.second.y);
+	std::cout << "       ";
 
-	Pos pos = { _posList[_selectIdx].x - 10, _posList[_selectIdx].y };
-	_prevPos = pos;
-	MoveCursor(pos.x, pos.y);
+	int moveX = 10;
+
+	Pos pos = { _posList[_selectIdx].x, _posList[_selectIdx].y };
+	Pos leftPos = { pos.x - moveX, pos.y };
+	_prevPosPair.first = leftPos;
+	MoveCursor(leftPos.x, leftPos.y);
 	SetColor(COLOR::GRAY);
 	std::cout << "={====-";
+
+	Pos rightPos = { pos.x + moveX + 2, pos.y };
+	_prevPosPair.second = rightPos;
+	MoveCursor(rightPos.x, rightPos.y);
+	std::cout << "-====}=";
 	SetColor();
 }
 

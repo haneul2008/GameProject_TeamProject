@@ -8,9 +8,6 @@
 
 void TitleScene::OnSceneEnter()
 {
-	SetConsoleFont(L"Consolas", { 18,18 }, 1);
-	SetConsoleSetting(0, 0, true, L"Game");
-
 	COORD resolution = GetConsoleResolution();
 	int x = resolution.X / 5;
 	int y = resolution.Y / 4;

@@ -36,6 +36,8 @@ InitManager::InitManager() :
     inputManager->addInputKeyPair({ 'D', Key::RIGHT });
     inputManager->addInputKeyPair({ VK_RIGHT, Key::RIGHT });
 
+    inputManager->addInputKeyPair({ VK_ESCAPE, Key::ESC });
+
     inputManager->SetUpdatePriotity(1000);
 
 
