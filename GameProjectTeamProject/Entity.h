@@ -17,6 +17,8 @@ struct EntityStat
     int avoidance; // 회피율
     int addDamagePer; // 추뎀 퍼센트
 
+    EntityStat operator+(const EntityStat& other) const;
+
     static EntityStat makeStat(int damage, int maxHp, int avoidance, int addDamagePer);
 };
 

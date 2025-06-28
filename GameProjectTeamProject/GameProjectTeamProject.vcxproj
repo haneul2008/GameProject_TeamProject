@@ -139,6 +139,7 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InitManager.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="TitleInteraction.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="TurnManager.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="UISupporter.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
   </ItemGroup>
@@ -173,6 +175,7 @@
     <ClInclude Include="InitManager.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="IRender.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="IUpdate.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Physics.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="TitleInteraction.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="TurnManager.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="UISupporter.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="UpdateContainer.h" />

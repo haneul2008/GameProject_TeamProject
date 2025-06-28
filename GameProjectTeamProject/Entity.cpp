@@ -24,7 +24,7 @@ Entity::Entity(Entity&& other) :
     _tempMoveX(0),
     _tempMoveY(0),
     _updatePriority(0),
-    _isDead (false){
+    _isDead(false) {
 }
 
 Entity::Entity(const Entity& other)
@@ -35,7 +35,7 @@ Entity::Entity(const Entity& other)
     _tempMoveY(0),
     _updatePriority(other._updatePriority),
     _attckComments(other._attckComments),
-    _isDead (false){
+    _isDead(false) {
     Collider::init(&pos, other.getIsTrigger(), other.getLayer());
 }
 
@@ -104,8 +104,10 @@ void Entity::applyMove() {
         pos.x < 0 ||
         pos.y < 0 ||
         pos.x >= maxWidth ||
-        pos.y >= maxHeight)
+        pos.y >= maxHeight) {
+        pos = previousPos;
         return;
+    }
 
     tryCollision(previousPos, pos);
 }
@@ -167,7 +169,7 @@ void Entity::onDeadEvent(Entity* dealer, int damage) {
     _isDead = true;
     for (IDeadHandler* listener : _deadListeners)
         if (listener != nullptr)
-        listener->handleDeadEvent(this);
+            listener->handleDeadEvent(this);
 }
 
 void Entity::addDeadListener(IDeadHandler* deadListener) {
@@ -204,6 +206,16 @@ void Entity::attack(Entity* target, int damage) {
 
 bool Entity::getIsdead() const {
     return _isDead;
+}
+
+EntityStat EntityStat::operator+(const EntityStat& other) const {
+    EntityStat newEntityStat = EntityStat();
+    newEntityStat.damage = damage + other.damage;
+    newEntityStat.maxHp = maxHp + other.maxHp;
+    newEntityStat.hp = hp + other.hp;
+    newEntityStat.avoidance = avoidance + other.avoidance;
+    newEntityStat.addDamagePer = addDamagePer + other.addDamagePer;
+    return newEntityStat;
 }
 
 EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDamagePer) {

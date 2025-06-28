@@ -20,7 +20,6 @@ public:
     // IRender을(를) 통해 상속됨
     void Render() override;
     int GetRenderPriotity() override;
-    void SetRenderPriotity(int value);
 
     void setUI(const std::string& key, const std::wstring& value);
     void setUI(const std::string& key, int x, int y);
@@ -30,7 +29,6 @@ private:
     UIInfo* getUI(const std::string& key);
 
 private:
-    int _priority;
     std::unordered_map<std::string, UIInfo> _uis;
 };
 

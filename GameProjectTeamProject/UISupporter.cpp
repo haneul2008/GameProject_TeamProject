@@ -18,11 +18,8 @@ void UISupporter::Render() {
 }
 
 int UISupporter::GetRenderPriotity() {
-    return 0;
-}
-
-void UISupporter::SetRenderPriotity(int value) {
-    _priority = value;
+    // 항상 마지막에 실행 시켜야함
+    return -2147483648;
 }
 
 void UISupporter::setUI(const std::string& key, const std::wstring& value) {
@@ -61,7 +58,7 @@ void pauseToWaitKeyAndPrint(Key key, std::wstring printComment, int x, int y, un
         std::cout << "  ";
 }
 
-// UTF-8을 UTF-16으로 면환하는 함수. 주의 string이 반드시 UTF-8이여야함. // CP_949
+// 현재 인코딩을 UTF-16으로 면환하는 함수. 주의 string이 반드시 UTF-8이여야함. // 비쥬얼 스튜디오가 CP_949라서 UTF-8을 못씀 CP_949를 기본값으로 함
 std::wstring to_wstring(const std::string& str, int incode) {
     // 비어있으면 공백 반환
     if (str.empty())

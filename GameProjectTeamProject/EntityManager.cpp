@@ -13,15 +13,13 @@ EntityManager::~EntityManager() {
     std::vector<Entity*> tempData = _activeEntities;
 
     for (Entity* activeEntity : tempData)
-        handleDeadEvent(activeEntity);
+        deleteEntity(activeEntity);
 
     for (auto& entityDataPool : _entityDataPoolMap)
         for (auto& entityData : entityDataPool.second)
             delete entityData.second;
 
     _entityDataPoolMap.clear();
-
-
 }
 
 void EntityManager::addEntityData(std::string dataPool, std::string name, Entity*&& entity) {
@@ -83,6 +81,9 @@ void EntityManager::handleDeadEvent(Entity* deadEntity) {
 }
 
 void EntityManager::deleteEntity(Entity* deadEntity) {
+    if (deadEntity == nullptr)
+        return;
+
     // 비활성화 (참조 시킨 포인터 제거)
     deadEntity->deActive();
     _activeEntities.erase(std::remove(_activeEntities.begin(), _activeEntities.end(), deadEntity), _activeEntities.end());

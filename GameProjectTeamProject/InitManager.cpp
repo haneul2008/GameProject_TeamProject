@@ -84,11 +84,9 @@ void InitManager::InitPlayer()
     // Player Init
     _pPlayer = new Player();
 
-    int addDamagePer = 10;
-
-    // 레이어 설정 필요
     char idleAnimation = 'i', moveAnimation = 'm';
 
+    int addDamagePer = 10;
     int startDamage = 1, startMaxHP = 10, startAvoidance = 0;
 
     _pPlayer->init(EntityStat::makeStat(startDamage, startMaxHP, startAvoidance, addDamagePer), L'P', false, L(Layer::PLAYER));
@@ -118,6 +116,7 @@ void InitManager::InitPlayer()
     _pPlayer->addAttackComment("균형을 잃어 적어게 넘어져 적에게 로멘틱한 자세를 취했다. 적의 심장이 빠르게 뛴다");
     _pPlayer->addAttackComment("음심에 가득한 신체접촉을 했다. 적이 기겁하면 정신적 충격을 받았다");
 
+    // 테스트
     _pPlayer->SetRenderPriotity(100);
     _pPlayer->SetUpdatePriotity(100);
     _pPlayer->setPosition({ 30, 30 });

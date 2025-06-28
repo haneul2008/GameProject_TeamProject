@@ -7,6 +7,7 @@
 #include "TurnManager.h"
 #include "IDamageable.h"
 #include "StageManager.h"
+#include "Item.h"
 
 Player::Player() :
     _whatIsItem(0),
@@ -98,6 +99,17 @@ void Player::onCollisionEvent(Collider& other, const Pos& previousPos) {
             int damagePer = stat.damage / stat.addDamagePer;
             int randDamage = rand() % (damagePer == 0 ? 1 : damagePer);
             attack(entity, stat.damage + randDamage);
+        }
+    }
+
+    if ((collisionLayer & _whatIsEnemy) != 0) {
+        Item* item = dynamic_cast<Item*>(&other);
+        if (item != nullptr && stat.damage >= 0) {
+            std::string printComment = std::format("{}이(가) {}를(을) 주었다.", _name, item->getName());
+            std::wstring printMessage = to_wstring(printComment);
+            pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+            // 인벤에 올리기
         }
     }
 
