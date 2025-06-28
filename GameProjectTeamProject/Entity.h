@@ -81,7 +81,6 @@ protected:
 
 public:
     EntityStat stat;
-    bool isDead;
 
 protected:
     std::unordered_set<IDeadHandler*> _deadListeners;
@@ -89,6 +88,7 @@ protected:
     std::vector<std::string> _attckComments;
 
 protected:
+    bool _isDead;
     std::string _name;
     int _tempMoveX;
     int _tempMoveY;

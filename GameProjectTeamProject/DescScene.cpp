@@ -20,9 +20,8 @@ void DescScene::OnSceneExit()
 
 void DescScene::Update()
 {
-	Key key = InputManager::GetInstance()->getKey();
-	MoveCursor(100, 30);
-	cout << (int)key;
+	Key key = InputManager::GetInstance()->getKeyFast();
+	
 	switch (key)
 	{
 	case Key::ESC:

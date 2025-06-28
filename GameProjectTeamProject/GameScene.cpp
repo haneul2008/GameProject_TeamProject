@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include "StageManager.h"
 #include"InitManager.h"
+#include"EntityManager.h"
+#include"InputSystem.h"	
 
 void GameScene::OnSceneEnter()
 {
@@ -14,7 +16,8 @@ void GameScene::OnSceneEnter()
 
 void GameScene::OnSceneExit()
 {
-	InitManager::GetInstance()->DeletePlayer();
+	EntityManager::GetInstance()->deleteAllActiveObject();
+
 	system("cls");
 }
 

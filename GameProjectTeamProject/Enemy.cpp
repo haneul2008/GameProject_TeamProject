@@ -40,8 +40,6 @@ void Enemy::handlePlayerTurn() {
 }
 
 void Enemy::handleEnemyTurn() {
-
-
     if (!sencePlayerInSenceRange())
         return;
 
@@ -58,13 +56,13 @@ void Enemy::onHitEvent(Entity* dealer, int damage) {
 }
 
 void Enemy::onDeadEvent(Entity* dealer, int damage) {
+    Entity::onDeadEvent(dealer, damage);
+
     std::string printComment = std::format("{}이(가) {}.", _name, getDeadMessage());
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
     PlaySoundID(SOUNDID::EnemyDead);
 	_pPlayer->removeDeadListener(this);
-
-    Entity::onDeadEvent(dealer, damage);
 }
 
 void Enemy::addDeadMessage(std::string message) {
@@ -84,13 +82,13 @@ void Enemy::onCollisionEvent(Collider& other, const Pos& beforePosition) {
     if (_pPlayer == nullptr)
         return;
 
+    Entity::onCollisionEvent(other, beforePosition);
+    
     if ((other.getLayer() & _pPlayer->getLayer()) != 0) {
         Entity* entity = dynamic_cast<Entity*>(&other);
         if (entity != nullptr && stat.damage >= 0)
             attack(entity, stat.damage);
     }
-    
-    Entity::onCollisionEvent(other, beforePosition);
 }
 
 std::string Enemy::getDeadMessage() {
@@ -98,7 +96,7 @@ std::string Enemy::getDeadMessage() {
 }
 
 bool Enemy::sencePlayerInSenceRange() {
-    if (_pPlayer == nullptr || _pPlayer->isDead)
+    if (_pPlayer == nullptr)
         return false;
 
     Pos direction = *_pPlayer->getPosition() - pos;
@@ -140,6 +138,7 @@ Pos Enemy::getMoveToPlayerPos() {
 
     return moveDistance;
 }
+
 
 void Enemy::handleDeadEvent(Entity* deadEntity) {
     if (_pPlayer == deadEntity) {

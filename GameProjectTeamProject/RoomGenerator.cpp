@@ -428,7 +428,7 @@ void RoomGenerator::SetPositions(const PSTAGE stage)
 	int endRoom = random.GetRandomPoint(0, _roomList.size() - 1);
 
 	if (startRoom == endRoom)
-		endRoom = startRoom + 1 % _roomList.size();
+		endRoom = (startRoom + 1) % _roomList.size();
 
 	stage->startPos = _roomList[startRoom]->GetCenter();
 	stage->endPos = _roomList[endRoom]->GetCenter();

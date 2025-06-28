@@ -10,10 +10,11 @@
 #include "Random.h"
 #include "DataSaver.h"
 #include "TempEnums.h"
+#include "EntityManager.h"
 
 using std::cout;
 using std::endl;
-using std::vector;\
+using std::vector;
 
 StageManager::StageManager()
 {
@@ -40,6 +41,7 @@ StageManager::~StageManager()
 
 void StageManager::Init()
 {
+	ClearStage();
 	_currentFloor = 0;
 }
 
@@ -59,7 +61,7 @@ void StageManager::CreateMap()
 	{
 		PhysicsManager::GetInstance()->removeCollider(collider);
 		if (collider != nullptr)
-		delete collider;
+			delete collider;
 	}
 
 	_colliders.clear();
@@ -122,12 +124,21 @@ void StageManager::SpawnObjects()
 	int cnt = random.GetRandomPoint(MIN_ENEMY, MAX_ENEMY);
 
 	for (int i = 0; i < cnt; ++i)
-		_objectSpawner->Spawn("ENEMY");
+	{
+		Object* newObj = _objectSpawner->Spawn("ENEMY");
+		Entity* entity = dynamic_cast<Entity*>(newObj);
+
+		if (entity == nullptr) continue;
+
+		entity->multifyStat(_currentFloor + 1);
+	}
 
 	cnt = random.GetRandomPoint(MIN_ITEM, MAX_ITEM);
 
 	for (int i = 0; i < cnt; ++i)
+	{
 		_objectSpawner->Spawn("ITEM");
+	}
 }
 
 void StageManager::RenderStage()

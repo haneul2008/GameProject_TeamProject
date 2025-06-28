@@ -15,7 +15,7 @@ TitleInteraction::TitleInteraction(std::vector<Pos> posList) : _posList(), _prev
 
 void TitleInteraction::Update()
 {
-	Key key = InputManager::GetInstance()->getKey();
+	Key key = InputManager::GetInstance()->getKeyFast();
 
 	switch (key)
 	{

@@ -13,6 +13,7 @@ public:
 	~SceneManager();
 public:
 	void ChangeScene(std::string sceneName);
+	std::string GetCurrentSceneName();
 public:
 	void Update() override;
 	int GetUpdatePriotity() override;
@@ -20,6 +21,7 @@ public:
 	void Render() override;
 	int GetRenderPriotity() override;
 private:
+	std::string _currentSceneName;
 	Scene* _currentScene;
 	std::unordered_map<std::string, Scene*> _scenePairs;
 };

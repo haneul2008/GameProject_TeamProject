@@ -16,6 +16,7 @@ enum class SOUNDID
 	PlayerAttack,
     PlayerHit,
     EnemyDead,
+    PlayerDead,
     END
 };
 

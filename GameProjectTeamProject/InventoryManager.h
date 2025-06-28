@@ -27,7 +27,7 @@ public:
 
     // IInputable을(를) 통해 상속됨
     void onInputKey(Key key) override;
-
+	void removeUI();
 private:
     int _maxInven;
     bool _openIven;

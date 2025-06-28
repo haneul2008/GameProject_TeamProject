@@ -2,6 +2,7 @@
 
 void FOV::UpdateFov(const Pos& targetPos)
 {
+
 	for (const PROOM room : _rooms)
 	{
 		if (room->isHide == false) return;

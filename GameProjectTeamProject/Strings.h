@@ -44,8 +44,7 @@ const vector<string> controlText =
 {
 	{"W,A,S,D : 이동"},
 	{"Enter : 메세지 넘기기"},
-	{"I,B : 인벤토리 열기"},
-	{"F : 상호작용"},
+	{"I,B : 인벤토리 열기"}
 };
 
 const vector<string> gameOverText =
@@ -63,3 +62,5 @@ const vector<string> gameOverText =
 	{"   ^^^^^^^^		   "},
 	{"^^^^^^^^^^^^^^^^^^^^^"}
 };
+
+const std::string HP_UI = "HP_UI";

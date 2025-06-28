@@ -4,7 +4,7 @@
 #include "DescScene.h"
 #include "DeadScene.h"
 
-SceneManager::SceneManager() : _scenePairs(), _currentScene(nullptr)
+SceneManager::SceneManager() : _scenePairs(), _currentScene(nullptr), _currentSceneName("")
 {
 	_scenePairs["TITLE"] = new TitleScene;
 	_scenePairs["GAME"] = new GameScene;
@@ -28,8 +28,14 @@ void SceneManager::ChangeScene(std::string sceneName)
 	if (_currentScene != nullptr)
 		_currentScene->OnSceneExit();
 
+	_currentSceneName = sceneName;
 	_currentScene = _scenePairs[sceneName];
 	_currentScene->OnSceneEnter();
+}
+
+std::string SceneManager::GetCurrentSceneName()
+{
+	return _currentSceneName;
 }
 
 void SceneManager::Update()

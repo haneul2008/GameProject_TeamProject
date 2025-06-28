@@ -21,6 +21,7 @@ public:
 
 public:
     Key getKey();
+    Key getKeyFast();
 
     void setInput(bool value);
 

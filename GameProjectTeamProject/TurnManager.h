@@ -1,6 +1,6 @@
 #pragma once
 
-#include <set>
+#include <vector>
 
 #include "Singletone.h"
 
@@ -21,5 +21,5 @@ public:
     void removeTurnListener(ITurnListener* listener);
 
 private:
-    std::set<ITurnListener*> _turnListeners;
+    std::vector<ITurnListener*> _turnListeners;
 };

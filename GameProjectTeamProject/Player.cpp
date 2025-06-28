@@ -15,9 +15,8 @@
 #include "Constants.h"
 #include "Mci.h"
 #include "Core.h"
+#include "Strings.h"
 #pragma comment(lib, "winmm")
-
-const std::string HP_UI = "HP_UI";
 
 Player::Player() :
     _whatIsItem(0),
@@ -59,6 +58,7 @@ void Player::SetUp() {
     StageManager* stageManager = StageManager::GetInstance();
     if (fov) {
         delete fov;
+		fov = nullptr;
     }
     fov = new FOV(stageManager->GetStage(), stageManager->GetStage()->rooms);
 
@@ -67,22 +67,38 @@ void Player::SetUp() {
 }
 
 void Player::takeDamage(Entity* dealer, int damage) {
+	bool isDead = stat.hp <= damage;
+    
     Entity::takeDamage(dealer, damage);
 
 	PlaySoundID(SOUNDID::PlayerHit);
-    setHpUI();
+
+    if(isDead == false)
+        setHpUI();
 }
 
 void Player::onDeadEvent(Entity* dealer, int damage)
 {
-	SceneManager::GetInstance()->ChangeScene("DEAD");
+	PlaySoundID(SOUNDID::PlayerDead);
+
+    deActive();
+
+    Entity::onDeadEvent(dealer, damage);
+
+	PhysicsManager::GetInstance()->removeCollider(this);
+	InputManager::GetInstance()->removeInputListener(this);
 	Core::GetInstance()->RemoveRender(this);
 	Core::GetInstance()->RemoveUpdate(this);
 
 	delete fov;
+    fov = nullptr;
+
+	SceneManager::GetInstance()->ChangeScene("DEAD");
 }
 
 void Player::applyMove() {
+    if (SceneManager::GetInstance()->GetCurrentSceneName() != "GAME") return;
+
     bool move = _tempMoveX != 0 || _tempMoveY != 0;
 
     Entity::applyMove();
@@ -91,7 +107,8 @@ void Player::applyMove() {
         // move 애니메이션으로 변경
         render.setCurrentAnimation('m');
         TurnManager::GetInstance()->usePlayerTurn();
-        fov->UpdateFov(pos);
+        if (fov)
+            fov->UpdateFov(pos);
 
         if (StageManager::GetInstance()->CheckGoal(pos))
             SetUp();
@@ -102,7 +119,11 @@ void Player::applyMove() {
 
 void Player::onInputKey(Key key) {
     if (_inputLock)
+    {
+        _tempMoveX = 0;
+        _tempMoveY = 0;
         return;
+    }
 
     switch (key) {
         case Key::UP:
@@ -168,7 +189,7 @@ void Player::onTriggerEvent(Collider& other, const Pos& previousPos) {
             bool pick = InventoryManager::GetInstance()->tryAddItem(item);
 
             std::string printComment = pick
-                ? std::format("{}이(가) {}를(을) 주었다.", _name, item->getName())
+                ? std::format("{}이(가) {}를(을) 주웠다.", _name, item->getName())
                 : std::format("{}이(가) {}를(을) 주으려 했으나 실패했다.", _name, item->getName());
             std::wstring printMessage = to_wstring(printComment);
             pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
@@ -194,9 +215,8 @@ void Player::onCollisionEvent(Collider& other, const Pos& previousPos) {
     Entity::onCollisionEvent(other, previousPos);
 }
 
-void Player::setHpUI() {
-    if (isDead) return;
 
+void Player::setHpUI() {
     std::string str = std::format("HP : {} / {}", stat.hp, stat.maxHp);
     std::wstring wstr = to_wstring(str);
     UISupporter::GetInstance()->setUI(HP_UI, wstr);

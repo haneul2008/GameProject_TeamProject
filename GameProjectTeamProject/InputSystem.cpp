@@ -20,11 +20,23 @@ Key InputManager::getKey() {
         return Key::FAIL;
 
     for (InputKeyPair keyPair : _inputKeyPairs) {
+        if ((GetAsyncKeyState(keyPair.keyCode) & 0x0001) != 0)
+            return keyPair.keyValue;
+    }
+
+    return Key::FAIL;
+}
+
+Key InputManager::getKeyFast()
+{
+    if (_inputLock)
+        return Key::FAIL;
+
+    for (InputKeyPair keyPair : _inputKeyPairs) {
         if ((GetAsyncKeyState(keyPair.keyCode) & 0x8001) != 0)
             return keyPair.keyValue;
     }
 
-    FrameSync(10);
     return Key::FAIL;
 }
 

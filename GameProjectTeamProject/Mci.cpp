@@ -11,6 +11,7 @@ static std::vector<SoundEntry> Sound_Table = {
     {L"Sound\\PlayerAttack.mp3", 220, 0},
     {L"Sound\\PlayerHit.mp3", 220, 0},
     {L"Sound\\EnemyDead.mp3", 220, 0},
+    {L"Sound\\PlayerDead.mp3", 220, 0},
 };
 
 // ¿ÀÇÂ
