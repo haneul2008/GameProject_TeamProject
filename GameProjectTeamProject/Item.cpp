@@ -1,5 +1,7 @@
 #include "Item.h"
 
+#include "StageManager.h"
+
 void Item::onTriggerEvent(Collider& other, const Pos& beforePosition) {
 }
 
@@ -16,13 +18,13 @@ void Item::init( wchar_t defaultImage, bool trigger, int layer) {
 
 void Item::active() {
     Collider::active();
-    Collider::setPosition(&pos);
+    Collider::setOriginPosition(&pos);
     Object::active();
 }
 
 void Item::deActive() {
     Collider::deActive();
-    Collider::setPosition(nullptr);
+    Collider::setOriginPosition(nullptr);
     Object::deActive();
 }
 
@@ -31,8 +33,11 @@ Item* Item::newClone() {
     return nullptr;
 }
 
-void Item::setPosition(const Pos& pos) {
-    this->pos = pos;
+void Item::Render() {
+    if (StageManager::GetInstance()->GetStage()->curMap[pos.y][pos.x].isHide)
+        return;
+
+    Object::Render();
 }
 
 void Item::setName(std::string name) {

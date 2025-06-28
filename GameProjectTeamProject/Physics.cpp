@@ -103,7 +103,7 @@ pPos Collider::getPosition() const {
     return _pPosition;
 }
 
-void Collider::setPosition(pPos position) {
+void Collider::setOriginPosition(pPos position) {
     _pPosition = position;
 }
 

@@ -64,6 +64,7 @@ Object::~Object() {
 }
 
 void Object::init() {
+
     // 본래 있었음
 }
 
@@ -80,6 +81,7 @@ Object* Object::newClone() {
 }
 
 void Object::setPosition(const Pos& pos) {
+    previousPos = pos;
     this->pos = pos;
 }
 
@@ -91,7 +93,7 @@ void Object::setDefaultImage(wchar_t defaultImage) {
 
 void Object::Render() {
     if (previousPos != pos) {
-        MoveCursor(previousPos.x, previousPos.y);
+        MoveCursor(previousPos.x * 2, previousPos.y);
         std::cout << "  ";
     }
 
@@ -125,7 +127,7 @@ bool Position::operator==(const Position& other) const {
 }
 
 bool Position::operator!=(const Position& other) const {
-    return (x != other.x) && (y != other.y);
+    return (x != other.x) || (y != other.y);
 }
 
 Position Position::operator+(const Position& other) const {

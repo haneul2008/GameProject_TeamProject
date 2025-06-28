@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <queue>
 #include <unordered_set>
 
 #include "Object.h"
@@ -19,7 +20,7 @@ struct EntityStat
 
     EntityStat operator+(const EntityStat& other) const;
 
-    static EntityStat makeStat(int damage, int maxHp, int avoidance, int addDamagePer);
+    static EntityStat makeStat(int damage, int maxHp, int avoidance, int addDamagePer, int hp = -1);
 };
 
 class Entity : public virtual IUpdate, public virtual Object, public virtual PositionCollider, public virtual IDamageable
@@ -78,6 +79,7 @@ public:
 
 protected:
     std::unordered_set<IDeadHandler*> _deadListeners;
+    std::queue<IDeadHandler*> _removeToListeners;
     std::vector<std::string> _attckComments;
 
 protected:

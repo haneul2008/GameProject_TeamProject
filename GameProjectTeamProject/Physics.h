@@ -27,7 +27,7 @@ public:
     virtual void setLayer(int layer);
 
     virtual pPos getPosition() const;
-    virtual void setPosition(pPos position);
+    virtual void setOriginPosition(pPos position);
 
 protected:
     virtual bool calculateCollision(const Collider& other) const abstract;
