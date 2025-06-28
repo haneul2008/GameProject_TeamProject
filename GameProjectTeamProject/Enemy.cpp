@@ -52,6 +52,7 @@ void Enemy::handleEnemyTurn() {
 
 void Enemy::onHitEvent(Entity* dealer, int damage) {
 	PlaySoundID(SOUNDID::PlayerAttack);
+    Entity::onHitEvent(dealer, damage);
 }
 
 void Enemy::onDeadEvent(Entity* dealer, int damage) {
@@ -101,11 +102,11 @@ bool Enemy::sencePlayerInSenceRange() {
     return direction.getMagnitude() <= _senceRange;
 }
 
-Pos&& Enemy::getMoveToPlayerPos() {
+Pos Enemy::getMoveToPlayerPos() {
     Pos moveDistance = Pos();
 
     if (_pPlayer == nullptr)
-        return std::move(moveDistance);
+        return moveDistance;
 
     Pos direction = *_pPlayer->getPosition() - pos;
 
@@ -114,11 +115,13 @@ Pos&& Enemy::getMoveToPlayerPos() {
     else
         moveDistance.y = direction.y;
 
+    moveDistance.normalize();
+
     Pos check = pos + moveDistance;
     Collider* collider = PhysicsManager::GetInstance()->getCollider(*this, check);
     if (collider != nullptr
         && !collider->getIsTrigger()
-        && (collider->getLayer() & _pPlayer->getLayer()) == 0) {
+        && (collider->getLayer() & _whatIsWall) != 0) {
 
         if (std::abs(direction.x) > std::abs(direction.y)) {
             moveDistance.x = 0;
@@ -132,7 +135,7 @@ Pos&& Enemy::getMoveToPlayerPos() {
 
     moveDistance.normalize();
 
-    return std::move(moveDistance);
+    return moveDistance;
 }
 
 void Enemy::handleDeadEvent(Entity* deadEntity) {
@@ -140,5 +143,9 @@ void Enemy::handleDeadEvent(Entity* deadEntity) {
         _pPlayer->removeDeadListener(this);
         _pPlayer = nullptr;
     }
+}
+
+void Enemy::setWallLayer(int layer) {
+    _whatIsWall = layer;
 }
 

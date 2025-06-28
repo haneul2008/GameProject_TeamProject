@@ -50,8 +50,9 @@ void UISupporter::removeUI(const std::string& key) {
 }
 
 void UISupporter::removeUIPosition(const std::string& key) {
-    MoveCursor(getUI(key)->x, getUI(key)->y);
-    for (int i = 0; i < getUI(key)->value.size(); ++i)
+    UIInfo* info = getUI(key);
+    MoveCursor(info->x, info->y);
+    for (int i = 0; i < info->value.size(); ++i)
         std::cout << "  ";
 }
 

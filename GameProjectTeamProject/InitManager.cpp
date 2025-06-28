@@ -115,6 +115,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(5);
+        star.setWallLayer(L(Layer::WALL));
 
         star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -127,7 +128,7 @@ void InitManager::InitEnemies() {
 
         star.addAttackComment("자신의 날카로운 조각으로 찌르는 공격을 했다");
         star.addAttackComment("빠르게 베어지나가는 공격을 했다");
-        star.addAttackComment("시야를 빼는 강렬한 불빛을 내뿜었다");
+        star.addAttackComment("시야를 빼앗는 강렬한 불빛을 내뿜었다");
     }
     
 

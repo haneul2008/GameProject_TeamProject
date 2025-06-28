@@ -105,7 +105,7 @@ void Entity::applyMove() {
         return;
     }
 
-    tryCollision(previousPos, pos);
+    tryCollision(previousPos);
 }
 
 const EntityStat Entity::getStat() const {
@@ -140,16 +140,6 @@ void Entity::takeDamage(Entity* dealer, int damage) {
     if (damage == 0)
         return;
 
-    int evade = rand() % 1001;
-    if (evade <= stat.evadePer) {
-
-        std::string healMassage = std::format("{}이(가) {}의 공격을 회피했다.", _name, dealer->getName());
-        std::wstring printMessage = to_wstring(healMassage);
-        pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
-
-        return;
-    }
-
     if (damage <= 0) { // 회복 시 damage가 음수일 때
         stat.hp = std::min(stat.hp - damage, stat.maxHp);
 
@@ -158,10 +148,17 @@ void Entity::takeDamage(Entity* dealer, int damage) {
         pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
     }
     else {
-        int attackSuccess = rand() % 101;
+        int evade = rand() % 1001;
+        if (evade <= stat.evadePer) {
 
-        if (stat.evadePer <= attackSuccess)
-            stat.hp = std::max(stat.hp - damage, 0);
+            std::string healMassage = std::format("{}이(가) {}의 공격을 회피했다.", _name, dealer->getName());
+            std::wstring printMessage = to_wstring(healMassage);
+            pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+            return;
+        }
+
+        stat.hp = std::max(stat.hp - damage, 0);
 
         if (stat.hp > 0)
             onHitEvent(dealer, damage);

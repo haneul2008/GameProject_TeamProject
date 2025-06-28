@@ -32,7 +32,7 @@ public:
     virtual bool calculateCollision(const Collider& other) const abstract;
 
 protected:
-    virtual bool tryCollision(const Pos& previousPos, const Pos& pos);
+    virtual bool tryCollision(const Pos& previousPos);
 
     virtual void onTriggerEvent(Collider& other, const Pos& previousPos) abstract;
     virtual void onCollisionEvent(Collider& other, const Pos& previousPos) abstract;
@@ -60,6 +60,7 @@ public:
     Collider* getCollider(const Pos& pos) const;
     Collider* getCollider(const Collider& owner, int x, int y) const;
     Collider* getCollider(const Collider& owner, const Pos& pos) const;
+    Collider* getCollider(const Collider& owner) const;
 
     void addCollider(Collider* collider);
     void removeCollider(Collider* collider);

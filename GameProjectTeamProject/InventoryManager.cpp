@@ -37,6 +37,7 @@ bool InventoryManager::tryAddItem(Item* item) {
 
     _inventory.push_back(item);
     _deActivationQueue.push(item);
+
     resetItemUI();
 }
 
@@ -62,7 +63,7 @@ bool InventoryManager::useItem(Entity* user, int i) {
     // 사용 후 제거
     delete _inventory[i];
     _inventory.erase(_inventory.begin() + i);
-    UISupporter::GetInstance()->removeUI(INVEN(i));
+    UISupporter::GetInstance()->removeUI(INVEN(i + 1));
 
     resetItemUI();
 
