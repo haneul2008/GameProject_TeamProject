@@ -183,6 +183,9 @@
     <ClCompile Include="ObjectSpawner.cpp">
       <Filter>04.ETC</Filter>
     </ClCompile>
+    <ClCompile Include="DeadScene.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
@@ -317,5 +320,16 @@
     <ClInclude Include="ObjectSpawner.h">
       <Filter>04.ETC</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadScene.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameProjectTeamProject.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

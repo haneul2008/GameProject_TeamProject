@@ -21,6 +21,8 @@ void DescScene::OnSceneExit()
 void DescScene::Update()
 {
 	Key key = InputManager::GetInstance()->getKey();
+	MoveCursor(100, 30);
+	cout << (int)key;
 	switch (key)
 	{
 	case Key::ESC:

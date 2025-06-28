@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include"Object.h"
+#include"IInputable.h"
 class TitleInteraction
 {
 public:

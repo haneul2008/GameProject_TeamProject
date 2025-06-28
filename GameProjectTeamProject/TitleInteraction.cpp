@@ -16,6 +16,7 @@ TitleInteraction::TitleInteraction(std::vector<Pos> posList) : _posList(), _prev
 void TitleInteraction::Update()
 {
 	Key key = InputManager::GetInstance()->getKey();
+
 	switch (key)
 	{
 	case Key::UP:
@@ -32,6 +33,8 @@ void TitleInteraction::Update()
 	case Key::READYINPUT:
 		Interact();
 	}
+
+	FrameSync(10);
 }
 
 void TitleInteraction::RenderSword()

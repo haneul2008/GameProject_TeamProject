@@ -13,7 +13,7 @@ Entity::Entity() :
     _tempMoveX(0),
     _tempMoveY(0),
     _updatePriority(0),
-    _isDead(false) {
+    isDead(false) {
 }
 
 Entity::~Entity() {
@@ -24,7 +24,7 @@ Entity::Entity(Entity&& other) :
     _tempMoveX(0),
     _tempMoveY(0),
     _updatePriority(0),
-    _isDead(false) {
+    isDead(false) {
 }
 
 Entity::Entity(const Entity& other)
@@ -35,7 +35,7 @@ Entity::Entity(const Entity& other)
     _tempMoveY(0),
     _updatePriority(other._updatePriority),
     _attckComments(other._attckComments),
-    _isDead(false) {
+    isDead(false) {
     Collider::init(&pos, other.getIsTrigger(), other.getLayer());
 }
 
@@ -140,16 +140,6 @@ void Entity::takeDamage(Entity* dealer, int damage) {
     if (damage == 0)
         return;
 
-    int evade = rand() % 1001;
-    if (evade <= stat.evadePer) {
-
-        std::string healMassage = std::format("{}이(가) {}의 공격을 회피했다.", _name, dealer->getName());
-        std::wstring printMessage = to_wstring(healMassage);
-        pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
-
-        return;
-    }
-
     if (damage <= 0) { // 회복 시 damage가 음수일 때
         stat.hp = std::min(stat.hp - damage, stat.maxHp);
 
@@ -158,10 +148,17 @@ void Entity::takeDamage(Entity* dealer, int damage) {
         pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
     }
     else {
-        int attackSuccess = rand() % 101;
+        int evade = rand() % 1001;
+        if (evade <= stat.evadePer) {
 
-        if (stat.evadePer <= attackSuccess)
-            stat.hp = std::max(stat.hp - damage, 0);
+            std::string healMassage = std::format("{}이(가) {}의 공격을 회피했다.", _name, dealer->getName());
+            std::wstring printMessage = to_wstring(healMassage);
+            pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+
+            return;
+        }
+
+        stat.hp = std::max(stat.hp - damage, 0);
 
         if (stat.hp > 0)
             onHitEvent(dealer, damage);
@@ -174,10 +171,10 @@ void Entity::onHitEvent(Entity* dealer, int damage) {
 }
 
 void Entity::onDeadEvent(Entity* dealer, int damage) {
-    if (_isDead)
+    if (isDead)
         return;
 
-    _isDead = true;
+    isDead = true;
 
     while (!_removeToListeners.empty()) {
         _deadListeners.erase(_removeToListeners.front());
@@ -217,7 +214,7 @@ void Entity::addAttackComment(const std::string& comment) {
 }
 
 void Entity::attack(Entity* target, int damage) {
-    if (_isDead)
+    if (isDead)
         return;
 
     std::string printComment = std::format("{}이(가) {}에게 {}. 피해 : {}", _name, target->getName(), getAttackComment(), damage);
@@ -228,7 +225,7 @@ void Entity::attack(Entity* target, int damage) {
 }
 
 bool Entity::getIsdead() const {
-    return _isDead;
+    return isDead;
 }
 
 void Entity::onUseItem() {
