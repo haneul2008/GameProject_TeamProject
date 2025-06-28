@@ -21,8 +21,10 @@ public:
 	void CreateMap();
 	void Render();
 	PSTAGE GetStage();
+	bool CheckGoal(const Pos& pos);
 private:
 	void RenderStage();
+	void ClearStage();
 private:
 	PSTAGE _stage;
 	RoomRender* _roomRender;

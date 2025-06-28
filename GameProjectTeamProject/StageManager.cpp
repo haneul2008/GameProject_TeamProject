@@ -7,6 +7,7 @@
 #include "RoomRender.h"
 #include "Physics.h"
 #include "Entity.h"
+#include "Transition.h"
 
 using std::cout;
 using std::endl;
@@ -55,6 +56,19 @@ PSTAGE StageManager::GetStage()
 	return _stage;
 }
 
+bool StageManager::CheckGoal(const Pos& pos)
+{
+	if (_stage->endPos == pos)
+	{
+		ClearStage();
+		Transition();
+		system("cls");
+		return true;
+	}
+
+	return false;
+}
+
 void StageManager::RenderStage()
 {
 	for (int i = 0; i < MAP_HEIGHT; ++i)
@@ -75,6 +89,19 @@ void StageManager::RenderStage()
 				SetColor(_stage->curMap[i][j].textColor);
 				cout << _stage->curMap[i][j].symbol;
 			}
+		}
+
+		cout << endl;
+	}
+}
+
+void StageManager::ClearStage()
+{
+	for (int i = 0; i < MAP_HEIGHT; ++i)
+	{
+		for (int j = 0; j < MAP_WIDTH; ++j)
+		{
+			_stage->curMap[i][j].SetTile(Tile::EMPTY);
 		}
 
 		cout << endl;
