@@ -161,6 +161,7 @@
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TurnManager.cpp" />
     <ClCompile Include="InventoryManager.cpp" />
+    <ClCompile Include="Types.cpp" />
     <ClCompile Include="UISupporter.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
   </ItemGroup>

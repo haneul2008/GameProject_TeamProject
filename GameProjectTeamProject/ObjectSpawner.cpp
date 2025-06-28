@@ -33,13 +33,14 @@ Object* ObjectSpawner::Spawn(std::string poolName)
 
 	Random random;
 
-	int randX = random.GetRandomPoint(targetRoom->x + 1, targetRoom->x + targetRoom->width - 2);
-	int randY = random.GetRandomPoint(targetRoom->y + 1, targetRoom->y + targetRoom->height - 2);
+	int randX = random.GetRandomPoint(targetRoom->x + 2, targetRoom->x + targetRoom->width - 2);
+	int randY = random.GetRandomPoint(targetRoom->y + 2, targetRoom->y + targetRoom->height - 2);
 
 	Pos pos = { randX, randY };
 
 	vector<Pos>& spawnPositions = _spawnPosPairs[targetRoom];
-	if(std::find(spawnPositions.begin(), spawnPositions.end(), pos) != spawnPositions.end())
+	if(std::find(spawnPositions.begin(), spawnPositions.end(), pos) != spawnPositions.end() ||
+		pos == _stage->startPos || pos == _stage->endPos)
 		return nullptr;
 
 	_spawnPosPairs[targetRoom].push_back(pos);

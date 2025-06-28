@@ -5,11 +5,11 @@
 #include "Enums.h"
 #include "Console.h"
 #include "RoomRender.h"
-#include "Physics.h"
 #include "Entity.h"
 #include "Transition.h"
 #include "Random.h"
 #include "DataSaver.h"
+#include "TempEnums.h"
 
 using std::cout;
 using std::endl;
@@ -40,6 +40,12 @@ StageManager::~StageManager()
 
 void StageManager::Init()
 {
+	for(const Collider* collider : _colliders)
+	{
+		if (collider != nullptr)
+			delete collider;
+	}
+	_colliders.clear();
 	_currentFloor = 0;
 }
 
@@ -48,11 +54,39 @@ void StageManager::CreateMap()
 	RoomInfo info = _roomGenerator->GenerateRooms(_stage);
 	_stage->rooms = std::move(info.rooms);
 	vector<vector<Pos>>* pathList = &info.pathList;
+
 	for (const PROOM room : _stage->rooms)
 		_roomRender->DrawRoom(_stage, room);
 
 	for (Path& path : *pathList)
 		_roomRender->DrawPath(_stage, path);
+
+	for (Collider* collider : _colliders)
+	{
+		PhysicsManager::GetInstance()->removeCollider(collider);
+		delete collider;
+	}
+
+	for(int i = 0; i < MAP_HEIGHT; ++i)
+	{
+		for (int j = 0; j < MAP_WIDTH; ++j)
+		{
+			Tile& tile = _stage->curMap[i][j].tile;
+
+			if (tile == Tile::WALL || tile == Tile::EMPTY)
+			{
+				PositionCollider* collider = new PositionCollider;
+
+				Pos* pos = new Pos;
+				pos->x = j;
+				pos->y = i;
+
+				collider->init(pos, false, L(Layer::WALL));
+				PhysicsManager::GetInstance()->addCollider(collider);
+				_colliders.push_back(collider);
+			}
+		}
+	}
 }
 
 void StageManager::Render()
@@ -87,11 +121,15 @@ void StageManager::SpawnObjects()
 
 	_objectSpawner->SetUp();
 
-	string poolName = "ENEMY";
 	int cnt = random.GetRandomPoint(MIN_ENEMY, MAX_ENEMY);
 
-	for(int i = 0; i < cnt; ++i)
-		_objectSpawner->Spawn(poolName);
+	for (int i = 0; i < cnt; ++i)
+		_objectSpawner->Spawn("ENEMY");
+
+	cnt = random.GetRandomPoint(MIN_ITEM, MAX_ITEM);
+
+	for (int i = 0; i < cnt; ++i)
+		_objectSpawner->Spawn("ITEM");
 }
 
 void StageManager::RenderStage()

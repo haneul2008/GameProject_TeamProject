@@ -4,6 +4,7 @@
 
 void GameScene::OnSceneEnter()
 {
+	StageManager::GetInstance()->Init();
 	StageManager::GetInstance()->CreateMap();
 	InitManager::GetInstance()->InitPlayer();
 	InitManager::GetInstance()->InitEnemies();
