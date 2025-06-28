@@ -11,8 +11,8 @@ public:
     InventoryManager();
 
 public:
-    void init(int maxInven);
-    void getItem(Item&& item);
+    //void init(int maxInven);
+    //void getItem(Item&& item);
 
 private:
     int _maxInven;

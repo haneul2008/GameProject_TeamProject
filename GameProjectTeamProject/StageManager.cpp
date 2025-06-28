@@ -5,6 +5,8 @@
 #include "Enums.h"
 #include "Console.h"
 #include "RoomRender.h"
+#include "Physics.h"
+#include "Entity.h"
 
 using std::cout;
 using std::endl;
@@ -59,6 +61,13 @@ void StageManager::RenderStage()
 	{
 		for (int j = 0; j < MAP_WIDTH; ++j)
 		{
+			Collider* collider = PhysicsManager::GetInstance()->getCollider({ j, i });
+			if (dynamic_cast<Entity*>(collider) != nullptr)
+			{
+				MoveCursor(collider->getPosition()->x * 2 + 2, collider->getPosition()->y);
+				continue;
+			}
+
 			if (_stage->curMap[i][j].isHide)
 				cout << "  ";
 			else
