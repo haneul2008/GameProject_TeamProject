@@ -5,6 +5,9 @@
 #include "Enums.h"
 #include "Console.h"
 #include "RoomRender.h"
+#include "Physics.h"
+#include "Entity.h"
+#include "Transition.h"
 
 using std::cout;
 using std::endl;
@@ -53,12 +56,32 @@ PSTAGE StageManager::GetStage()
 	return _stage;
 }
 
+bool StageManager::CheckGoal(const Pos& pos)
+{
+	if (_stage->endPos == pos)
+	{
+		ClearStage();
+		Transition();
+		system("cls");
+		return true;
+	}
+
+	return false;
+}
+
 void StageManager::RenderStage()
 {
 	for (int i = 0; i < MAP_HEIGHT; ++i)
 	{
 		for (int j = 0; j < MAP_WIDTH; ++j)
 		{
+			Collider* collider = PhysicsManager::GetInstance()->getCollider({ j, i });
+			if (dynamic_cast<Entity*>(collider) != nullptr)
+			{
+				MoveCursor(collider->getPosition()->x * 2 + 2, collider->getPosition()->y);
+				continue;
+			}
+
 			if (_stage->curMap[i][j].isHide)
 				cout << "  ";
 			else
@@ -66,6 +89,19 @@ void StageManager::RenderStage()
 				SetColor(_stage->curMap[i][j].textColor);
 				cout << _stage->curMap[i][j].symbol;
 			}
+		}
+
+		cout << endl;
+	}
+}
+
+void StageManager::ClearStage()
+{
+	for (int i = 0; i < MAP_HEIGHT; ++i)
+	{
+		for (int j = 0; j < MAP_WIDTH; ++j)
+		{
+			_stage->curMap[i][j].SetTile(Tile::EMPTY);
 		}
 
 		cout << endl;

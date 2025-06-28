@@ -19,6 +19,7 @@ public:
     void setWhatIsItemLayer(int layer);
     void setWhatIsWallLayer(int layer);
     void setWhatIsEnemyLayer(int layer);
+    void SetUp();
 
     void applyMove() override;
 

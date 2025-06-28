@@ -15,9 +15,6 @@ Player::Player() :
 	_whatIsWall(0),
 	_whatIsEnemy(0),
 	_inputLock(false) {
-	StageManager* stageManager = StageManager::GetInstance();
-
-	fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
 }
 
 Player::~Player() {
@@ -33,8 +30,7 @@ void Player::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer
 	Entity::init(stat, defaultImage, trigger, layer);
 	InputManager::GetInstance()->addInputListener(this);
 
-	setPosition(StageManager::GetInstance()->GetStage()->startPos);
-	fov->UpdateFov(pos);
+	SetUp();
 }
 
 void Player::setWhatIsItemLayer(int layer) {
@@ -49,6 +45,15 @@ void Player::setWhatIsEnemyLayer(int layer) {
 	_whatIsEnemy = layer;
 }
 
+void Player::SetUp()
+{
+	StageManager* stageManager = StageManager::GetInstance();
+	fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
+
+	setPosition(stageManager->GetStage()->startPos);
+	fov->UpdateFov(pos);
+}
+
 void Player::applyMove() {
 	bool move = _tempMoveX != 0 || _tempMoveY != 0;
 
@@ -59,6 +64,9 @@ void Player::applyMove() {
 		render.setCurrentAnimation('m');
 		TurnManager::GetInstance()->usePlayerTurn();
 		fov.get()->UpdateFov(pos);
+
+		if (StageManager::GetInstance()->CheckGoal(pos))
+			SetUp();
 	}
 	else
 		render.setCurrentAnimation('i');
