@@ -150,7 +150,7 @@ void InitManager::InitEnemies() {
         star.setPlayer(_pPlayer);
         star.setSenceRange(5);
 
-        star.render.addAnimation(idleAnimation, { L'☭', L'⚸', L'⚒' });
+        star.render.addAnimation(idleAnimation, { L'☭', L'⚸' });
         star.render.setCurrentAnimation(idleAnimation);
 
         star.setName("붉은 녀석");
