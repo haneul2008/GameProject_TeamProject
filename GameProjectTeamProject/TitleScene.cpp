@@ -22,6 +22,8 @@ void TitleScene::OnSceneEnter()
 
 	std::vector<Pos> posList;
 
+	SetColor();
+
 	posList.push_back({ resolution.X / 2 - 4, y + 5 });
 	MoveCursor(posList[0].x, posList[0].y);
 	std::cout << "게임 시작";

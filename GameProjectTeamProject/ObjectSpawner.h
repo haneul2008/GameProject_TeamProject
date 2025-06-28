@@ -10,9 +10,8 @@ class ObjectSpawner
 public:
 	ObjectSpawner(PSTAGE stage);
 public:
-	void Spawn(std::string poolName);
-private:
-	int GetRandomPoint(int start, int end);
+	void SetUp();
+	Object* Spawn(std::string poolName);
 private:
 	PSTAGE _stage;
 	std::unordered_map<PROOM, std::vector<Pos>> _spawnPosPairs;

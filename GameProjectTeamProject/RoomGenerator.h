@@ -21,7 +21,6 @@ private:
 	Path GetOptimalPath(const WallSide& currentSide, const WallSide& targetSide,
 		const Pos& current, const Pos& target);
 	void SetStraightPath(vector<Pos>& pathList, const Pos& start, const Pos& end);
-	int GetRandomPoint(int start, int end);
 	std::pair<WallSide, WallSide> GetWallSide(const PROOM start, const PROOM end);
 	Pos GetRandomWallPos(const PROOM room, WallSide side);
 	Pos GetWallCenterPos(const PROOM room, WallSide side);

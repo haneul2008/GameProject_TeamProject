@@ -7,6 +7,7 @@
 #include"Types.h"
 #include"Constants.h"
 #include"RoomGenerator.h"
+#include"ObjectSpawner.h"
 
 using std::vector;
 
@@ -22,6 +23,7 @@ public:
 	void Render();
 	PSTAGE GetStage();
 	bool CheckGoal(const Pos& pos);
+	void SpawnObjects();
 private:
 	void RenderStage();
 	void ClearStage();
@@ -29,4 +31,5 @@ private:
 	PSTAGE _stage;
 	RoomRender* _roomRender;
 	RoomGenerator* _roomGenerator;
+	ObjectSpawner* _objectSpawner;
 };

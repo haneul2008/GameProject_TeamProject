@@ -50,7 +50,7 @@ void Player::SetUp()
 	StageManager* stageManager = StageManager::GetInstance();
 	fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
 
-	setPosition(stageManager->GetStage()->startPos);
+	Object::setPosition(stageManager->GetStage()->startPos);
 	fov->UpdateFov(pos);
 }
 

@@ -8,6 +8,7 @@
 #include "Physics.h"
 #include "Entity.h"
 #include "Transition.h"
+#include "Random.h"
 
 using std::cout;
 using std::endl;
@@ -19,6 +20,7 @@ StageManager::StageManager()
 	_stage->curMap = new RenderTile[MAP_HEIGHT][MAP_WIDTH];
 	_roomRender = new RoomRender(_stage);
 	_roomGenerator = new RoomGenerator(3);
+	_objectSpawner = new ObjectSpawner(_stage);
 }
 
 StageManager::~StageManager()
@@ -28,9 +30,10 @@ StageManager::~StageManager()
 	for (const PROOM room : _stage->rooms)
 		delete room;
 
-	delete[] _stage;
 	delete[] _roomRender;
 	delete[] _roomGenerator;
+	delete[] _objectSpawner;
+	delete[] _stage;
 }
 
 void StageManager::CreateMap()
@@ -67,6 +70,19 @@ bool StageManager::CheckGoal(const Pos& pos)
 	}
 
 	return false;
+}
+
+void StageManager::SpawnObjects()
+{
+	Random random;
+
+	_objectSpawner->SetUp();
+
+	string poolName = "ENEMY";
+	int cnt = random.GetRandomPoint(MIN_ENEMY, MAX_ENEMY);
+
+	for(int i = 0; i < cnt; ++i)
+		_objectSpawner->Spawn(poolName);
 }
 
 void StageManager::RenderStage()

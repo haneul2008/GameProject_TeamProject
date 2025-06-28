@@ -1,39 +1,50 @@
-#include<random>
 #include "ObjectSpawner.h"
 #include "EntityManager.h"
+#include "Random.h"
 
 ObjectSpawner::ObjectSpawner(PSTAGE stage) : _stage(nullptr), _spawnPosPairs()
 {
 	_stage = stage;
 }
 
-void ObjectSpawner::Spawn(std::string poolName)
+void ObjectSpawner::SetUp()
+{
+	_spawnPosPairs.clear();
+
+	for (const PROOM room : _stage->rooms)
+	{
+		_spawnPosPairs[room] = vector<Pos>();
+	}
+}
+
+Object* ObjectSpawner::Spawn(std::string poolName)
 {
 	PROOM targetRoom = _stage->rooms[0];
-	int maxSize = 1000;
+	int minSize = 1000;
 
 	for(const auto& pair : _spawnPosPairs)
 	{
-		if (pair.second.size() < maxSize)
+		if (pair.second.size() < minSize)
 		{
-			maxSize = pair.second.size();
+			minSize = pair.second.size();
 			targetRoom = pair.first;
-			break;
 		}
 	}
 
-	int randX = GetRandomPoint(targetRoom->x + 1, targetRoom->x + targetRoom->width - 2);
-	int randY = GetRandomPoint(targetRoom->y + 1, targetRoom->y + targetRoom->height - 2);
+	Random random;
+
+	int randX = random.GetRandomPoint(targetRoom->x + 1, targetRoom->x + targetRoom->width - 2);
+	int randY = random.GetRandomPoint(targetRoom->y + 1, targetRoom->y + targetRoom->height - 2);
 
 	Pos pos = { randX, randY };
+
+	vector<Pos>& spawnPositions = _spawnPosPairs[targetRoom];
+	if(std::find(spawnPositions.begin(), spawnPositions.end(), pos) != spawnPositions.end())
+		return nullptr;
+
 	_spawnPosPairs[targetRoom].push_back(pos);
 
 	Object* newObj = EntityManager::GetInstance()->activeRandomObject(poolName);
-}
-
-int ObjectSpawner::GetRandomPoint(int start, int end)
-{
-	std::mt19937 rng(std::random_device{}());
-	std::uniform_int_distribution<int> range(start, end);
-	return range(rng);
+	newObj->setPosition(pos);
+	return newObj;
 }

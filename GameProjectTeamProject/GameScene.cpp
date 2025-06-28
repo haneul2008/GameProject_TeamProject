@@ -6,6 +6,9 @@ void GameScene::OnSceneEnter()
 {
 	StageManager::GetInstance()->CreateMap();
 	InitManager::GetInstance()->InitPlayer();
+	InitManager::GetInstance()->InitEnemies();
+
+	StageManager::GetInstance()->SpawnObjects();
 }
 
 void GameScene::OnSceneExit()

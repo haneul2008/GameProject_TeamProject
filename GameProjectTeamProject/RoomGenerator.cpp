@@ -1,8 +1,8 @@
 #include <iostream>
-#include <random>
 #include <algorithm>
 #include <math.h>
 #include "RoomGenerator.h"
+#include "Random.h"
 
 RoomInfo RoomGenerator::GenerateRooms(PSTAGE stage)
 {
@@ -255,13 +255,6 @@ void RoomGenerator::SetStraightPath(vector<Pos>& pathList, const Pos& start, con
 	}
 }
 
-int RoomGenerator::GetRandomPoint(int start, int end)
-{
-	std::mt19937 rng(std::random_device{}());
-	std::uniform_int_distribution<int> range(start, end);
-	return range(rng);
-}
-
 std::pair<WallSide, WallSide> RoomGenerator::GetWallSide(const PROOM start, const PROOM end)
 {
 	std::pair<WallSide, WallSide> result;
@@ -312,20 +305,21 @@ std::pair<WallSide, WallSide> RoomGenerator::GetWallSide(const PROOM start, cons
 Pos RoomGenerator::GetRandomWallPos(const PROOM room, WallSide side)
 {
 	Pos result;
+	Random random;
 
 	switch (side)
 	{
 	case WallSide::TOP:
-		result = { GetRandomPoint(room->x + 1, room->x + room->width - 2), room->y };
+		result = { random.GetRandomPoint(room->x + 1, room->x + room->width - 2), room->y };
 		break;
 	case WallSide::BOTTOM:
-		result = { GetRandomPoint(room->x + 1, room->x + room->width - 2), room->y + room->height - 1 };
+		result = { random.GetRandomPoint(room->x + 1, room->x + room->width - 2), room->y + room->height - 1 };
 		break;
 	case WallSide::LEFT:
-		result = { room->x, GetRandomPoint(room->y + 2, room->y + room->height - 3) };
+		result = { room->x, random.GetRandomPoint(room->y + 2, room->y + room->height - 3) };
 		break;
 	case WallSide::RIGHT:
-		result = { room->x + room->width - 1, GetRandomPoint(room->y + 2, room->y + room->height - 3) };
+		result = { room->x + room->width - 1, random.GetRandomPoint(room->y + 2, room->y + room->height - 3) };
 		break;
 	default:
 		result = {};
@@ -428,8 +422,10 @@ PathList RoomGenerator::ConnectAllRoom(const PSTAGE stage, const vector<PROOM>& 
 
 void RoomGenerator::SetPositions(const PSTAGE stage)
 {
-	int startRoom = GetRandomPoint(0, _roomList.size() - 1);
-	int endRoom = GetRandomPoint(0, _roomList.size() - 1);
+	Random random;
+
+	int startRoom = random.GetRandomPoint(0, _roomList.size() - 1);
+	int endRoom = random.GetRandomPoint(0, _roomList.size() - 1);
 
 	if (startRoom == endRoom)
 		endRoom = startRoom + 1 % _roomList.size();
