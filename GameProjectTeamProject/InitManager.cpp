@@ -111,7 +111,7 @@ void InitManager::InitEnemies() {
     if (enemyPtr != nullptr) {
         Enemy& star = *enemyPtr;
         // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
-        star.init(EntityStat::makeStat(20, 35, 100, 10), L'E', false, L(Layer::ENEMY));
+        star.init(EntityStat::makeStat(5, 35, 100, 10), L'E', false, L(Layer::ENEMY));
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(5);

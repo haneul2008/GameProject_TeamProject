@@ -8,7 +8,7 @@
 #include "Core.h"
 
 constexpr std::string INVEN(int i) { return "INVEN" + std::to_string(i); }
-constexpr int INTERVAL = 10;
+constexpr int INTERVAL = 18;
 
 InventoryManager::InventoryManager() :
     _maxInven(0) {
@@ -39,6 +39,7 @@ bool InventoryManager::tryAddItem(Item* item) {
     _deActivationQueue.push(item);
 
     resetItemUI();
+    return true;
 }
 
 void InventoryManager::Update() {
@@ -63,7 +64,7 @@ bool InventoryManager::useItem(Entity* user, int i) {
     // 사용 후 제거
     delete _inventory[i];
     _inventory.erase(_inventory.begin() + i);
-    UISupporter::GetInstance()->removeUI(INVEN(i + 1));
+    UISupporter::GetInstance()->removeUI(INVEN(_inventory.size() + 1));
 
     resetItemUI();
 
@@ -77,7 +78,7 @@ bool InventoryManager::useItem(Entity* user, int i) {
 void InventoryManager::resetItemUI() {
     // 전부 리셋해버려서 비효율적, 수정시 고정 인덱스로 접근 시켜야 할듯
     for (int i = 1; i <= _inventory.size(); ++i) {
-        std::string str = std::format("{} : {}", i, _inventory[i - 1]->getName());
+        std::string str = std::format("{} : {}   ", i, _inventory[i - 1]->getName());
         std::wstring wstr = to_wstring(str);
         UISupporter::GetInstance()->setUI(INVEN(i), wstr);
         UISupporter::GetInstance()->setUI(INVEN(i), (i - 1) * INTERVAL, MAP_HEIGHT + 2);
