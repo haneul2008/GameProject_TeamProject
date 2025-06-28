@@ -13,11 +13,16 @@ constexpr int INTERVAL = 10;
 InventoryManager::InventoryManager() :
     _maxInven(0) {
     Core::GetInstance()->AddUpdate(this);
+
+    InputManager::GetInstance()->addInputListener(this);
 }
 
 InventoryManager::~InventoryManager() {
     for (Item* item : _inventory)
         delete item;
+
+    Core::GetInstance()->RemoveUpdate(this);
+    InputManager::GetInstance()->removeInputListener(this);
 }
 
 void InventoryManager::init(int maxIven) {
@@ -51,12 +56,19 @@ bool InventoryManager::useItem(Entity* user, int i) {
     if (--i < 0 || _inventory.size() <= i)
         return false;
 
+    std::string itemName = _inventory[i]->getName();
+
     _inventory[i]->useItem(user);
     // 사용 후 제거
     delete _inventory[i];
     _inventory.erase(_inventory.begin() + i);
+    UISupporter::GetInstance()->removeUI(INVEN(i));
 
     resetItemUI();
+
+    std::string printComment = std::format("{}이(가) {}를(을) 사용했다.", user->getName(), itemName);
+    std::wstring printMessage = to_wstring(printComment);
+    pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
 
     return true;
 }
@@ -68,5 +80,21 @@ void InventoryManager::resetItemUI() {
         std::wstring wstr = to_wstring(str);
         UISupporter::GetInstance()->setUI(INVEN(i), wstr);
         UISupporter::GetInstance()->setUI(INVEN(i), (i - 1) * INTERVAL, MAP_HEIGHT + 2);
+    }
+}
+
+void InventoryManager::onInputKey(Key key) {
+    switch (key) {
+        case Key::OPENINVEN: {
+            _openIven = !_openIven;
+
+            if (_openIven)
+                resetItemUI();
+            else
+                for (int i = 1; i <= _inventory.size(); ++i)
+                    UISupporter::GetInstance()->removeUI(INVEN(i));
+        }
+        default:
+            break;
     }
 }

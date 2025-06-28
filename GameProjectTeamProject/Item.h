@@ -20,7 +20,7 @@ public:
     bool isPick();
     void pick();
 
-    virtual void useItem(Entity* itemUser) abstract;
+    virtual void useItem(Entity* itemUser);
 
 public:
     // PositionCollider을(를) 통해 상속됨

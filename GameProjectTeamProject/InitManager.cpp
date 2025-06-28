@@ -7,21 +7,10 @@
 #include "InventoryManager.h"
 #include "TempEnums.h"
 #include "Item.h"
+#include "Constants.h"
 
 InitManager::InitManager() :
     _pPlayer(nullptr) {
-    // PhysicsManager Init
-
-    PhysicsManager* physicsManager = PhysicsManager::GetInstance();
-    physicsManager->setMaxMoveBound(100, 100);
-
-
-    // Inventory Init
-
-    InventoryManager* inventoryManager = InventoryManager::GetInstance();
-    inventoryManager->init(3);
-
-
     // Input Init
 
     // UI키 우선함.
@@ -46,7 +35,24 @@ InitManager::InitManager() :
 
     inputManager->addInputKeyPair({ VK_ESCAPE, Key::ESC });
 
-    inputManager->SetUpdatePriotity(1000);
+    for (int i = 1; i <= 9; ++i)
+        // 0x31이 키보드 1
+        inputManager->addInputKeyPair({ 0x30 + i, (Key)((int)Key::ONE + (i - 1)) });
+
+    // 항상 먼저 값을 입력 받게
+    inputManager->SetUpdatePriotity(2147483647);
+
+
+    // PhysicsManager Init
+
+    PhysicsManager* physicsManager = PhysicsManager::GetInstance();
+    physicsManager->setMaxMoveBound(MAP_WIDTH, MAP_HEIGHT);
+
+
+    // Inventory Init
+
+    InventoryManager* inventoryManager = InventoryManager::GetInstance();
+    inventoryManager->init(3);
 }
 
 void InitManager::InitPlayer() {
@@ -55,7 +61,7 @@ void InitManager::InitPlayer() {
     char idleAnimation = 'i', moveAnimation = 'm';
 
     int addDamagePer = 10;
-    int startDamage = 1, startMaxHP = 10, startAvoidance = 0;
+    int startDamage = 3, startMaxHP = 15, startAvoidance = 0;
 
     _pPlayer->init(EntityStat::makeStat(startDamage, startMaxHP, startAvoidance, addDamagePer), L'P', false, L(Layer::PLAYER));
     _pPlayer->active();
@@ -102,7 +108,7 @@ void InitManager::InitEnemies() {
     if (enemyPtr != nullptr) {
         Enemy& star = *enemyPtr;
         // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
-        star.init(EntityStat::makeStat(1, 5, 10, 10), L'E', false, L(Layer::ENEMY));
+        star.init(EntityStat::makeStat(1, 3, 10, 10), L'E', false, L(Layer::ENEMY));
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(5);

@@ -221,6 +221,9 @@ bool Entity::getIsdead() const {
     return _isDead;
 }
 
+void Entity::onUseItem() {
+}
+
 EntityStat EntityStat::operator+(const EntityStat& other) const {
     EntityStat newEntityStat = EntityStat();
     newEntityStat.damage = damage + other.damage;
