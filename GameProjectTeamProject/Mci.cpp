@@ -8,6 +8,9 @@
 static std::vector<SoundEntry> Sound_Table = {
     {L"Sound\\BGM.mp3", 200, 0},
     {L"Sound\\Transition.mp3", 220, 0},
+    {L"Sound\\PlayerAttack.mp3", 220, 0},
+    {L"Sound\\PlayerHit.mp3", 220, 0},
+    {L"Sound\\EnemyDead.mp3", 220, 0},
 };
 
 // ¿ÀÇÂ

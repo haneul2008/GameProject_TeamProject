@@ -11,6 +11,8 @@
 #include "Item.h"
 #include "InventoryManager.h"
 #include "Constants.h"
+#include "Mci.h"
+#pragma comment(lib, "winmm")
 
 const std::string HP_UI = "HP_UI";
 
@@ -61,6 +63,7 @@ void Player::SetUp() {
 void Player::takeDamage(Entity* dealer, int damage) {
     Entity::takeDamage(dealer, damage);
 
+	PlaySoundID(SOUNDID::PlayerHit);
     setHpUI();
 }
 

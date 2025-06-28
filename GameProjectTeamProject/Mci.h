@@ -13,6 +13,9 @@ enum class SOUNDID
 {
     BGM,
 	Transition,
+	PlayerAttack,
+    PlayerHit,
+    EnemyDead,
     END
 };
 

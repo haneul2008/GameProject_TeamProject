@@ -5,6 +5,8 @@
 #include "UISupporter.h"
 #include "Physics.h"
 #include "StageManager.h"
+#include "Mci.h"
+#pragma comment(lib, "winmm")
 
 Enemy::~Enemy() {
 }
@@ -49,12 +51,14 @@ void Enemy::handleEnemyTurn() {
 }
 
 void Enemy::onHitEvent(Entity* dealer, int damage) {
+	PlaySoundID(SOUNDID::PlayerAttack);
 }
 
 void Enemy::onDeadEvent(Entity* dealer, int damage) {
     std::string printComment = std::format("{}이(가) {}.", _name, getDeadMessage());
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
+    PlaySoundID(SOUNDID::EnemyDead);
 
     Entity::onDeadEvent(dealer, damage);
 }
