@@ -11,6 +11,7 @@ class InitManager : public Singleton<InitManager>
 public:
     InitManager();
     void InitPlayer();
+    void InitEnemies();
     void DeletePlayer();
 private:
     Player* _pPlayer;
