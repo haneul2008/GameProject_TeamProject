@@ -2,7 +2,6 @@
 
 #include <string>
 #include <format>
-#include <algorithm>
 
 #include "UISupporter.h"
 
@@ -142,7 +141,7 @@ void Player::setInputLock(bool value) {
 }
 
 void Player::onUseItem() {
-    stat.hp = std::min(stat.hp - damage, stat.maxHp);
+    stat.hp = stat.hp < stat.maxHp ? stat.hp : stat.maxHp;
     setHpUI();
 }
 
