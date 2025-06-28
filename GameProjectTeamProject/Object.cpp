@@ -79,6 +79,10 @@ Object* Object::newClone() {
     return new Object(*this);
 }
 
+void Object::setPosition(const Pos& pos) {
+    this->pos = pos;
+}
+
 void Object::setDefaultImage(wchar_t defaultImage) {
     render = RendI();
     render.setDefaultImage(defaultImage);

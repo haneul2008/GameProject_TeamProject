@@ -66,10 +66,6 @@ void Entity::deActive() {
     _deadListeners.clear();
 }
 
-void Entity::setPosition(const Pos& pos) {
-    this->pos = pos;
-}
-
 void Entity::move(int x, int y) {
     moveX(x);
     moveY(y);
