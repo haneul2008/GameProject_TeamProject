@@ -143,6 +143,7 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mci.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectSpawner.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="IRender.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="IUpdate.h" />
+    <ClInclude Include="Mci.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectSpawner.h" />
     <ClInclude Include="Physics.h" />
