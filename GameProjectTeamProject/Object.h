@@ -63,6 +63,8 @@ public:
     virtual void deActive();
     virtual Object* newClone();
 
+    void setPosition(const Pos& pos);
+
     void setDefaultImage(wchar_t defaultImage);
 
     // IRender을(를) 통해 상속됨

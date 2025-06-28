@@ -36,8 +36,6 @@ public:
     virtual void active() override;
     virtual void deActive() override;
 
-    void setPosition(const Pos& pos);
-
     void move(int x, int y);
     void move(const Pos& pos);
     void moveX(int value);
