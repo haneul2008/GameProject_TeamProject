@@ -61,8 +61,8 @@ bool StageManager::CheckGoal(const Pos& pos)
 	if (_stage->endPos == pos)
 	{
 		ClearStage();
+		CreateMap();
 		Transition();
-		system("cls");
 		return true;
 	}
 
@@ -101,6 +101,7 @@ void StageManager::ClearStage()
 	{
 		for (int j = 0; j < MAP_WIDTH; ++j)
 		{
+			_stage->curMap[i][j].isHide = true;
 			_stage->curMap[i][j].SetTile(Tile::EMPTY);
 		}
 
