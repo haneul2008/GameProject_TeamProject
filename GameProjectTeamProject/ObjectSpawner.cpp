@@ -1,12 +1,13 @@
 #include<random>
 #include "ObjectSpawner.h"
+#include "EntityManager.h"
 
 ObjectSpawner::ObjectSpawner(PSTAGE stage) : _stage(nullptr), _spawnPosPairs()
 {
 	_stage = stage;
 }
 
-void ObjectSpawner::Spawn(Object* object)
+void ObjectSpawner::Spawn(std::string poolName)
 {
 	PROOM targetRoom = _stage->rooms[0];
 	int maxSize = 1000;
@@ -24,6 +25,10 @@ void ObjectSpawner::Spawn(Object* object)
 	int randX = GetRandomPoint(targetRoom->x + 1, targetRoom->x + targetRoom->width - 2);
 	int randY = GetRandomPoint(targetRoom->y + 1, targetRoom->y + targetRoom->height - 2);
 
+	Pos pos = { randX, randY };
+	_spawnPosPairs[targetRoom].push_back(pos);
+
+	Object* newObj = EntityManager::GetInstance()->activeRandomObject(poolName);
 }
 
 int ObjectSpawner::GetRandomPoint(int start, int end)
