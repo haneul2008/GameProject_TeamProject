@@ -122,7 +122,6 @@ void InitManager::InitPlayer()
 
     _pPlayer->SetRenderPriotity(100);
     _pPlayer->SetUpdatePriotity(100);
-    _pPlayer->setPosition({ 30, 30 });
 }
 
 void InitManager::DeletePlayer()
