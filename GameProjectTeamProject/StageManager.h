@@ -19,6 +19,7 @@ public:
 	StageManager();
 	~StageManager();
 public:
+	void Init();
 	void CreateMap();
 	void Render();
 	PSTAGE GetStage();
@@ -32,4 +33,5 @@ private:
 	RoomRender* _roomRender;
 	RoomGenerator* _roomGenerator;
 	ObjectSpawner* _objectSpawner;
+	int _currentFloor;
 };

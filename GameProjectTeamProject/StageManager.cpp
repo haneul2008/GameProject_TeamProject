@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "Transition.h"
 #include "Random.h"
+#include "DataSaver.h"
 
 using std::cout;
 using std::endl;
@@ -21,6 +22,7 @@ StageManager::StageManager()
 	_roomRender = new RoomRender(_stage);
 	_roomGenerator = new RoomGenerator(3);
 	_objectSpawner = new ObjectSpawner(_stage);
+	_currentFloor = 0;
 }
 
 StageManager::~StageManager()
@@ -34,6 +36,11 @@ StageManager::~StageManager()
 	delete[] _roomGenerator;
 	delete[] _objectSpawner;
 	delete[] _stage;
+}
+
+void StageManager::Init()
+{
+	_currentFloor = 0;
 }
 
 void StageManager::CreateMap()
@@ -63,6 +70,8 @@ bool StageManager::CheckGoal(const Pos& pos)
 {
 	if (_stage->endPos == pos)
 	{
+		DataSaver().SetBestScore(++_currentFloor);
+
 		ClearStage();
 		CreateMap();
 		Transition();

@@ -5,6 +5,7 @@
 #include "TitleScene.h"
 #include "Console.h"
 #include "Strings.h"
+#include "DataSaver.h"
 
 void TitleScene::OnSceneEnter()
 {
@@ -25,17 +26,22 @@ void TitleScene::OnSceneEnter()
 
 	SetColor();
 
-	posList.push_back({ resolution.X / 2 - 4, y + 5 });
-	MoveCursor(posList[0].x, posList[0].y);
-	std::cout << "게임 시작";
+	string str[3] = {
+		"게임 시작",
+		"게임 설명",
+		"게임 종료"
+	};
 
-	posList.push_back({ resolution.X / 2 - 4, y + 10 });
-	MoveCursor(posList[1].x, posList[1].y);
-	std::cout << "게임 설명";
+	for(int i = 0; i < 3; ++i)
+	{
+		posList.push_back({ resolution.X / 2 - 4, y + 5 * (i + 1) });
+		MoveCursor(posList[i].x, posList[i].y);
+		std::cout << str[i];
+	}
 
-	posList.push_back({ resolution.X / 2 - 4, y + 15 });
-	MoveCursor(posList[2].x, posList[2].y);
-	std::cout << "게임 종료";
+	MoveCursor(posList[2].x - 3, posList[2].y + 7);
+	SetColor(COLOR::LIGHT_BLUE);
+	std::cout << "최고 깊이 : " << DataSaver().GetBestScore() << "층";
 
 	_titleInteraction = new TitleInteraction(posList);
 }

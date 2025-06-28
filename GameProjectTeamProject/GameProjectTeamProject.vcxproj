@@ -132,6 +132,7 @@
     <ClCompile Include="Colliders.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DataSaver.cpp" />
     <ClCompile Include="DescScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DataSaver.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="DescScene.h" />
     <ClInclude Include="Enemy.h" />
