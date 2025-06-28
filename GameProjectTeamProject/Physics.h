@@ -56,6 +56,7 @@ public:
 public:
     void setMaxMoveBound(int x, int y);
 
+    Collider* getCollider(const Pos& pos) const;
     Collider* getCollider(const Collider& owner, int x, int y) const;
     Collider* getCollider(const Collider& owner, const Pos& pos) const;
 

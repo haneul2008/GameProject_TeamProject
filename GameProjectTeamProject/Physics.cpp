@@ -13,6 +13,14 @@ void PhysicsManager::setMaxMoveBound(int x, int y) {
     _maxWidth = x;
 }
 
+Collider* PhysicsManager::getCollider(const Pos& pos) const {
+    for (Collider* collider : _colliders) {
+        if (*collider->getPosition() == pos)
+            return collider;
+    }
+    return nullptr;
+}
+
 Collider* PhysicsManager::getCollider(const Collider& owner, int x, int y) const {
     return this->getCollider(owner, { x, y });
 }

@@ -156,7 +156,7 @@
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TurnManager.cpp" />
-    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="InventoryManager.cpp" />
     <ClCompile Include="UISupporter.cpp" />
     <ClCompile Include="UpdateContainer.cpp" />
   </ItemGroup>
@@ -196,7 +196,7 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="TurnManager.h" />
-    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="InventoryManager.h" />
     <ClInclude Include="UISupporter.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="UpdateContainer.h" />
