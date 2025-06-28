@@ -26,6 +26,11 @@ void Item::deActive() {
     Object::deActive();
 }
 
+Item* Item::newClone() {
+    // item자체는 nullptr반환 상속 객체가 newClone가능하게 할것
+    return nullptr;
+}
+
 void Item::setPosition(const Pos& pos) {
     this->pos = pos;
 }
@@ -47,6 +52,10 @@ void Item::pick() {
 }
 
 // Item=========================================
+
+StatItem* StatItem::newClone() {
+    return new StatItem(*this);
+}
 
 void StatItem::setUpStat(const EntityStat& stat) {
     _upStat = stat;
