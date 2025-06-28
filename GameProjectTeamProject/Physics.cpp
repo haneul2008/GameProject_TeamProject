@@ -43,7 +43,7 @@ void PhysicsManager::removeCollider(Collider* collider) {
         _colliders.erase(std::remove(_colliders.begin(), _colliders.end(), collider), _colliders.end());
 }
 
-Collider* PhysicsManager::getCollider(const Collider& owner) const {
+Collider* PhysicsManager::getCollision(const Collider& owner) const {
     for (Collider* collider : _colliders) {
         if (&owner != collider && collider->calculateCollision(owner))
             return collider;
@@ -118,7 +118,7 @@ void Collider::setOriginPosition(pPos position) {
 bool Collider::tryCollision(const Pos& previousPos) {
     const PhysicsManager* physicsManager = PhysicsManager::GetInstance();
 
-    Collider* collider = physicsManager->getCollider(*this);
+    Collider* collider = physicsManager->getCollision(*this);
     if (collider != nullptr) {
         bool triggerCollsition = isAnyTrigger(*collider);
         if (triggerCollsition)
