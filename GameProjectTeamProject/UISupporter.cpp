@@ -17,6 +17,7 @@ UISupporter::~UISupporter() {
 
 void UISupporter::Render() {
     int coutMode = _setmode(_fileno(stdout), _O_U16TEXT);
+    SetColor();
 
     for (const std::pair<std::string, UIInfo>& pair : _uis) {
         MoveCursor(pair.second.x, pair.second.y);
