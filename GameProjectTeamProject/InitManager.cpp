@@ -89,8 +89,8 @@ void InitManager::InitEnemies() {
 
     EntityManager* entityManager = EntityManager::GetInstance();
 
-    entityManager->addEntityData(enemyDataPoolName, e_star_name, new Enemy());
-    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getEntityData(enemyDataPoolName, e_star_name));
+    entityManager->addObjectData(enemyDataPoolName, e_star_name, new Enemy());
+    Enemy* enemyPtr = dynamic_cast<Enemy*>(entityManager->getObjectData(enemyDataPoolName, e_star_name));
     if (enemyPtr != nullptr) {
         Enemy& star = *enemyPtr;
         // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
@@ -112,8 +112,6 @@ void InitManager::InitEnemies() {
         star.addAttackComment("빠르게 베어지나가는 공격을 했다");
         star.addAttackComment("시야를 빼는 강렬한 불빛을 내뿜었다");
     }
-
-    Entity* newEnemy = entityManager->activeRandomEntity(enemyDataPoolName);
 }
 
 void InitManager::DeletePlayer() {
