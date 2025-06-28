@@ -288,7 +288,7 @@ void InitManager::InitItems() {
         potion.init(L'♗', true, L(Layer::ITEM));
 
         potion.setName("공격물약");
-        potion.setUpStat(EntityStat::makeStat(2, 0, 0, 0, 0));
+        potion.setUpStat(EntityStat::makeStat(4, 0, 0, 0, 0));
     }
 
     statItemName = "potion";
@@ -299,7 +299,7 @@ void InitManager::InitItems() {
         potion.init(L'♕', true, L(Layer::ITEM));
 
         potion.setName("활력물약");
-        potion.setUpStat(EntityStat::makeStat(0, 15, 0, 0, 0));
+        potion.setUpStat(EntityStat::makeStat(0, 7, 0, 0, 0));
     }
 
     statItemName = "potionAd";
@@ -310,7 +310,7 @@ void InitManager::InitItems() {
         potion.init(L'♕', true, L(Layer::ITEM));
 
         potion.setName("회피물약");
-        potion.setUpStat(EntityStat::makeStat(0, 0, 5, 0, 0));
+        potion.setUpStat(EntityStat::makeStat(0, 0, 3, 0, 0));
     }
 
     statItemName = "potionAll";
@@ -321,7 +321,18 @@ void InitManager::InitItems() {
         potion.init(L'♔', true, L(Layer::ITEM));
 
         potion.setName("만능물약");
-        potion.setUpStat(EntityStat::makeStat(2, 7, 3, 0, 15));
+        potion.setUpStat(EntityStat::makeStat(2, 4, 3, 0, 10));
+    }
+
+    statItemName = "potionLuck";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♔', true, L(Layer::ITEM));
+
+        potion.setName("도박사의약");
+        potion.setUpStat(EntityStat::makeStat(0, 0, 0, 5, 0));
     }
 }
 
