@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <queue>
 #include <unordered_set>
 
 #include "Object.h"
@@ -78,6 +79,7 @@ public:
 
 protected:
     std::unordered_set<IDeadHandler*> _deadListeners;
+    std::queue<IDeadHandler*> _removeToListeners;
     std::vector<std::string> _attckComments;
 
 protected:

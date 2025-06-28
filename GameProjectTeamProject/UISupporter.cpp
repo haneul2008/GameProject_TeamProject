@@ -32,18 +32,26 @@ int UISupporter::GetRenderPriotity() {
 }
 
 void UISupporter::setUI(const std::string& key, const std::wstring& value) {
+    removeUIPosition(key);
     getUI(key)->value = value;
 }
 
 void UISupporter::setUI(const std::string& key, int x, int y) {
-    UIInfo* uiInfo = getUI(key);
+    removeUIPosition(key);
 
+    UIInfo* uiInfo = getUI(key);
     uiInfo->x = x;
     uiInfo->y = y;
 }
 
 void UISupporter::removeUI(const std::string& key) {
     _uis.erase(key);
+}
+
+void UISupporter::removeUIPosition(const std::string& key) {
+    MoveCursor(getUI(key)->x, getUI(key)->y);
+    for (int i = 0; i < getUI(key)->value.size(); ++i)
+        std::cout << "  ";
 }
 
 UIInfo* UISupporter::getUI(const std::string& key) {

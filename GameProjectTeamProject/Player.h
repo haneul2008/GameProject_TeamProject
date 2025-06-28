@@ -21,6 +21,7 @@ public:
     void setWhatIsEnemyLayer(int layer);
     void SetUp();
 
+    void takeDamage(Entity* dealer, int damage) override;
     void applyMove() override;
 
     // IInputable을(를) 통해 상속됨
@@ -30,6 +31,8 @@ public:
 private:
     void onTriggerEvent(Collider& other, const Pos& newPosition) override;
     void onCollisionEvent(Collider& other, const Pos& newPosition) override;
+
+    void setHpUI();
 
 private:
     bool _inputLock;

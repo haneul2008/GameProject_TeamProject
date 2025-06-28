@@ -1,5 +1,7 @@
 #include "Item.h"
 
+#include "StageManager.h"
+
 void Item::onTriggerEvent(Collider& other, const Pos& beforePosition) {
 }
 
@@ -29,6 +31,13 @@ void Item::deActive() {
 Item* Item::newClone() {
     // item자체는 nullptr반환 상속 객체가 newClone가능하게 할것
     return nullptr;
+}
+
+void Item::Render() {
+    if (StageManager::GetInstance()->GetStage()->curMap[pos.y][pos.x].isHide)
+        return;
+
+    Object::Render();
 }
 
 void Item::setName(std::string name) {

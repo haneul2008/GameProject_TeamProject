@@ -4,11 +4,11 @@
 #include<format>
 
 #include "UISupporter.h"
+#include "Constants.h"
 #include "Core.h"
 
 constexpr std::string INVEN(int i) { return "INVEN" + std::to_string(i); }
 constexpr int INTERVAL = 10;
-constexpr int START_Y_POS = 45;
 
 InventoryManager::InventoryManager() :
     _maxInven(0) {
@@ -67,6 +67,6 @@ void InventoryManager::resetItemUI() {
         std::string str = std::format("{} : {}", i, _inventory[i - 1]->getName());
         std::wstring wstr = to_wstring(str);
         UISupporter::GetInstance()->setUI(INVEN(i), wstr);
-        UISupporter::GetInstance()->setUI(INVEN(i), (i - 1) * INTERVAL, START_Y_POS);
+        UISupporter::GetInstance()->setUI(INVEN(i), (i - 1) * INTERVAL, MAP_HEIGHT + 2);
     }
 }

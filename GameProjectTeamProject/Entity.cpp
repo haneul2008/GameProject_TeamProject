@@ -137,35 +137,52 @@ std::string Entity::getAttackComment() const {
 }
 
 void Entity::takeDamage(Entity* dealer, int damage) {
+    if (damage == 0)
+        return;
+
     if (damage <= 0) { // 회복 시 damage가 음수일 때
         stat.hp = std::min(stat.hp - damage, stat.maxHp);
 
         std::string healMassage = std::format("{}이(가) {}에 의해 {}의 체력을 회복했습니다.", _name, dealer->getName(), -damage);
         std::wstring printMessage = to_wstring(healMassage);
         pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
-
-        return;
     }
+    else {
+        int attackSuccess = rand() % 101;
 
-    int attackSuccess = rand() % 101;
+        if (stat.avoidance <= attackSuccess)
+            stat.hp = std::max(stat.hp - damage, 0);
 
-    if (stat.avoidance <= attackSuccess)
-        stat.hp = std::max(stat.hp - damage, 0);
-
-    if (stat.hp > 0)
-        onHitEvent(dealer, damage);
-    else
-        onDeadEvent(dealer, damage);
+        if (stat.hp > 0)
+            onHitEvent(dealer, damage);
+        else
+            onDeadEvent(dealer, damage);
+    }
 }
 
 void Entity::onHitEvent(Entity* dealer, int damage) {
 }
 
 void Entity::onDeadEvent(Entity* dealer, int damage) {
+    if (_isDead)
+        return;
+
     _isDead = true;
-    for (IDeadHandler* listener : _deadListeners)
-        if (listener != nullptr)
-            listener->handleDeadEvent(this);
+
+    while (!_removeToListeners.empty()) {
+        _deadListeners.erase(_removeToListeners.front());
+        _removeToListeners.pop();
+    }
+
+    if (_deadListeners.size() > 0)
+        for (IDeadHandler* listener : _deadListeners)
+            if (listener != nullptr)
+                listener->handleDeadEvent(this);
+
+    while (!_removeToListeners.empty()) {
+        _deadListeners.erase(_removeToListeners.front());
+        _removeToListeners.pop();
+    }
 }
 
 void Entity::addDeadListener(IDeadHandler* deadListener) {
@@ -174,7 +191,7 @@ void Entity::addDeadListener(IDeadHandler* deadListener) {
 }
 
 void Entity::removeDeadListener(IDeadHandler* deadListener) {
-    _deadListeners.erase(deadListener);
+    _removeToListeners.push(deadListener);
 }
 
 void Entity::setName(std::string name) {

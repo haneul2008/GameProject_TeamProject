@@ -133,8 +133,8 @@ Pos&& Enemy::getMoveToPlayerPos() {
 
 void Enemy::handleDeadEvent(Entity* deadEntity) {
     if (_pPlayer == deadEntity) {
-        _pPlayer = nullptr;
         _pPlayer->removeDeadListener(this);
+        _pPlayer = nullptr;
     }
 }
 

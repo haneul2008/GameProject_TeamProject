@@ -30,6 +30,7 @@ public:
     void removeUI(const std::string& key);
 
 private:
+    void removeUIPosition(const std::string& key);
     UIInfo* getUI(const std::string& key);
 
 private:

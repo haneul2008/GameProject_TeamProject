@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 
+#include <string>
 #include <format>
 #include "UISupporter.h"
 
@@ -9,6 +10,9 @@
 #include "StageManager.h"
 #include "Item.h"
 #include "InventoryManager.h"
+#include "Constants.h"
+
+const std::string HP_UI = "HP_UI";
 
 Player::Player() :
     _whatIsItem(0),
@@ -31,6 +35,7 @@ void Player::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer
     InputManager::GetInstance()->addInputListener(this);
 
     SetUp();
+    setHpUI();
 }
 
 void Player::setWhatIsItemLayer(int layer) {
@@ -49,8 +54,14 @@ void Player::SetUp() {
     StageManager* stageManager = StageManager::GetInstance();
     fov = std::make_unique<FOV>(stageManager->GetStage(), stageManager->GetStage()->rooms);
 
-    setPosition(stageManager->GetStage()->startPos);
-    fov->UpdateFov(pos);
+	setPosition(stageManager->GetStage()->startPos);
+	fov->UpdateFov(pos);
+}
+
+void Player::takeDamage(Entity* dealer, int damage) {
+    Entity::takeDamage(dealer, damage);
+
+    setHpUI();
 }
 
 void Player::applyMove() {
@@ -130,4 +141,11 @@ void Player::onCollisionEvent(Collider& other, const Pos& previousPos) {
     }
 
     Entity::onCollisionEvent(other, previousPos);
+}
+
+void Player::setHpUI() {
+    std::string str = std::format("HP : {} / {}", stat.hp, stat.maxHp);
+    std::wstring wstr = to_wstring(str);
+    UISupporter::GetInstance()->setUI(HP_UI, wstr);
+    UISupporter::GetInstance()->setUI(HP_UI, (MAP_HEIGHT / 2) - (str.size() / 2), MAP_HEIGHT + 1);
 }
