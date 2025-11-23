@@ -3,11 +3,13 @@
 #include "Console.h"
 #include "Entity.h"
 #include "Mci.h"
+#include "SceneManager.h"
 #pragma comment(lib, "winmm")
 
 void Core::Run()
 {
 	_isRunning = true;
+	m_playerDead = false;
 	PlaySoundID(SOUNDID::BGM, true);
 
 	while (true)
@@ -56,6 +58,11 @@ void Core::Update()
 	{
 		_updateList[i]->Update();
 	}
+
+	if (m_playerDead) {
+		m_playerDead = false;
+		SceneManager::GetInstance()->ChangeScene("DEAD");
+	}
 }
 
 void Core::Render()
@@ -74,4 +81,8 @@ bool Core::UpdatePredicate(IUpdate* a, IUpdate* b)
 bool Core::RenderPredicate(IRender* a, IRender* b)
 {
 	return a->GetRenderPriotity() > b->GetRenderPriotity();
+}
+
+void Core::setPlayerDead(bool isDead) {
+	m_playerDead = true;
 }

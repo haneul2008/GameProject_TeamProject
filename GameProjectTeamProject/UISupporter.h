@@ -28,6 +28,7 @@ public:
     void setUI(const std::string& key, const std::wstring& value);
     void setUI(const std::string& key, int x, int y);
     void removeUI(const std::string& key);
+    void deleteUI();
 
 private:
     void removeUIPosition(const std::string& key);

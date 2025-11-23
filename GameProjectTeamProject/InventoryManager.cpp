@@ -100,3 +100,9 @@ void InventoryManager::onInputKey(Key key) {
             break;
     }
 }
+
+void InventoryManager::removeUI() {
+    for (int i = 0; i < _maxInven; ++i) {
+        UISupporter::GetInstance()->removeUI(INVEN(i));
+    }
+}

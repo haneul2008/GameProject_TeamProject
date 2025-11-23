@@ -22,8 +22,12 @@ private:
 	void Render();
 	static bool UpdatePredicate(IUpdate* prev, IUpdate* current);
 	static bool RenderPredicate(IRender* a, IRender* b);
+	// 끔찍하지만 시간상의 문제로 어쩔 수 없음. 개선 필요.
+public:
+	void setPlayerDead(bool isDead);
 private:
 	bool _isRunning;
 	int m_hp;
+	bool m_playerDead;
 };
 
