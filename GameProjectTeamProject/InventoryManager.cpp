@@ -3,6 +3,7 @@
 #include<string>
 #include<format>
 
+#include "EntityManager.h"
 #include "UISupporter.h"
 #include "Constants.h"
 #include "Core.h"
@@ -62,7 +63,8 @@ bool InventoryManager::useItem(Entity* user, int i) {
 
     _inventory[i]->useItem(user);
     // 사용 후 제거
-    delete _inventory[i];
+    EntityManager::GetInstance()->deleteObject(_inventory[i]);
+    _inventory[i] = nullptr;
     _inventory.erase(_inventory.begin() + i);
     UISupporter::GetInstance()->removeUI(INVEN(_inventory.size() + 1));
 

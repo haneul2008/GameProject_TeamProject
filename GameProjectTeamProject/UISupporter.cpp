@@ -29,7 +29,7 @@ void UISupporter::Render() {
 
 int UISupporter::GetRenderPriotity() {
     // 항상 마지막에 실행 시켜야함
-    return -2147483648;
+    return -10e8;
 }
 
 void UISupporter::setUI(const std::string& key, const std::wstring& value) {
