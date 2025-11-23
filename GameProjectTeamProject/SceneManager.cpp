@@ -44,15 +44,15 @@ void SceneManager::Update()
 		_currentScene->Update();
 }
 
-int SceneManager::GetUpdatePriotity()
-{
-	return 20;
-}
-
 void SceneManager::Render()
 {
 	if (_currentScene != nullptr)
 		_currentScene->Render();
+}
+
+int SceneManager::GetUpdatePriotity()
+{
+	return 20;
 }
 
 int SceneManager::GetRenderPriotity()
