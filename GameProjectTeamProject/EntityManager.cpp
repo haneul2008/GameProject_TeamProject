@@ -27,6 +27,20 @@ void EntityManager::addObjectData(std::string dataPool, std::string name, Object
     dataMap.insert({ name , std::move(entity) });
 }
 
+void EntityManager::removeObjectData(std::string dataPool, std::string name) {
+    auto it = _objectDataPoolMap.find(dataPool);
+
+    if (it == _objectDataPoolMap.end()) {
+        return;
+    }
+
+    it->second.erase(name);
+}
+
+void EntityManager::removeObjectDataPool(std::string dataPool) {
+        _objectDataPoolMap.erase(dataPool);
+}
+
 Object* EntityManager::getObjectData(std::string dataPool, std::string name) {
     std::unordered_map<std::string, std::unordered_map<std::string, Object*>>::iterator it = _objectDataPoolMap.find(dataPool);
 

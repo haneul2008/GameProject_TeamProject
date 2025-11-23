@@ -22,7 +22,8 @@ Player::Player() :
     _whatIsItem(0),
     _whatIsWall(0),
     _whatIsEnemy(0),
-    _inputLock(false) {
+    _inputLock(false),
+    fov(nullptr) {
 }
 
 Player::~Player() {
@@ -58,7 +59,7 @@ void Player::SetUp() {
     StageManager* stageManager = StageManager::GetInstance();
     if (fov) {
         delete fov;
-		fov = nullptr;
+        fov = nullptr;
     }
     fov = new FOV(stageManager->GetStage(), stageManager->GetStage()->rooms);
 
@@ -67,33 +68,32 @@ void Player::SetUp() {
 }
 
 void Player::takeDamage(Entity* dealer, int damage) {
-	bool isDead = stat.hp <= damage;
-    
+    bool isDead = stat.hp <= damage;
+
     Entity::takeDamage(dealer, damage);
 
-	PlaySoundID(SOUNDID::PlayerHit);
+    PlaySoundID(SOUNDID::PlayerHit);
 
-    if(isDead == false)
+    if (isDead == false)
         setHpUI();
 }
 
-void Player::onDeadEvent(Entity* dealer, int damage)
-{
-	PlaySoundID(SOUNDID::PlayerDead);
+void Player::onDeadEvent(Entity* dealer, int damage) {
+    PlaySoundID(SOUNDID::PlayerDead);
 
     deActive();
 
     Entity::onDeadEvent(dealer, damage);
 
-	PhysicsManager::GetInstance()->removeCollider(this);
-	InputManager::GetInstance()->removeInputListener(this);
-	Core::GetInstance()->RemoveRender(this);
-	Core::GetInstance()->RemoveUpdate(this);
+    PhysicsManager::GetInstance()->removeCollider(this);
+    InputManager::GetInstance()->removeInputListener(this);
+    Core::GetInstance()->RemoveRender(this);
+    Core::GetInstance()->RemoveUpdate(this);
 
-	delete fov;
+    delete fov;
     fov = nullptr;
 
-	SceneManager::GetInstance()->ChangeScene("DEAD");
+    Core::GetInstance()->setPlayerDead(true);
 }
 
 void Player::applyMove() {
@@ -118,8 +118,7 @@ void Player::applyMove() {
 }
 
 void Player::onInputKey(Key key) {
-    if (_inputLock)
-    {
+    if (_inputLock) {
         _tempMoveX = 0;
         _tempMoveY = 0;
         return;

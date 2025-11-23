@@ -100,8 +100,6 @@ void InitManager::InitPlayer() {
     // 테스트
     _pPlayer->SetRenderPriotity(100);
     _pPlayer->SetUpdatePriotity(100);
-
-    InitItems();
 }
 
 void InitManager::InitEnemies() {
@@ -169,7 +167,7 @@ void InitManager::InitEnemies() {
     if (enemyPtr != nullptr) {
         Enemy& star = *enemyPtr;
         // active()를 하지않아 데이터 상으로 남아있게 함. 복사 생성으로 계속 사용이 가능하게
-        star.init(EntityStat::makeStat(3, 7, 200, 50), L'E', false, L(Layer::ENEMY));
+        star.init(EntityStat::makeStat(3, 7, 100, 50), L'E', false, L(Layer::ENEMY));
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(7);
@@ -178,7 +176,7 @@ void InitManager::InitEnemies() {
         star.render.setCurrentAnimation(idleAnimation);
 
         star.setName("도박꾼");
-        star.addDeadMessage("빚을 갚지 않아도 되게 되어 웃었다");
+        star.addDeadMessage("마침내 그는 도박을 끊을 수 있었다.");
         star.addDeadMessage("그의 손에서 주사위가 굴러떨어졌다... 숫자는 1이다");
 
         star.addAttackComment("카드를 날렸다");
@@ -336,6 +334,17 @@ void InitManager::InitItems() {
     }
 }
 
-void InitManager::DeletePlayer() {
-    delete _pPlayer;
+void InitManager::RemovePlayer() {
+    EntityManager::GetInstance()->deleteObject(_pPlayer);
+    _pPlayer = nullptr;
+}
+
+void InitManager::RemoveEnemies() {
+    EntityManager* entityManager = EntityManager::GetInstance();
+    entityManager->removeObjectDataPool(ENEMY_DATA_POOL);
+}
+
+void InitManager::RemoveItems() {
+    EntityManager* entityManager = EntityManager::GetInstance();
+    entityManager->removeObjectDataPool(ITEM_DATA_POOL);
 }

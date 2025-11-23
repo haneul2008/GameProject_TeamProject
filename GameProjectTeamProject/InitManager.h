@@ -14,10 +14,17 @@ class InitManager : public Singleton<InitManager>
 {
 public:
     InitManager();
+
+public:
     void InitPlayer();
     void InitEnemies();
     void InitItems();
-    void DeletePlayer();
+
+public:
+    void RemovePlayer();
+    void RemoveEnemies();
+    void RemoveItems();
+
 private:
     Player* _pPlayer;
 };

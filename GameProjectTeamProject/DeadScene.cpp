@@ -23,7 +23,7 @@ void DeadScene::Update()
 	if (_isDestroy == false)
 	{
 		_isDestroy = true;
-		InitManager::GetInstance()->DeletePlayer();
+		InitManager::GetInstance()->RemovePlayer();
 		UISupporter::GetInstance()->removeUI(HP_UI);
 		RenderScene();
 	}

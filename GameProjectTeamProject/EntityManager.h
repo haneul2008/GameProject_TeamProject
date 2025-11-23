@@ -17,6 +17,8 @@ public:
 
 public:
     void addObjectData(std::string dataPool, std::string name, Object*&& entity);
+    void removeObjectData(std::string dataPool, std::string name);
+    void removeObjectDataPool(std::string dataPool);
     Object* getObjectData(std::string dataPool, std::string name);
     Object* activeObject(std::string dataPool, std::string name);
     Object* activeRandomObject(std::string dataPool);
