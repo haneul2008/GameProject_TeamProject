@@ -16,7 +16,7 @@ struct EntityStat
     int maxHp;
     int hp;
     // 회피율 (0.0% ~ 100.0%) {0 ~ 1000}
-    int evadePer; 
+    int avoidPer; 
     int addDamagePer; // 추뎀 퍼센트
 
     EntityStat operator+(const EntityStat& other) const;

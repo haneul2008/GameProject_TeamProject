@@ -3,12 +3,13 @@
 #include<string>
 #include<format>
 
+#include "EntityManager.h"
 #include "UISupporter.h"
 #include "Constants.h"
 #include "Core.h"
 
 constexpr std::string INVEN(int i) { return "INVEN" + std::to_string(i); }
-constexpr int INTERVAL = 18;
+constexpr int INTERVAL = 25;
 
 InventoryManager::InventoryManager() :
     _maxInven(0) {
@@ -62,13 +63,14 @@ bool InventoryManager::useItem(Entity* user, int i) {
 
     _inventory[i]->useItem(user);
     // 사용 후 제거
-    delete _inventory[i];
+    EntityManager::GetInstance()->deleteObject(_inventory[i]);
+    _inventory[i] = nullptr;
     _inventory.erase(_inventory.begin() + i);
     UISupporter::GetInstance()->removeUI(INVEN(_inventory.size() + 1));
 
     resetItemUI();
 
-    std::string printComment = std::format("{}이(가) {}를(을) 사용했다.", user->getName(), itemName);
+    std::string printComment = std::format("{}이(가) {}을(를) 사용했다.", user->getName(), itemName);
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
 

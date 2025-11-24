@@ -120,7 +120,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(3);
-        star.setWallLayer(L(Layer::WALL));
+        star.setWallLayer(L(Layer::WALL) | L(Layer::ITEM));
 
         star.render.addAnimation(idleAnimation, { L'⛦', L'⛧' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -147,6 +147,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(5);
+        star.setWallLayer(L(Layer::WALL) | L(Layer::ITEM));
 
         star.render.addAnimation(idleAnimation, { L'☭', L'⚸' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -171,6 +172,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(7);
+        star.setWallLayer(L(Layer::WALL) | L(Layer::ITEM));
 
         star.render.addAnimation(idleAnimation, { L'⚀', L'⚁', L'⚂', L'⚃', L'⚄', L'⚅', L'⚄', L'⚃', L'⚂', L'⚁' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -194,6 +196,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(7);
+        star.setWallLayer(L(Layer::WALL) | L(Layer::ITEM));
 
         star.render.addAnimation(idleAnimation, { L'☢' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -215,6 +218,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(7);
+        star.setWallLayer(L(Layer::WALL) | L(Layer::ITEM));
 
         star.render.addAnimation(idleAnimation, { L'☃' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -238,6 +242,7 @@ void InitManager::InitEnemies() {
 
         star.setPlayer(_pPlayer);
         star.setSenceRange(7);
+        star.setWallLayer(L(Layer::WALL) | L(Layer::ITEM));
 
         star.render.addAnimation(idleAnimation, { L'☠' });
         star.render.setCurrentAnimation(idleAnimation);
@@ -255,10 +260,23 @@ void InitManager::InitEnemies() {
 
 void InitManager::InitItems() {
     EntityManager* entityManager = EntityManager::GetInstance();
+    std::string statItemName;
+    StatItem* statItemPtr;
 
-    std::string statItemName = "potionN";
+    statItemName = "potionNone";
     entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
-    StatItem* statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♙', true, L(Layer::ITEM));
+
+        potion.setName("물약");
+        potion.setUpStat(EntityStat::makeStat(1, 0, 0, 5, 5));
+    }
+
+    statItemName = "potionN";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
     if (statItemPtr != nullptr) {
         StatItem& potion = *statItemPtr;
         potion.init(L'♙', true, L(Layer::ITEM));
@@ -278,6 +296,17 @@ void InitManager::InitItems() {
         potion.setUpStat(EntityStat::makeStat(0, 0, 0, 0, 50));
     }
 
+    statItemName = "potionL";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♟', true, L(Layer::ITEM));
+
+        potion.setName("엘릭서");
+        potion.setUpStat(EntityStat::makeStat(0, 25, 0, 0, 75));
+    }
+
     statItemName = "potionAtk";
     entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
     statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
@@ -285,8 +314,19 @@ void InitManager::InitItems() {
         StatItem& potion = *statItemPtr;
         potion.init(L'♗', true, L(Layer::ITEM));
 
-        potion.setName("공격물약");
+        potion.setName("공격 물약");
         potion.setUpStat(EntityStat::makeStat(4, 0, 0, 0, 0));
+    }
+
+    statItemName = "potionSpAtk";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♗', true, L(Layer::ITEM));
+
+        potion.setName("어둠의 공격 물약");
+        potion.setUpStat(EntityStat::makeStat(11, -20, 0, 0, 0));
     }
 
     statItemName = "potion";
@@ -297,7 +337,29 @@ void InitManager::InitItems() {
         potion.init(L'♕', true, L(Layer::ITEM));
 
         potion.setName("활력물약");
-        potion.setUpStat(EntityStat::makeStat(0, 7, 0, 0, 0));
+        potion.setUpStat(EntityStat::makeStat(0, 7, 0, 0, 7));
+    }
+
+    statItemName = "potionH";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♕', true, L(Layer::ITEM));
+
+        potion.setName("보약");
+        potion.setUpStat(EntityStat::makeStat(0, 25, 0, 3, 1));
+    }
+
+    statItemName = "potionSpH";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♕', true, L(Layer::ITEM));
+
+        potion.setName("어둠의 보약");
+        potion.setUpStat(EntityStat::makeStat(3, -10, 0, 10, 10));
     }
 
     statItemName = "potionAd";
@@ -307,8 +369,19 @@ void InitManager::InitItems() {
         StatItem& potion = *statItemPtr;
         potion.init(L'♕', true, L(Layer::ITEM));
 
-        potion.setName("회피물약");
-        potion.setUpStat(EntityStat::makeStat(0, 0, 3, 0, 0));
+        potion.setName("회피 물약");
+        potion.setUpStat(EntityStat::makeStat(0, 0, 10, 0, 0));
+    }
+
+    statItemName = "potionSpAd";
+    entityManager->addObjectData(ITEM_DATA_POOL, statItemName, new StatItem());
+    statItemPtr = dynamic_cast<StatItem*>(entityManager->getObjectData(ITEM_DATA_POOL, statItemName));
+    if (statItemPtr != nullptr) {
+        StatItem& potion = *statItemPtr;
+        potion.init(L'♕', true, L(Layer::ITEM));
+
+        potion.setName("어둠의 회피 물약");
+        potion.setUpStat(EntityStat::makeStat(-2, -10, 25, 0, 0));
     }
 
     statItemName = "potionAll";
@@ -318,8 +391,8 @@ void InitManager::InitItems() {
         StatItem& potion = *statItemPtr;
         potion.init(L'♔', true, L(Layer::ITEM));
 
-        potion.setName("만능물약");
-        potion.setUpStat(EntityStat::makeStat(2, 4, 3, 0, 10));
+        potion.setName("만능 물약");
+        potion.setUpStat(EntityStat::makeStat(2, 7, 5, 0, 10));
     }
 
     statItemName = "potionLuck";
@@ -329,8 +402,8 @@ void InitManager::InitItems() {
         StatItem& potion = *statItemPtr;
         potion.init(L'♔', true, L(Layer::ITEM));
 
-        potion.setName("도박사의약");
-        potion.setUpStat(EntityStat::makeStat(0, 0, 0, 5, 0));
+        potion.setName("도박사의 물약");
+        potion.setUpStat(EntityStat::makeStat(0, 0, 3, 5, 0));
     }
 }
 

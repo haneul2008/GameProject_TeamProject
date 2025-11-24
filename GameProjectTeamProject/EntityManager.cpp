@@ -10,7 +10,7 @@ EntityManager::~EntityManager() {
     Core::GetInstance()->RemoveUpdate(this);
 
     // for문 돌리면 handleDeadEvent때문에 _activeEntities의 iterator가 바뀜
-    std::vector<Object*> tempData = _activeObjects;
+    std::vector<Object*>& tempData = _activeObjects;
 
     for (Object* activeObject : tempData)
         deleteObject(activeObject);
