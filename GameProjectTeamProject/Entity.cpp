@@ -149,7 +149,7 @@ void Entity::takeDamage(Entity* dealer, int damage) {
 	}
 	else {
 		int evade = rand() % 1001;
-		if (evade <= stat.evadePer) {
+		if (evade <= stat.avoidPer) {
 
 			std::string healMassage = std::format("{}이(가) {}의 공격을 회피했다.", _name, dealer->getName());
 			std::wstring printMessage = to_wstring(healMassage);
@@ -240,7 +240,7 @@ EntityStat EntityStat::operator+(const EntityStat& other) const {
 	newEntityStat.damage = damage + other.damage;
 	newEntityStat.maxHp = maxHp + other.maxHp;
 	newEntityStat.hp = hp + other.hp;
-	newEntityStat.evadePer = evadePer + other.evadePer;
+	newEntityStat.avoidPer = avoidPer + other.avoidPer;
 	newEntityStat.addDamagePer = addDamagePer + other.addDamagePer;
 	return newEntityStat;
 }
@@ -249,7 +249,7 @@ EntityStat EntityStat::operator*(const float& value) const {
 	EntityStat newEntityStat = EntityStat();
 	newEntityStat.damage = static_cast<int>(std::round(damage * value));
 	newEntityStat.addDamagePer = static_cast<int>(std::round(addDamagePer * value));
-	newEntityStat.evadePer = static_cast<int>(std::round(evadePer * value));
+	newEntityStat.avoidPer = static_cast<int>(std::round(avoidPer * value));
 	newEntityStat.hp = static_cast<int>(std::round(hp * value));
 	newEntityStat.maxHp = static_cast<int>(std::round(maxHp * value));
 	return newEntityStat;
@@ -260,7 +260,7 @@ EntityStat EntityStat::makeStat(int damage, int maxHp, int avoidance, int addDam
 	stat.damage = damage;
 	stat.maxHp = maxHp;
 	stat.hp = hp < 0 ? maxHp : hp;
-	stat.evadePer = avoidance;
+	stat.avoidPer = avoidance;
 	stat.addDamagePer = addDamagePer;
 	return stat;
 }

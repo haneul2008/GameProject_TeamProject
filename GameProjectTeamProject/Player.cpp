@@ -27,6 +27,10 @@ Player::Player() :
 }
 
 Player::~Player() {
+    UISupporter::GetInstance()->removeUI(HP_UI);
+    UISupporter::GetInstance()->removeUI(ATTACK_UI);
+    UISupporter::GetInstance()->removeUI(AVOID_UI);
+
     InputManager::GetInstance()->removeInputListener(this);
 }
 
@@ -41,6 +45,7 @@ void Player::init(EntityStat stat, wchar_t defaultImage, bool trigger, int layer
 
     SetUp();
     setHpUI();
+    setStatUI();
 }
 
 void Player::setWhatIsItemLayer(int layer) {
@@ -177,6 +182,7 @@ void Player::setInputLock(bool value) {
 void Player::onUseItem() {
     stat.hp = stat.hp < stat.maxHp ? stat.hp : stat.maxHp;
     setHpUI();
+    setStatUI();
 }
 
 void Player::onTriggerEvent(Collider& other, const Pos& previousPos) {
@@ -220,4 +226,16 @@ void Player::setHpUI() {
     std::wstring wstr = to_wstring(str);
     UISupporter::GetInstance()->setUI(HP_UI, wstr);
     UISupporter::GetInstance()->setUI(HP_UI, (MAP_HEIGHT / 2) - (str.size() / 2), MAP_HEIGHT + 1);
+}
+
+void Player::setStatUI() {
+    std::string attackStr = std::format("ATTACK : {}", stat.damage);
+    std::wstring attackWstr = to_wstring(attackStr);
+    UISupporter::GetInstance()->setUI(ATTACK_UI, attackWstr);
+    UISupporter::GetInstance()->setUI(ATTACK_UI, (MAP_HEIGHT / 2) - (attackStr.size() / 2) + UI_INTERVAL, MAP_HEIGHT + 1);
+
+    std::string avoidStr = std::format("AVOID : {}%", (stat.avoidPer / 10.f));
+    std::wstring avoidkWstr = to_wstring(avoidStr);
+    UISupporter::GetInstance()->setUI(AVOID_UI, avoidkWstr);
+    UISupporter::GetInstance()->setUI(AVOID_UI, (MAP_HEIGHT / 2) - (avoidStr.size() / 2) + 2 * UI_INTERVAL, MAP_HEIGHT + 1);
 }

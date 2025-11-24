@@ -64,3 +64,7 @@ const vector<string> gameOverText =
 };
 
 const std::string HP_UI = "HP_UI";
+const std::string ATTACK_UI = "ATTACK_UI";
+const std::string AVOID_UI = "AVOID_UI";
+// 추후 수정
+const int UI_INTERVAL = 20;

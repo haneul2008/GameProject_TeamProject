@@ -46,6 +46,9 @@ void UISupporter::setUI(const std::string& key, int x, int y) {
 }
 
 void UISupporter::removeUI(const std::string& key) {
+    if (_uis.find(key) == _uis.end())
+        return;
+
     removeUIPosition(key);
     _uis.erase(key);
 }

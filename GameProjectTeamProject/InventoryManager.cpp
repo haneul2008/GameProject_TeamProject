@@ -9,7 +9,7 @@
 #include "Core.h"
 
 constexpr std::string INVEN(int i) { return "INVEN" + std::to_string(i); }
-constexpr int INTERVAL = 18;
+constexpr int INTERVAL = 25;
 
 InventoryManager::InventoryManager() :
     _maxInven(0) {
@@ -70,7 +70,7 @@ bool InventoryManager::useItem(Entity* user, int i) {
 
     resetItemUI();
 
-    std::string printComment = std::format("{}이(가) {}를(을) 사용했다.", user->getName(), itemName);
+    std::string printComment = std::format("{}이(가) {}을(를) 사용했다.", user->getName(), itemName);
     std::wstring printMessage = to_wstring(printComment);
     pauseToWaitKeyAndPrint(Key::ENDINPUT, printMessage);
 

@@ -36,6 +36,7 @@ private:
     void onCollisionEvent(Collider& other, const Pos& newPosition) override;
 
     void setHpUI();
+    void setStatUI();
 
 private:
     bool _inputLock;

@@ -30,7 +30,7 @@ void TitleInteraction::Update()
 
 		RenderSword();
 		break;
-	case Key::READYINPUT:
+	case Key::ENDINPUT:
 		Interact();
 	}
 
